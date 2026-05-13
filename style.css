@@ -2191,6 +2191,53 @@ footer {
   margin-top: 24px;
 }
 
+/* 小白导读:每个技术 section 开头的"先打个比方"引子 */
+.beginner-hint {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 8px 0 28px;
+  padding: 14px 18px;
+  background: #fbf5f0;
+  border-left: 3px solid var(--accent);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+.beginner-hint .bh-icon {
+  flex: 0 0 auto;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.beginner-hint .bh-body { flex: 1; }
+.beginner-hint b { color: var(--ink); }
+.beginner-hint .bh-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  vertical-align: 1px;
+}
+
+/* 轻量注释:章节内部串接用的一句话 */
+.note-soft {
+  margin: 20px 0 18px;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--ink-2);
+  font-style: italic;
+}
+.note-soft b {
+  font-style: normal;
+  color: var(--ink);
+}
+
 /* 移动端:单列,停用 sticky */
 @media (max-width: 900px) {
   .tech-tower-wrap {

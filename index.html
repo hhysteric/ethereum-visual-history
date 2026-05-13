@@ -968,8 +968,16 @@
 <!-- ============ 分层 ============ -->
 <section id="layers" class="section">
   <div class="section-head">
-    <h2>执行层 × 共识层</h2>
-    <p>Merge 之后，一个以太坊节点实际上是两个进程：EL（执行客户端）和 CL（共识客户端），通过 Engine API 通信。</p>
+    <h2>执行层 × 共识层 · 大楼中间两层在协作</h2>
+    <p>架构图里中间两层:一层负责"跑合约",一层负责"谁说了算"。Merge 之后这两者被拆成了两个独立的程序,互相通过一个叫 Engine API 的接口对话。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🤝</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      执行层 EL 像<b>后厨</b>:接到订单,按菜谱(EVM)炒菜,更新库存;共识层 CL 像<b>前厅经理</b>:决定哪桌的订单先做、哪份出品可以上菜。两者分工明确,各自升级互不影响。
+    </div>
   </div>
 
   <div class="split">
@@ -1007,8 +1015,16 @@
 <!-- ============ EVM ============ -->
 <section id="evm" class="section alt">
   <div class="section-head">
-    <h2>EVM · 以太坊虚拟机</h2>
-    <p>一个 256 位的栈式虚拟机，是智能合约的运行时。每条指令消耗 Gas，不可中断、不可死循环。</p>
+    <h2>EVM · 那台"世界计算机"到底是什么</h2>
+    <p>刚才那张图里的「执行层 EL」里,真正在跑代码的部件就叫 EVM(Ethereum Virtual Machine)。你可以把它想象成一台全球通用的、被数万台物理机同时模拟的"计算器"。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">💡</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      EVM 就像游戏卡带机 —— 你写的智能合约是"卡带",EVM 是"主机"。每台节点都装着一模一样的主机,只要插入同一张卡带、按相同顺序按键,结果就绝对一致。这种"人人跑出同样结果"是区块链能达成共识的根本。
+    </div>
   </div>
 
   <div class="evm-grid">
@@ -1049,6 +1065,8 @@ ISZERO
     </div>
   </div>
 
+  <p class="note-soft">把上面 4 块当成 EVM 主机的"零件":<b>Stack</b> 是桌面便签(用完就擦);<b>Memory</b> 是本次运行的草稿纸;<b>Storage</b> 是合约自己的硬盘(永久保留);<b>Bytecode</b> 是游戏卡带本体(只读)。下表里的 Opcode,就是这台主机认识的"按键"。</p>
+
   <div class="opcode-table">
     <h4>常见 Opcode 分类</h4>
     <table>
@@ -1069,8 +1087,16 @@ ISZERO
 <!-- ============ 共识 ============ -->
 <section id="consensus" class="section">
   <div class="section-head">
-    <h2>权益证明 PoS · 深入剖析</h2>
-    <p>32 ETH 成为一个验证者。Slot 12 秒，Epoch 32 slots ≈ 6.4 分钟。通过签名与投票推进链的安全性。</p>
+    <h2>共识层 PoS · 大楼里的"物业管委会"怎么开会</h2>
+    <p>执行层算完账本,但谁来拍板"这个版本是官方版"?这就是共识层的活儿。2022 年 The Merge 之后,以太坊用的是 PoS(权益证明)。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🧑‍⚖️</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      想象一个全球大楼的管委会:每人先交 <b>32 ETH 保证金</b>才能当委员。每 12 秒摇号选出一位"值班员"整理这 12 秒的账本,其他委员一起投票说"同意"。两轮 2/3 以上的投票通过,账本就"盖章定稿",再也改不了。这就是 PoS 在做的事。
+    </div>
   </div>
 
   <div class="pos-grid">
@@ -1092,14 +1118,16 @@ ISZERO
     </div>
   </div>
 
+  <p class="note-soft">每 12 秒(一个 slot)走完下面 4 步,就产出一个新区块:</p>
+
   <div class="consensus-flow">
-    <div class="cf-step"><b>1. Proposer</b><p>每个 slot 伪随机选出一个验证者出块（RANDAO）</p></div>
+    <div class="cf-step"><b>1. Proposer · 出题人</b><p>摇号选一位验证者打包这 12 秒的新区块</p></div>
     <div class="cf-arrow">→</div>
-    <div class="cf-step"><b>2. Attesters</b><p>委员会对区块进行投票（Attestation）</p></div>
+    <div class="cf-step"><b>2. Attesters · 见证人</b><p>一小队委员投票:"我同意这个区块"</p></div>
     <div class="cf-arrow">→</div>
-    <div class="cf-step"><b>3. LMD-GHOST</b><p>最重子树作为规范链（分叉选择）</p></div>
+    <div class="cf-step"><b>3. LMD-GHOST · 选主干</b><p>哪条链收到的票最重,就是正版</p></div>
     <div class="cf-arrow">→</div>
-    <div class="cf-step"><b>4. Casper FFG</b><p>2/3 权重投票达成 Justification → Finality</p></div>
+    <div class="cf-step"><b>4. Casper FFG · 盖章</b><p>2/3 以上权重投票 → 区块永不可逆</p></div>
   </div>
 
   <div class="cards two">
@@ -1119,8 +1147,16 @@ ISZERO
 <!-- ============ 状态 ============ -->
 <section id="state" class="section alt">
   <div class="section-head">
-    <h2>账户模型与状态树</h2>
-    <p>以太坊用账户模型（不是 UTXO）。所有账户构成一棵全局的 Merkle Patricia Trie（MPT）。</p>
+    <h2>账户与账本 · 以太坊是怎么"记账"的</h2>
+    <p>前面一直在说"账本",它的结构到底长什么样?这里我们打开数据层地下室的档案柜,看看以太坊到底在存什么。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">📒</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      想象一本全球共用的 Excel:每一行就是一个账户,要么是<b>你</b>(外部账户 EOA,由钱包私钥控制),要么是<b>一段程序</b>(合约账户)。每行存着余额、nonce、合约代码等字段。以太坊并不直接存这张表,而是用一棵被称作 <b>Merkle Patricia Trie(MPT)</b>的哈希树来存,只要树根(State Root)一致,所有节点都能判断账本有没有被动过。
+    </div>
   </div>
 
   <div class="account-types">
@@ -1173,8 +1209,16 @@ ISZERO
 <!-- ============ Gas ============ -->
 <section id="gas" class="section">
   <div class="section-head">
-    <h2>Gas 与 EIP-1559</h2>
-    <p>Gas 是计算、存储、带宽的统一计价单位。EIP-1559 引入 Base Fee + Tip 的双轨定价。</p>
+    <h2>Gas · 你付的那笔手续费怎么算</h2>
+    <p>以太坊是公共计算机,想让它替你干活就得付费。这笔费用叫 <b>Gas</b> —— 它既防止有人写死循环把全网卡死,也是验证者干活的报酬来源。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">⛽</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      像开车上高速:<b>Gas 用量</b>是你这趟烧的油(简单转账少,调用复杂合约多);<b>Base Fee</b> 是实时油价,堵车时自动涨价、冷清时自动降;<b>Priority Fee</b> 是给司机(验证者)的小费。最终账单:<b>Max Fee = Base Fee + Priority Fee</b>,其中 Base Fee 会被 🔥 销毁,让 ETH 供给减少。
+    </div>
   </div>
 
   <div class="gas-formula">
@@ -1219,51 +1263,59 @@ ISZERO
 <!-- ============ 交易生命周期 (从原 11 号迁入 tech 末尾) ============ -->
 <section id="lifecycle" class="section">
   <div class="section-head">
-    <h2>一笔交易的一生</h2>
-    <p>从钱包签名到最终确定,一笔以太坊交易穿过整个协议栈。</p>
+    <h2>串起来看:一笔交易从点击"确认"到"永久记录"</h2>
+    <p>前面讲的各层,放到真实场景里就是下面这 6 步。随便做一次转账或 swap,你的交易就会走一遍这个流程。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🎬</span>
+    <div class="bh-body">
+      <span class="bh-tag">举个例子</span>
+      你在钱包点了"用 0.1 ETH 换 USDC":第 1 步钱包用私钥签字,第 2 步广播给全球节点,第 3 步验证者把它打包进区块,第 4 步 EVM 真正执行换币逻辑,第 5-6 步管委会投票盖章。大约 12.8 分钟后,这笔交易就"板上钉钉"了。
+    </div>
   </div>
 
   <ol class="timeline">
     <li>
       <div class="t-dot">1</div>
       <div class="t-body">
-        <h4>签名</h4>
-        <p>钱包用私钥(secp256k1)对 RLP 编码后的交易哈希签名,得到 (v, r, s)。</p>
+        <h4>🖊️ 签名 · 你按下"确认"</h4>
+        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
       </div>
     </li>
     <li>
       <div class="t-dot">2</div>
       <div class="t-body">
-        <h4>广播到 mempool</h4>
-        <p>通过 JSON-RPC 发给节点,再由 devp2p 在 P2P 网络中 gossip。</p>
+        <h4>📡 广播到 mempool · 交易进"候车厅"</h4>
+        <p>通过 JSON-RPC 发给节点,节点再通过 P2P 网络转告全球所有节点,大家一起把它塞进等待池。</p>
       </div>
     </li>
     <li>
       <div class="t-dot">3</div>
       <div class="t-body">
-        <h4>Builder 构造区块</h4>
-        <p>MEV-Boost 下由 Builder 打包、Relay 中继、Proposer 选择最高收益区块(PBS)。</p>
+        <h4>📦 Builder 打包 · 被选中上车</h4>
+        <p>专业打包者(Builder)从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
       </div>
     </li>
     <li>
       <div class="t-dot">4</div>
       <div class="t-body">
-        <h4>EVM 执行</h4>
-        <p>节点重放交易,更新 State/Storage/Receipts 三棵树,计算新状态根。</p>
+        <h4>⚙️ EVM 执行 · 改账本</h4>
+        <p>每个节点都把这批交易重放一遍,更新 State/Storage/Receipts 三棵树,算出新的状态根。</p>
       </div>
     </li>
     <li>
       <div class="t-dot">5</div>
       <div class="t-body">
-        <h4>Attestation</h4>
-        <p>验证者委员会对区块投票,LMD-GHOST 选出规范链。</p>
+        <h4>🗳️ 见证投票 · 大家都认可</h4>
+        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
       </div>
     </li>
     <li>
       <div class="t-dot">6</div>
       <div class="t-body">
-        <h4>Finality</h4>
-        <p>两个 Epoch(~12.8 分钟)后 Casper FFG 最终化,交易不可逆。</p>
+        <h4>🔒 Finality · 盖章永久生效</h4>
+        <p>经过两个 Epoch(约 12.8 分钟),Casper FFG 把区块最终化,再也无法回滚 —— 你的交易永久写入历史。</p>
       </div>
     </li>
   </ol>
