@@ -2135,7 +2135,13 @@ footer {
   cursor: default;
   transition: border-left-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-.tt-step:hover {
+.tt-step:hover,
+.tech-tower-wrap.is-hover-1 .tt-step-1,
+.tech-tower-wrap.is-hover-2 .tt-step-2,
+.tech-tower-wrap.is-hover-3 .tt-step-3,
+.tech-tower-wrap.is-hover-4 .tt-step-4,
+.tech-tower-wrap.is-hover-5 .tt-step-5,
+.tech-tower-wrap.is-hover-6 .tt-step-6 {
   border-left-color: var(--accent);
   background: #fbf5f0;
   transform: translateX(2px);
