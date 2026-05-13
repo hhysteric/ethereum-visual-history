@@ -2238,6 +2238,130 @@ footer {
   color: var(--ink);
 }
 
+/* -----------------------------------------------------
+   交易生命周期流程图(tx-flow)
+   ----------------------------------------------------- */
+.tx-flow {
+  margin: 28px 0 36px;
+  padding: 22px 20px 18px;
+  background: var(--bg);
+  border: 1px solid var(--rule-light);
+}
+.tx-flow svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.tx-flow-caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.tx-flow-caption span { display: inline-flex; align-items: center; gap: 8px; }
+.tx-flow-caption i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}
+
+/* 6 个节点默认半透明,轮流点亮 */
+.tx-flow .tx-node rect { transition: fill 0.3s ease, stroke-width 0.3s ease; }
+.tx-flow .tx-node {
+  opacity: 0.55;
+  animation: tx-node-pulse 18s linear infinite;
+}
+.tx-flow .tx-n1 { animation-delay: 0s; }
+.tx-flow .tx-n2 { animation-delay: 3s; }
+.tx-flow .tx-n3 { animation-delay: 6s; }
+.tx-flow .tx-n4 { animation-delay: 9s; }
+.tx-flow .tx-n5 { animation-delay: 12s; }
+.tx-flow .tx-n6 { animation-delay: 15s; }
+@keyframes tx-node-pulse {
+  0%, 16.66%, 100% { opacity: 0.55; }
+  2%, 15% { opacity: 1; }
+}
+
+/* "NOW ▼" 阶段指针 */
+.tx-flow .tx-stage text { opacity: 0; }
+.tx-flow .tx-stage-1 { animation: tx-stage-flash 18s linear infinite 0s; }
+.tx-flow .tx-stage-2 { animation: tx-stage-flash 18s linear infinite 3s; }
+.tx-flow .tx-stage-3 { animation: tx-stage-flash 18s linear infinite 6s; }
+.tx-flow .tx-stage-4 { animation: tx-stage-flash 18s linear infinite 9s; }
+.tx-flow .tx-stage-5 { animation: tx-stage-flash 18s linear infinite 12s; }
+.tx-flow .tx-stage-6 { animation: tx-stage-flash 18s linear infinite 15s; }
+@keyframes tx-stage-flash {
+  0%, 16.66%, 100% { opacity: 0; }
+  2%, 15% { opacity: 1; }
+}
+
+/* 交易胶囊:沿主轴从 ①→⑥ 滑动(cx: 80→820) */
+.tx-flow .tx-pkg {
+  animation: tx-pkg-slide 18s cubic-bezier(.65,.05,.35,.95) infinite;
+}
+@keyframes tx-pkg-slide {
+  0%    { transform: translate(80px, 165px); opacity: 0; }
+  3%    { opacity: 1; }
+  16%   { transform: translate(80px, 165px); opacity: 1; }
+  19%   { transform: translate(230px, 165px); }
+  33%   { transform: translate(230px, 165px); }
+  36%   { transform: translate(380px, 165px); }
+  50%   { transform: translate(380px, 165px); }
+  53%   { transform: translate(535px, 165px); }
+  66%   { transform: translate(535px, 165px); }
+  69%   { transform: translate(690px, 165px); }
+  83%   { transform: translate(690px, 165px); }
+  86%   { transform: translate(820px, 165px); }
+  96%   { transform: translate(820px, 165px); opacity: 1; }
+  100%  { transform: translate(820px, 165px); opacity: 0; }
+}
+
+/* Gas 金币:在阶段 ④(50-66%,即 9-12 秒)期间从 EL 飞出 */
+.tx-flow .tx-coin-burn {
+  opacity: 0;
+  animation: tx-coin-burn 18s ease-out infinite;
+}
+@keyframes tx-coin-burn {
+  0%, 50%  { transform: translate(535px, 160px); opacity: 0; }
+  52%      { opacity: 1; }
+  63%      { transform: translate(535px, 72px); opacity: 1; }
+  68%, 100%{ transform: translate(535px, 72px); opacity: 0; }
+}
+.tx-flow .tx-coin-tip {
+  opacity: 0;
+  animation: tx-coin-tip 18s ease-out infinite;
+}
+@keyframes tx-coin-tip {
+  0%, 50%  { transform: translate(535px, 170px); opacity: 0; }
+  52%      { opacity: 1; }
+  63%      { transform: translate(535px, 280px); opacity: 1; }
+  68%, 100%{ transform: translate(535px, 280px); opacity: 0; }
+}
+
+/* 支线盒子也在 ④ 阶段亮起来 */
+.tx-flow .tx-burn,
+.tx-flow .tx-tip {
+  opacity: 0.4;
+  animation: tx-side-pulse 18s linear infinite 9s;
+}
+@keyframes tx-side-pulse {
+  0%, 16.66%, 100% { opacity: 0.4; }
+  2%, 15% { opacity: 1; }
+}
+
+/* 移动端:允许横向滚动查看流程 */
+@media (max-width: 780px) {
+  .tx-flow { overflow-x: auto; }
+  .tx-flow svg { min-width: 760px; }
+}
+
 /* 折叠展开:EVM / PoS 等技术细节默认收起 */
 .drill {
   margin-top: 32px;
@@ -2334,4 +2458,15 @@ footer {
   .tech-tower .tt-layer { opacity: 1; }
   .tt-cursor { transition: none !important; }
   .tt-step { transition: none !important; }
+
+  .tx-flow .tx-node,
+  .tx-flow .tx-pkg,
+  .tx-flow .tx-coin-burn, .tx-flow .tx-coin-tip,
+  .tx-flow .tx-burn, .tx-flow .tx-tip,
+  .tx-flow .tx-stage text {
+    animation: none !important;
+  }
+  .tx-flow .tx-node { opacity: 1; }
+  .tx-flow .tx-burn, .tx-flow .tx-tip { opacity: 1; }
+  .tx-flow .tx-pkg, .tx-flow .tx-coin-burn, .tx-flow .tx-coin-tip { opacity: 0; }
 }
