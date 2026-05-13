@@ -651,6 +651,20 @@ async function fetchBlocks() {
 })();
 
 // =======================================================
+// 若锚点落到 <details id="..."> 内,自动展开
+// =======================================================
+(function autoOpenDetails() {
+  const open = () => {
+    const h = location.hash.replace(/^#/, "");
+    if (!h) return;
+    const el = document.getElementById(h);
+    if (el && el.tagName === "DETAILS") el.open = true;
+  };
+  open();
+  window.addEventListener("hashchange", open);
+})();
+
+// =======================================================
 // 启动：实时数据
 // =======================================================
 initLiveData();

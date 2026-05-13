@@ -2238,6 +2238,70 @@ footer {
   color: var(--ink);
 }
 
+/* 折叠展开:EVM / PoS 等技术细节默认收起 */
+.drill {
+  margin-top: 32px;
+  border: 1px solid var(--rule-light);
+  background: var(--bg);
+}
+.drill + .drill { margin-top: 16px; }
+.drill > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+  user-select: none;
+  transition: background 0.15s ease;
+}
+.drill > summary::-webkit-details-marker { display: none; }
+.drill > summary::after {
+  content: "+";
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--accent);
+  border: 1px solid var(--rule-light);
+  transition: transform 0.2s ease;
+}
+.drill[open] > summary::after { content: "−"; }
+.drill > summary:hover { background: var(--bg-2); }
+.drill > summary b {
+  font-weight: 700;
+  color: var(--ink);
+}
+.drill-tag {
+  padding: 2px 8px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+.drill-hint {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  font-weight: 400;
+}
+.drill-body {
+  padding: 8px 24px 24px;
+  border-top: 1px solid var(--rule-light);
+}
+@media (max-width: 600px) {
+  .drill-hint { display: none; }
+}
+
 /* 移动端:单列,停用 sticky */
 @media (max-width: 900px) {
   .tech-tower-wrap {
