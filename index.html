@@ -98,6 +98,145 @@
     </div>
   </header>
 
+  <!-- ============ 鸟瞰图:以太坊上都有谁在干什么 ============ -->
+  <section class="section eth-map">
+    <div class="section-head">
+      <h2>鸟瞰以太坊 · 谁在上面干什么</h2>
+      <p>先从最高处俯瞰一眼 —— 以太坊主网在中间,四类角色各自扮演着不同职责。理解了这张图,再往下看细节就有参照。</p>
+    </div>
+
+    <div class="map-wrap">
+      <svg class="map-svg" viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="map-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+
+        <!-- 中心:以太坊主网大圆盘 -->
+        <g class="map-core">
+          <circle cx="280" cy="210" r="86" fill="#faf8f3" stroke="#1a1a1a" stroke-width="2"/>
+          <circle cx="280" cy="210" r="72" fill="none" stroke="#1a1a1a" stroke-width="0.6" stroke-dasharray="2 3"/>
+          <!-- 内部:小区块链 -->
+          <g class="core-chain">
+            <rect x="244" y="198" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="260" y="198" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="276" y="198" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="292" y="198" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="308" y="198" width="14" height="14" fill="#8b2a2a" stroke="#8b2a2a" stroke-width="1"/>
+          </g>
+          <text x="280" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="16" font-weight="700" fill="#1a1a1a">Ethereum</text>
+          <text x="280" y="232" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="2.5">MAINNET · L1</text>
+          <text x="280" y="248" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#8b2a2a" letter-spacing="2">world computer</text>
+        </g>
+
+        <!-- 4 条主连线 + 流动小点 -->
+        <g class="map-flows">
+          <!-- 左上:用户 → 主网 · 发起交易 -->
+          <line x1="104" y1="96"  x2="220" y2="168" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <circle class="flow-dot f1" r="4" fill="#8b2a2a"/>
+          <text x="152" y="120" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">① 发起 Tx</text>
+
+          <!-- 右上:开发者 → 主网 · 部署合约 -->
+          <line x1="456" y1="96"  x2="340" y2="168" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <circle class="flow-dot f2" r="4" fill="#2a4a8b"/>
+          <text x="378" y="120" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" text-anchor="end">② 部署合约</text>
+          <text x="408" y="120" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" text-anchor="start"></text>
+
+          <!-- 左下:主网 → L2 · 提供结算层 (双向) -->
+          <line x1="220" y1="252" x2="104" y2="324" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <line x1="104" y1="316" x2="220" y2="244" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#map-arr)"/>
+          <circle class="flow-dot f3" r="4" fill="#2d6a3e"/>
+          <text x="108" y="288" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">④ 压缩上传</text>
+
+          <!-- 右下:验证者 → 主网 · 打包出块 -->
+          <line x1="456" y1="324" x2="340" y2="252" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <circle class="flow-dot f4" r="4" fill="#8b5a1a"/>
+          <text x="380" y="288" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" text-anchor="start">③ 打包出块</text>
+        </g>
+
+        <!-- 四角色卡片 -->
+        <!-- 1 用户 (左上) -->
+        <g class="role-card r-user">
+          <rect x="20" y="56" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="34" y="82" font-size="24">👛</text>
+          <text x="66" y="80" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">普通用户</text>
+          <text x="66" y="96" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">USER · WALLET</text>
+          <line x1="34" y1="104" x2="174" y2="104" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="34" y="118" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">转账、换币、买 NFT、</text>
+          <text x="34" y="130" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">玩 DApp、参与治理</text>
+        </g>
+
+        <!-- 2 开发者 (右上) -->
+        <g class="role-card r-dev">
+          <rect x="372" y="56" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="386" y="82" font-size="24">👨‍💻</text>
+          <text x="420" y="80" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">开发者</text>
+          <text x="420" y="96" font-family="JetBrains Mono,monospace" font-size="8" fill="#2a4a8b" letter-spacing="1.5">DEVELOPER</text>
+          <line x1="386" y1="104" x2="526" y2="104" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="386" y="118" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">用 Solidity 写智能合约、</text>
+          <text x="386" y="130" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">部署 DApp、维护协议</text>
+        </g>
+
+        <!-- 3 L2 Rollup (左下) -->
+        <g class="role-card r-l2">
+          <rect x="20" y="284" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="34" y="310" font-size="24">🌉</text>
+          <text x="66" y="308" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">L2 Rollup</text>
+          <text x="66" y="324" font-family="JetBrains Mono,monospace" font-size="8" fill="#2d6a3e" letter-spacing="1.5">LAYER 2 · SCALING</text>
+          <line x1="34" y1="332" x2="174" y2="332" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="34" y="346" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">Arbitrum / Optimism / Base,</text>
+          <text x="34" y="358" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">链下打包 · 批量回传主网</text>
+        </g>
+
+        <!-- 4 验证者 (右下) -->
+        <g class="role-card r-val">
+          <rect x="372" y="284" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="386" y="310" font-size="24">🛡️</text>
+          <text x="420" y="308" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">验证者</text>
+          <text x="420" y="324" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b5a1a" letter-spacing="1.5">VALIDATOR · PoS</text>
+          <line x1="386" y1="332" x2="526" y2="332" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="386" y="346" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">质押 32 ETH,打包区块、</text>
+          <text x="386" y="358" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">投票盖章、赚取奖励</text>
+        </g>
+
+        <!-- 底注 -->
+        <text x="280" y="400" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.5">※ 2022 合并后已无矿工 · 由质押 ETH 的"验证者"取代</text>
+      </svg>
+    </div>
+
+    <!-- 下方:角色职责对照表 -->
+    <div class="role-table">
+      <div class="rt-row rt-head">
+        <div>角色</div><div>投入什么</div><div>干的事</div><div>拿到什么</div>
+      </div>
+      <div class="rt-row">
+        <div><b>👛 普通用户</b></div>
+        <div>ETH 手续费 (Gas)</div>
+        <div>发起交易 · 与 DApp 交互</div>
+        <div>转账完成、资产、NFT、收益</div>
+      </div>
+      <div class="rt-row">
+        <div><b>👨‍💻 开发者</b></div>
+        <div>时间 · 一次性部署费</div>
+        <div>写合约、部署 DApp、升级协议</div>
+        <div>协议手续费分成、代币、声誉</div>
+      </div>
+      <div class="rt-row">
+        <div><b>🌉 L2 Rollup</b></div>
+        <div>数据上传 Blob 费</div>
+        <div>链下执行交易、压缩后回传主网</div>
+        <div>更便宜的吞吐、继承主网安全</div>
+      </div>
+      <div class="rt-row">
+        <div><b>🛡️ 验证者</b></div>
+        <div>32 ETH 押金 · 节点运维</div>
+        <div>打包区块、投票、维持共识</div>
+        <div>出块奖励、小费、MEV (~3-5% APR)</div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 以太坊 5 步看懂 · 从大到小拆解 ============ -->
   <section class="section eth-101">
     <div class="section-head">
