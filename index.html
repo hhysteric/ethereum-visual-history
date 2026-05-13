@@ -804,6 +804,149 @@
     <p class="page-desc">架构分层、EVM、PoS、账户模型、Gas、交易生命周期——以太坊的工程细节。</p>
   </div>
 
+<!-- ============ 架构动图详解(小白友好) ============ -->
+<section class="section tech-intro">
+  <div class="section-head">
+    <h2>一张图看懂以太坊架构</h2>
+    <p>把以太坊想象成一栋 6 层大楼 —— 从地基到屋顶,每层各司其职。下面这张图按顺序点亮每一层,讲清它在做什么、跟上下层怎么配合。</p>
+  </div>
+
+  <div class="tech-tower-wrap">
+
+    <!-- 左:6 层大楼图解 -->
+    <div class="tech-tower">
+      <svg viewBox="0 0 360 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="tt-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#8b2a2a"/>
+          </marker>
+          <pattern id="tt-grid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#e8e2d2" stroke-width="0.4"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="360" height="480" fill="url(#tt-grid)"/>
+
+        <!-- 6 层楼,从上到下 -->
+        <!-- L1 应用层 -->
+        <g class="tt-layer tt-l1">
+          <rect x="40" y="30" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="54" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🌐 应用层</text>
+          <text x="56" y="72" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">APPLICATIONS</text>
+          <text x="310" y="54" text-anchor="end" font-size="18">💸🖼️🏛️🎮</text>
+          <text x="310" y="78" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">DeFi · NFT · DAO · 游戏</text>
+        </g>
+
+        <!-- L2 扩容层 -->
+        <g class="tt-layer tt-l2">
+          <rect x="40" y="98" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="122" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🌉 Layer 2 扩容层</text>
+          <text x="56" y="140" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">ROLLUPS</text>
+          <text x="310" y="122" text-anchor="end" font-size="18">📦📦</text>
+          <text x="310" y="146" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">Arbitrum · OP · Base · zk</text>
+        </g>
+
+        <!-- L3 执行层 -->
+        <g class="tt-layer tt-l3">
+          <rect x="40" y="166" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="190" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">⚙️ 执行层 EL</text>
+          <text x="56" y="208" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">EXECUTION · EVM</text>
+          <text x="310" y="190" text-anchor="end" font-size="18">🖥️</text>
+          <text x="310" y="214" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">跑合约 · 更新状态</text>
+        </g>
+
+        <!-- L4 共识层 -->
+        <g class="tt-layer tt-l4">
+          <rect x="40" y="234" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="258" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🛡️ 共识层 CL</text>
+          <text x="56" y="276" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">CONSENSUS · PoS</text>
+          <text x="310" y="258" text-anchor="end" font-size="18">🧑‍⚖️</text>
+          <text x="310" y="282" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">选谁出块 · 谁最终</text>
+        </g>
+
+        <!-- L5 网络层 -->
+        <g class="tt-layer tt-l5">
+          <rect x="40" y="302" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="326" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">📡 网络层</text>
+          <text x="56" y="344" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">P2P NETWORKING</text>
+          <text x="310" y="326" text-anchor="end" font-size="18">🌍</text>
+          <text x="310" y="350" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">节点之间传消息</text>
+        </g>
+
+        <!-- L6 数据层 -->
+        <g class="tt-layer tt-l6">
+          <rect x="40" y="370" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="394" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">💾 数据层</text>
+          <text x="56" y="412" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">STORAGE · MPT</text>
+          <text x="310" y="394" text-anchor="end" font-size="18">📚</text>
+          <text x="310" y="418" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">永久存账本</text>
+        </g>
+
+        <!-- 地基 -->
+        <line x1="30" y1="446" x2="330" y2="446" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="30" y1="450" x2="330" y2="450" stroke="#1a1a1a" stroke-width="0.4" stroke-dasharray="3 3"/>
+        <text x="180" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="3">BEDROCK · 物理互联网</text>
+
+        <!-- 左侧高亮指示条(随当前激活层滑动) -->
+        <rect class="tt-cursor" x="22" y="30" width="4" height="58" fill="#8b2a2a"/>
+      </svg>
+
+      <!-- 楼宇脚注 -->
+      <div class="tt-legend">
+        <span><i class="dot-top"></i>越往上 · 越贴近用户</span>
+        <span><i class="dot-bot"></i>越往下 · 越靠近硬件</span>
+      </div>
+    </div>
+
+    <!-- 右:逐层详解,6 张小卡 -->
+    <div class="tech-steps">
+      <article class="tt-step tt-step-1 is-active" data-layer="1">
+        <div class="tt-num">01</div>
+        <h3>🌐 应用层 · 你每天看到的东西</h3>
+        <p><b>比喻</b>:大楼的楼顶花园 —— 真正"好玩"的都在这儿。Uniswap 换币、OpenSea 买 NFT、Aave 借贷,都是跑在这一层的应用。</p>
+        <p class="tt-note">👉 小白打开钱包能看见的所有按钮、DApp,都在这一层。</p>
+      </article>
+
+      <article class="tt-step tt-step-2" data-layer="2">
+        <div class="tt-num">02</div>
+        <h3>🌉 Layer 2 · 扩容层</h3>
+        <p><b>比喻</b>:商场的快速通道 —— 主厅太挤,新开几条高速车道(Rollup),大多数交易先走这里,最后汇总一次性上主链。</p>
+        <p class="tt-note">👉 Arbitrum / Optimism / Base,都是为了让你少付 Gas、快速确认。</p>
+      </article>
+
+      <article class="tt-step tt-step-3" data-layer="3">
+        <div class="tt-num">03</div>
+        <h3>⚙️ 执行层 EL · 那台"世界计算机"</h3>
+        <p><b>比喻</b>:大楼里真正的 CPU —— 收到交易,跑一遍 EVM 指令,改账本。节点软件有 Geth、Nethermind、Reth 等。</p>
+        <p class="tt-note">👉 合约被部署、余额被修改、状态变化 —— 都发生在这层。</p>
+      </article>
+
+      <article class="tt-step tt-step-4" data-layer="4">
+        <div class="tt-num">04</div>
+        <h3>🛡️ 共识层 CL · 决定"谁说了算"</h3>
+        <p><b>比喻</b>:物业管委会 —— 每 12 秒投票一次,决定由谁记账、哪一份账本成为最终版本。靠质押 32 ETH 的验证者们维护。</p>
+        <p class="tt-note">👉 The Merge 后,PoS 取代了挖矿,这层就是"PoS 大脑"。</p>
+      </article>
+
+      <article class="tt-step tt-step-5" data-layer="5">
+        <div class="tt-num">05</div>
+        <h3>📡 网络层 · 节点之间的悄悄话</h3>
+        <p><b>比喻</b>:大楼里的电线和气动管道 —— 任何一笔交易、任何一个新区块,都要通过 P2P 广播传给全球上万个节点。</p>
+        <p class="tt-note">👉 没有它,上面的"共识"就无从谈起。</p>
+      </article>
+
+      <article class="tt-step tt-step-6" data-layer="6">
+        <div class="tt-num">06</div>
+        <h3>💾 数据层 · 永不删除的账本</h3>
+        <p><b>比喻</b>:大楼地下室的档案柜 —— 自 2015 年以来的每一笔交易、每一个账户余额,都用 Merkle 树结构永久保存。</p>
+        <p class="tt-note">👉 任何人下载完整节点,都能拿到这份 15+ TB 的账本副本。</p>
+      </article>
+    </div>
+
+  </div>
+
+  <p class="tt-tail">简单记:<b>上面两层</b>给用户用,<b>中间两层</b>是大脑,<b>下面两层</b>是地基 —— 接下来各小节会逐一展开。</p>
+</section>
+
 <!-- ============ 概览 ============ -->
 <section id="overview" class="section alt">
   <div class="section-head">
