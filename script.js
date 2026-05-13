@@ -606,16 +606,47 @@ async function fetchBlocks() {
 (function initTechTower() {
   const wrap = document.querySelector(".tech-tower-wrap");
   if (!wrap) return;
-  const targets = wrap.querySelectorAll("[data-layer]");
+  const steps = wrap.querySelectorAll(".tt-step");
+  const stepByN = {};
+  steps.forEach((s) => { stepByN[s.dataset.layer] = s; });
+
   const setHover = (n) => {
     for (let i = 1; i <= 6; i++) wrap.classList.remove("is-hover-" + i);
     if (n) wrap.classList.add("is-hover-" + n);
   };
-  targets.forEach((el) => {
-    const n = el.dataset.layer;
-    el.addEventListener("mouseenter", () => setHover(n));
-    el.addEventListener("focusin", () => setHover(n));
+
+  // 左侧 SVG 楼层 hover:除了点亮,还把对应小卡滚到视口中央
+  const scrollStepIntoView = (n) => {
+    const step = stepByN[n];
+    if (!step) return;
+    const r = step.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // 若小卡不在视口中间区域,居中滚入
+    if (r.top < 80 || r.bottom > vh - 40) {
+      step.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  // 右侧小卡 hover:只点亮,不滚动(否则自己会抖)
+  steps.forEach((s) => {
+    const n = s.dataset.layer;
+    s.addEventListener("mouseenter", () => setHover(n));
+    s.addEventListener("focusin", () => setHover(n));
   });
+
+  // SVG 楼层 hover:点亮 + 滚动对应小卡
+  wrap.querySelectorAll(".tt-layer[data-layer]").forEach((g) => {
+    const n = g.dataset.layer;
+    g.addEventListener("mouseenter", () => {
+      setHover(n);
+      scrollStepIntoView(n);
+    });
+    g.addEventListener("focusin", () => {
+      setHover(n);
+      scrollStepIntoView(n);
+    });
+  });
+
   wrap.addEventListener("mouseleave", () => setHover(null));
 })();
 
