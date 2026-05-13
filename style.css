@@ -1738,166 +1738,205 @@ footer {
 }
 
 /* -----------------------------------------------------
-   STEP 01 · 世界计算机(地球 + 环绕节点)
+   STEP 01 · 世界计算机(大屏幕 + 4 台真实 PC 依次亮)
    ----------------------------------------------------- */
-.earth-group {
-  transform-origin: 130px 80px;
-  transform-box: fill-box;
-  animation: earth-spin 18s linear infinite;
+.vm-screen { animation: vm-screen-pulse 4s ease-in-out infinite; transform-origin: 130px 50px; transform-box: fill-box; }
+@keyframes vm-screen-pulse {
+  0%, 100% { filter: none; }
+  50%      { filter: drop-shadow(0 0 4px #8b2a2a); }
 }
-@keyframes earth-spin {
+.vm-links .vl { stroke-dasharray: 4 3; animation: vl-flow 2.2s linear infinite; }
+.vm-links .vl1 { animation-delay: 0s; }
+.vm-links .vl2 { animation-delay: 0.3s; }
+.vm-links .vl3 { animation-delay: 0.6s; }
+.vm-links .vl4 { animation-delay: 0.9s; }
+@keyframes vl-flow {
+  0%   { stroke-dashoffset: 0; opacity: 0.35; }
+  50%  { opacity: 1; }
+  100% { stroke-dashoffset: -28; opacity: 0.35; }
+}
+.vm-pcs .pc { transform-origin: center; transform-box: fill-box; }
+.vm-pcs .p1 { animation: pc-blink 3.2s ease-in-out infinite; animation-delay: 0s; }
+.vm-pcs .p2 { animation: pc-blink 3.2s ease-in-out infinite; animation-delay: 0.4s; }
+.vm-pcs .p3 { animation: pc-blink 3.2s ease-in-out infinite; animation-delay: 0.8s; }
+.vm-pcs .p4 { animation: pc-blink 3.2s ease-in-out infinite; animation-delay: 1.2s; }
+@keyframes pc-blink {
+  0%, 100% { opacity: 0.75; }
+  50%      { opacity: 1;    filter: drop-shadow(0 0 2px #8b2a2a); }
+}
+
+/* -----------------------------------------------------
+   STEP 02 · 区块链记账(钟表转 + 块依次生成 + 锁闭合)
+   ----------------------------------------------------- */
+.clock-hand { transform-origin: 30px 28px; animation: clock-spin 12s linear infinite; }
+@keyframes clock-spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.earth-orbit .orbit-dot {
-  transform-origin: 130px 80px;
-  transform-box: fill-box;
+.chain-g .cblock { opacity: 0; transform-origin: center; }
+.chain-g .clink  { opacity: 0; }
+.chain-g .clock-lock { opacity: 0; transform-origin: center; transform-box: fill-box; }
+.chain-g .b1 { animation: cblock-pop 8s infinite; animation-delay: 0.0s; }
+.chain-g .cl1 { animation: lock-snap 8s infinite; animation-delay: 0.5s; }
+.chain-g .l1 { animation: clink-show 8s infinite; animation-delay: 0.9s; }
+.chain-g .b2 { animation: cblock-pop 8s infinite; animation-delay: 1.3s; }
+.chain-g .cl2 { animation: lock-snap 8s infinite; animation-delay: 1.8s; }
+.chain-g .l2 { animation: clink-show 8s infinite; animation-delay: 2.2s; }
+.chain-g .b3 { animation: cblock-pop 8s infinite; animation-delay: 2.6s; }
+.chain-g .cl3 { animation: lock-snap 8s infinite; animation-delay: 3.1s; }
+.chain-g .l3 { animation: clink-show 8s infinite; animation-delay: 3.5s; }
+.chain-g .b4 { animation: cblock-new 8s infinite; animation-delay: 3.9s; }
+@keyframes cblock-pop {
+  0%, 4%    { opacity: 0; transform: translateY(-8px) scale(0.92); }
+  10%, 95%  { opacity: 1; transform: translateY(0) scale(1); }
+  100%      { opacity: 1; }
 }
-.earth-orbit .o1 { animation: orbit 6s linear infinite; }
-.earth-orbit .o2 { animation: orbit 6s linear infinite; animation-delay: -1.5s; }
-.earth-orbit .o3 { animation: orbit 6s linear infinite; animation-delay: -3.0s; }
-.earth-orbit .o4 { animation: orbit 6s linear infinite; animation-delay: -4.5s; }
-@keyframes orbit {
-  from { transform: rotate(0deg)   translateX(52px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(52px) rotate(-360deg); }
+@keyframes cblock-new {
+  0%, 45%   { opacity: 0; }
+  55%, 90%  { opacity: 1; }
+  100%      { opacity: 0.25; }
 }
-
-/* -----------------------------------------------------
-   STEP 02 · 区块链记账
-   ----------------------------------------------------- */
-.chain-g .block { opacity: 0; transform-origin: center; }
-.chain-g .link  { stroke-dasharray: 30; stroke-dashoffset: 30; }
-.chain-g .b1 { animation: chain-pop 7s infinite; animation-delay: 0.0s; }
-.chain-g .l1 { animation: chain-line 7s infinite; animation-delay: 0.8s; }
-.chain-g .b2 { animation: chain-pop 7s infinite; animation-delay: 1.2s; }
-.chain-g .l2 { animation: chain-line 7s infinite; animation-delay: 2.0s; }
-.chain-g .b3 { animation: chain-pop 7s infinite; animation-delay: 2.4s; }
-.chain-g .l3 { animation: chain-line 7s infinite; animation-delay: 3.2s; }
-.chain-g .b4 { animation: chain-pop-new 7s infinite; animation-delay: 3.6s; }
-@keyframes chain-pop {
-  0%,   8%  { opacity: 0; transform: translateY(-6px); }
-  14%, 95%  { opacity: 1; transform: translateY(0); }
-  100%      { opacity: 1; transform: translateY(0); }
+@keyframes clink-show {
+  0%, 8%    { opacity: 0; }
+  14%, 95%  { opacity: 1; }
+  100%      { opacity: 1; }
 }
-@keyframes chain-pop-new {
-  0%,   48% { opacity: 0; }
-  56%, 90%  { opacity: 1; }
-  100%      { opacity: 0.2; }
-}
-@keyframes chain-line {
-  0%,   10% { stroke-dashoffset: 30; }
-  24%, 95%  { stroke-dashoffset: 0; }
-  100%      { stroke-dashoffset: 0; }
+@keyframes lock-snap {
+  0%, 8%    { opacity: 0; transform: translateY(-4px) scale(0.7); }
+  14%, 95%  { opacity: 1; transform: translateY(0) scale(1); }
+  100%      { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* -----------------------------------------------------
-   STEP 03 · 两种用法(转账 + 合约)
+   STEP 03 · 上半转账 · 下半 if → then 规则触发
    ----------------------------------------------------- */
-/* 上半:转账 —— ETH 币从 Alice 飞到 Bob */
+/* 上半:ETH 币从 Alice 飞到 Bob(Y 约 49) */
 .eth-coin {
-  transform: translate(31px, 34px);
+  transform: translate(31px, 49px);
   animation: coin-fly-story 3.8s ease-in-out infinite;
 }
 @keyframes coin-fly-story {
-  0%   { transform: translate(31px, 34px)  scale(0.4); opacity: 0; }
-  12%  { transform: translate(31px, 34px)  scale(1);   opacity: 1; }
-  50%  { transform: translate(130px, 26px) scale(1.15); opacity: 1; }
-  85%  { transform: translate(229px, 34px) scale(1);   opacity: 1; }
-  100% { transform: translate(229px, 34px) scale(0.4); opacity: 0; }
+  0%   { transform: translate(31px, 49px)  scale(0.4); opacity: 0; }
+  12%  { transform: translate(31px, 49px)  scale(1);   opacity: 1; }
+  50%  { transform: translate(130px, 40px) scale(1.15); opacity: 1; }
+  85%  { transform: translate(229px, 49px) scale(1);   opacity: 1; }
+  100% { transform: translate(229px, 49px) scale(0.4); opacity: 0; }
 }
-/* 下半:合约 —— 输入到合约盒、盒子闪、输出从右侧冒出 */
-.ci-dot       { animation: ci-move-story 3.6s ease-in-out infinite; }
-.contract-box { animation: cb-flash-story 3.6s ease-in-out infinite; transform-origin: 130px 120px; transform-box: fill-box; }
-.co-tri {
-  transform: translate(170px, 120px);
+/* 下半:IF 亮 → contract 闪 → THEN 亮 */
+.rule-if       { transform-origin: 47px 126px;  transform-box: fill-box; animation: rule-if-flash    3.6s ease-in-out infinite; }
+.rule-contract { transform-origin: 130px 126px; transform-box: fill-box; animation: rule-ct-flash    3.6s ease-in-out infinite; animation-delay: 0.8s; }
+.rule-then     { transform-origin: 213px 126px; transform-box: fill-box; animation: rule-then-flash  3.6s ease-in-out infinite; animation-delay: 1.6s; opacity: 0.35; }
+.rule-arrow, .rule-arrow2 { opacity: 0.35; }
+.rule-arrow    { animation: rule-arrow-show  3.6s ease-in-out infinite; animation-delay: 0.5s; }
+.rule-arrow2   { animation: rule-arrow-show  3.6s ease-in-out infinite; animation-delay: 1.3s; }
+@keyframes rule-if-flash {
+  0%, 100% { filter: none; transform: scale(1); }
+  12%, 22% { filter: drop-shadow(0 0 3px #2a4a8b); transform: scale(1.04); }
+}
+@keyframes rule-ct-flash {
+  0%, 100% { filter: none; transform: scale(1); }
+  10%, 22% { filter: drop-shadow(0 0 3px #8b2a2a); transform: scale(1.04); }
+}
+@keyframes rule-then-flash {
+  0%, 30%  { opacity: 0.35; filter: none; transform: scale(1); }
+  40%, 90% { opacity: 1;    filter: drop-shadow(0 0 3px #2d6a3e); transform: scale(1.04); }
+  100%     { opacity: 0.35; filter: none; transform: scale(1); }
+}
+@keyframes rule-arrow-show {
+  0%, 10%  { opacity: 0.2; }
+  20%, 40% { opacity: 1; }
+  60%, 100%{ opacity: 0.2; }
+}
+
+/* -----------------------------------------------------
+   STEP 04 · Gas 付费(coin 飞入泵 · 价格闲/忙切换 · Tx 盖章)
+   ----------------------------------------------------- */
+.pay-coin {
+  transform: translate(30px, 70px);
+  animation: pay-coin-fly 4s ease-in-out infinite;
+}
+@keyframes pay-coin-fly {
+  0%   { transform: translate(30px, 70px)  scale(0.6); opacity: 0; }
+  15%  { transform: translate(30px, 70px)  scale(1);   opacity: 1; }
+  55%  { transform: translate(130px, 80px) scale(1);   opacity: 1; }
+  65%  { transform: translate(130px, 80px) scale(0);   opacity: 0; }
+  100% { transform: translate(130px, 80px) scale(0);   opacity: 0; }
+}
+.price-low,  .light-low  { animation: price-toggle-low  4s ease-in-out infinite; }
+.price-high, .light-high { animation: price-toggle-high 4s ease-in-out infinite; }
+@keyframes price-toggle-low {
+  0%, 48%  { opacity: 1; }
+  52%, 100%{ opacity: 0; }
+}
+@keyframes price-toggle-high {
+  0%, 48%  { opacity: 0; }
+  52%, 100%{ opacity: 1; }
+}
+.tx-stamp {
+  transform-origin: 222px 104px; transform-box: fill-box;
+  animation: tx-stamp-show 4s ease-in-out infinite;
   opacity: 0;
-  animation: co-show-story 3.6s ease-in-out infinite;
 }
-@keyframes ci-move-story {
-  0%   { transform: translateX(0);    opacity: 1; }
-  40%  { transform: translateX(66px); opacity: 1; }
-  55%, 100% { transform: translateX(66px); opacity: 0; }
-}
-@keyframes cb-flash-story {
-  0%, 50%   { filter: none; transform: scale(1); }
-  58%, 68%  { filter: drop-shadow(0 0 3px #8b2a2a); transform: scale(1.03); }
-  75%, 100% { filter: none; transform: scale(1); }
-}
-@keyframes co-show-story {
-  0%, 65% { transform: translate(170px, 120px); opacity: 0; }
-  75%     { transform: translate(180px, 120px); opacity: 1; }
-  95%     { transform: translate(198px, 120px); opacity: 1; }
-  100%    { transform: translate(210px, 120px); opacity: 0; }
+@keyframes tx-stamp-show {
+  0%, 70%  { opacity: 0; transform: scale(0.3); }
+  78%, 92% { opacity: 1; transform: scale(1); }
+  100%     { opacity: 1; transform: scale(1); }
 }
 
 /* -----------------------------------------------------
-   STEP 04 · Gas 燃料
+   STEP 05 · 保险箱 + 验证者盖章 + 双路输出(奖励/罚款)
    ----------------------------------------------------- */
-.gas-dial {
-  transform-origin: 140px 80px;
-  animation: gas-dial-spin 4s ease-in-out infinite;
+.vault-dial { transform-origin: 56px 86px; animation: vault-dial-spin 5s ease-in-out infinite; }
+@keyframes vault-dial-spin {
+  0%   { transform: rotate(-40deg); }
+  50%  { transform: rotate(60deg); }
+  100% { transform: rotate(-40deg); }
 }
-@keyframes gas-dial-spin {
-  0%   { transform: rotate(-60deg); }
-  50%  { transform: rotate(80deg); }
-  100% { transform: rotate(-60deg); }
+.validator-seal {
+  transform-origin: 130px 86px; transform-box: fill-box;
+  animation: seal-pulse 2.4s ease-in-out infinite;
 }
-.gas-scene .fl { transform-origin: center bottom; transform-box: fill-box; }
-.gas-scene .f1 { animation: flame-story 1.1s ease-in-out infinite; }
-.gas-scene .f2 { animation: flame-story 0.85s ease-in-out infinite; animation-delay: 0.25s; }
-@keyframes flame-story {
-  0%, 100% { transform: scaleY(1)    scaleX(1);    opacity: 0.85; }
-  50%      { transform: scaleY(1.3)  scaleX(0.8);  opacity: 1;    }
+@keyframes seal-pulse {
+  0%, 100% { transform: scale(1);    filter: none; }
+  50%      { transform: scale(1.12); filter: drop-shadow(0 0 3px #2d6a3e); }
 }
-
-/* -----------------------------------------------------
-   STEP 05 · 验证者 + 奖励下落
-   ----------------------------------------------------- */
-.validators .v { transform-origin: center; transform-box: fill-box; }
-.validators .v0 { animation: v-pulse-center 2.6s ease-in-out infinite; }
-.validators .v1 { animation: v-pulse 2.6s ease-in-out infinite; animation-delay: 0.2s; }
-.validators .v2 { animation: v-pulse 2.6s ease-in-out infinite; animation-delay: 0.5s; }
-.validators .v3 { animation: v-pulse 2.6s ease-in-out infinite; animation-delay: 0.8s; }
-.validators .v4 { animation: v-pulse 2.6s ease-in-out infinite; animation-delay: 1.1s; }
-.validators .v5 { animation: v-pulse 2.6s ease-in-out infinite; animation-delay: 1.4s; }
-@keyframes v-pulse-center {
-  0%, 100% { transform: scale(1);   fill: #8b2a2a; }
-  50%      { transform: scale(1.25); fill: #d94a4a; }
+.good-path { animation: good-glow 3.6s ease-in-out infinite; transform-origin: 211px 60px; transform-box: fill-box; }
+.bad-path  { animation: bad-glow  3.6s ease-in-out infinite; transform-origin: 211px 112px; transform-box: fill-box; animation-delay: 1.8s; }
+@keyframes good-glow {
+  0%, 20%  { filter: none; transform: scale(1); }
+  30%, 60% { filter: drop-shadow(0 0 3px #2d6a3e); transform: scale(1.03); }
+  70%, 100%{ filter: none; transform: scale(1); }
 }
-@keyframes v-pulse {
-  0%, 100% { transform: scale(1);   fill: #1a1a1a; }
-  40%      { transform: scale(1.4); fill: #8b2a2a; }
-  70%      { transform: scale(1);   fill: #1a1a1a; }
+@keyframes bad-glow {
+  0%, 20%  { filter: none; transform: scale(1); }
+  30%, 60% { filter: drop-shadow(0 0 3px #8b1a1a); transform: scale(1.03); }
+  70%, 100%{ filter: none; transform: scale(1); }
 }
 .reward-coin { opacity: 0; }
 .reward-coin.r1 {
-  transform: translate(130px, 80px);
-  animation: reward-drop-story 3.4s ease-in infinite;
-}
-.reward-coin.r2 {
-  transform: translate(130px, 80px);
-  animation: reward-drop-story 3.4s ease-in infinite;
-  animation-delay: 1.7s;
+  transform: translate(144px, 86px);
+  animation: reward-drop-story 3.4s ease-out infinite;
 }
 @keyframes reward-drop-story {
-  0%   { transform: translate(130px, 80px); opacity: 0; }
-  12%  { transform: translate(130px, 80px); opacity: 1; }
-  55%  { transform: translate(200px, 120px); opacity: 1; }
-  100% { transform: translate(230px, 160px); opacity: 0; }
+  0%   { transform: translate(144px, 86px); opacity: 0; }
+  15%  { transform: translate(144px, 86px); opacity: 1; }
+  55%  { transform: translate(200px, 60px); opacity: 1; }
+  100% { transform: translate(212px, 60px); opacity: 0; }
 }
 
 /* -----------------------------------------------------
    尊重减少动画偏好
    ----------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .earth-group, .earth-orbit .orbit-dot,
-  .chain-g .block, .chain-g .link,
+  .vm-screen, .vm-links .vl, .vm-pcs .pc,
+  .clock-hand, .chain-g .cblock, .chain-g .clink, .chain-g .clock-lock,
   .eth-coin,
-  .ci-dot, .contract-box, .co-tri,
-  .gas-dial, .gas-scene .fl,
-  .validators .v, .reward-coin {
+  .rule-if, .rule-contract, .rule-then, .rule-arrow, .rule-arrow2,
+  .pay-coin, .price-low, .price-high, .light-low, .light-high, .tx-stamp,
+  .vault-dial, .validator-seal, .good-path, .bad-path, .reward-coin {
     animation: none !important;
   }
-  .chain-g .block, .co-tri { opacity: 1; }
-  .chain-g .link { stroke-dashoffset: 0; }
+  .chain-g .cblock, .chain-g .clink, .chain-g .clock-lock,
+  .rule-then, .rule-arrow, .rule-arrow2, .tx-stamp, .reward-coin { opacity: 1; }
+  .price-high, .light-high { opacity: 0; }
 }
