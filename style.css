@@ -89,12 +89,12 @@ code, pre { font-family: var(--mono); }
 .side-links a {
   position: relative;
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   grid-template-areas:
-    "idx name"
-    "idx sub";
-  column-gap: 12px;
+    "name"
+    "sub";
+  row-gap: 2px;
   padding: 12px 4px;
   border: none;
   border-bottom: 1px solid var(--rule-light);
