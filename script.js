@@ -601,6 +601,25 @@ async function fetchBlocks() {
 })();
 
 // =======================================================
+// TECH 页架构塔:小卡 hover 同步高亮对应楼层
+// =======================================================
+(function initTechTower() {
+  const wrap = document.querySelector(".tech-tower-wrap");
+  if (!wrap) return;
+  const steps = wrap.querySelectorAll(".tt-step");
+  const setHover = (n) => {
+    for (let i = 1; i <= 6; i++) wrap.classList.remove("is-hover-" + i);
+    if (n) wrap.classList.add("is-hover-" + n);
+  };
+  steps.forEach((s) => {
+    const n = s.dataset.layer;
+    s.addEventListener("mouseenter", () => setHover(n));
+    s.addEventListener("focusin", () => setHover(n));
+  });
+  wrap.addEventListener("mouseleave", () => setHover(null));
+})();
+
+// =======================================================
 // 启动：实时数据
 // =======================================================
 initLiveData();

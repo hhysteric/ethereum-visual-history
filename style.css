@@ -2081,45 +2081,42 @@ footer {
 }
 .tt-legend .dot-bot { background: #3a3a3a; }
 
-/* 楼层默认淡一点,动画中轮流点亮 */
+/* 楼层:默认半透明,被对应小卡 hover 时点亮 */
 .tech-tower .tt-layer rect {
-  transition: fill 0.4s ease, stroke-width 0.4s ease;
+  transition: fill 0.25s ease, stroke-width 0.25s ease;
 }
 .tech-tower .tt-layer {
-  opacity: 0.45;
-  animation: tt-layer-pulse 18s ease-in-out infinite;
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
 }
-.tech-tower .tt-l1 { animation-delay: 0s; }
-.tech-tower .tt-l2 { animation-delay: 3s; }
-.tech-tower .tt-l3 { animation-delay: 6s; }
-.tech-tower .tt-l4 { animation-delay: 9s; }
-.tech-tower .tt-l5 { animation-delay: 12s; }
-.tech-tower .tt-l6 { animation-delay: 15s; }
-
-@keyframes tt-layer-pulse {
-  0%, 14%, 100% { opacity: 0.45; }
-  2%, 10% { opacity: 1; }
+.tech-tower-wrap.is-hover-1 .tt-l1,
+.tech-tower-wrap.is-hover-2 .tt-l2,
+.tech-tower-wrap.is-hover-3 .tt-l3,
+.tech-tower-wrap.is-hover-4 .tt-l4,
+.tech-tower-wrap.is-hover-5 .tt-l5,
+.tech-tower-wrap.is-hover-6 .tt-l6 {
+  opacity: 1;
 }
-
-/* 楼层被点亮时填色偏红 */
-.tech-tower .tt-layer.is-hot rect {
+.tech-tower-wrap.is-hover-1 .tt-l1 rect,
+.tech-tower-wrap.is-hover-2 .tt-l2 rect,
+.tech-tower-wrap.is-hover-3 .tt-l3 rect,
+.tech-tower-wrap.is-hover-4 .tt-l4 rect,
+.tech-tower-wrap.is-hover-5 .tt-l5 rect,
+.tech-tower-wrap.is-hover-6 .tt-l6 rect {
   fill: #fbeeee;
   stroke-width: 1.8;
 }
 
-/* 左侧游标滑动 */
+/* 左侧游标随 hover 的小卡对应到不同楼层 */
 .tt-cursor {
-  animation: tt-cursor-move 18s cubic-bezier(.7,.1,.3,.9) infinite;
+  transition: y 0.35s cubic-bezier(.7,.1,.3,.9);
 }
-@keyframes tt-cursor-move {
-  0%, 14%   { y: 30px; }
-  16%, 30%  { y: 98px; }
-  32%, 46%  { y: 166px; }
-  48%, 62%  { y: 234px; }
-  64%, 78%  { y: 302px; }
-  80%, 94%  { y: 370px; }
-  100%      { y: 30px; }
-}
+.tech-tower-wrap.is-hover-1 .tt-cursor { y: 30px; }
+.tech-tower-wrap.is-hover-2 .tt-cursor { y: 98px; }
+.tech-tower-wrap.is-hover-3 .tt-cursor { y: 166px; }
+.tech-tower-wrap.is-hover-4 .tt-cursor { y: 234px; }
+.tech-tower-wrap.is-hover-5 .tt-cursor { y: 302px; }
+.tech-tower-wrap.is-hover-6 .tt-cursor { y: 370px; }
 
 /* 右:逐层小卡 */
 .tech-steps {
@@ -2133,7 +2130,13 @@ footer {
   background: var(--bg);
   border: 1px solid var(--rule-light);
   border-left: 3px solid var(--rule-light);
-  transition: border-left-color 0.3s ease, background 0.3s ease;
+  cursor: default;
+  transition: border-left-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.tt-step:hover {
+  border-left-color: var(--accent);
+  background: #fbf5f0;
+  transform: translateX(2px);
 }
 .tt-step .tt-num {
   position: absolute;
@@ -2164,28 +2167,6 @@ footer {
   padding-top: 8px;
   margin-top: 6px;
   border-top: 1px dashed var(--rule-light);
-}
-
-/* 轮流高亮小卡,和左侧动画同步 */
-.tt-step {
-  animation: tt-step-hot 18s ease-in-out infinite;
-}
-.tt-step-1 { animation-delay: 0s; }
-.tt-step-2 { animation-delay: 3s; }
-.tt-step-3 { animation-delay: 6s; }
-.tt-step-4 { animation-delay: 9s; }
-.tt-step-5 { animation-delay: 12s; }
-.tt-step-6 { animation-delay: 15s; }
-
-@keyframes tt-step-hot {
-  0%, 12%, 18%, 100% {
-    border-left-color: var(--rule-light);
-    background: var(--bg);
-  }
-  2%, 10% {
-    border-left-color: var(--accent);
-    background: #fbf5f0;
-  }
 }
 
 .tt-tail {
@@ -2228,7 +2209,7 @@ footer {
   .rule-then, .rule-arrow, .rule-arrow2, .tx-stamp, .reward-coin { opacity: 1; }
   .price-high, .light-high { opacity: 0; }
 
-  .tech-tower .tt-layer { opacity: 1; animation: none !important; }
-  .tt-cursor { animation: none !important; }
-  .tt-step { animation: none !important; }
+  .tech-tower .tt-layer { opacity: 1; }
+  .tt-cursor { transition: none !important; }
+  .tt-step { transition: none !important; }
 }
