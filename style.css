@@ -1657,21 +1657,21 @@ footer {
 /* 4 条动作流上的小圆点(沿线滑动) */
 .flow-dot { offset-rotate: 0deg; }
 .flow-dot.f1 {
-  offset-path: path("M104 96 L220 168");
+  offset-path: path("M188 136 L228 158");
   animation: flow-move 2.6s linear infinite;
 }
 .flow-dot.f2 {
-  offset-path: path("M456 96 L340 168");
+  offset-path: path("M372 136 L332 158");
   animation: flow-move 2.6s linear infinite;
   animation-delay: 0.65s;
 }
 .flow-dot.f3 {
-  offset-path: path("M220 252 L104 324");
+  offset-path: path("M228 262 L188 284");
   animation: flow-move 2.6s linear infinite;
   animation-delay: 1.3s;
 }
 .flow-dot.f4 {
-  offset-path: path("M456 324 L340 252");
+  offset-path: path("M372 284 L332 262");
   animation: flow-move 2.6s linear infinite;
   animation-delay: 1.95s;
 }
