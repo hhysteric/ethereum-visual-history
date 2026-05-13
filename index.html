@@ -804,11 +804,11 @@
     <p class="page-desc">架构分层、EVM、PoS、账户模型、Gas、交易生命周期——以太坊的工程细节。</p>
   </div>
 
-<!-- ============ 架构动图详解(小白友好) ============ -->
-<section class="section tech-intro">
+<!-- ============ 架构概览(图解 + 概念卡) ============ -->
+<section id="overview" class="section tech-intro">
   <div class="section-head">
-    <h2>一张图看懂以太坊架构</h2>
-    <p>把以太坊想象成一栋 6 层大楼 —— 从地基到屋顶,每层各司其职。下面这张图按顺序点亮每一层,讲清它在做什么、跟上下层怎么配合。</p>
+    <h2>架构概览</h2>
+    <p>把以太坊想象成一栋 6 层大楼 —— 从地基到屋顶,每层各司其职。悬停右侧任一卡片,左侧对应楼层会点亮。</p>
   </div>
 
   <div class="tech-tower-wrap">
@@ -944,58 +944,23 @@
 
   </div>
 
-  <p class="tt-tail">简单记:<b>上面两层</b>给用户用,<b>中间两层</b>是大脑,<b>下面两层</b>是地基 —— 接下来各小节会逐一展开。</p>
-</section>
+  <p class="tt-tail">简单记:<b>上面两层</b>给用户用,<b>中间两层</b>是大脑,<b>下面两层</b>是地基。以太坊本质上是一个复制状态机:所有节点对同一份「世界状态」达成共识,通过交易驱动状态转移。</p>
 
-<!-- ============ 概览 ============ -->
-<section id="overview" class="section alt">
-  <div class="section-head">
-    <h2>架构概览</h2>
-    <p>以太坊是一个复制状态机：所有节点对同一份「世界状态」达成共识，通过交易驱动状态转移。</p>
-  </div>
-
-  <div class="arch-diagram">
-    <div class="layer layer-app">
-      <h4>应用层 · Applications</h4>
-      <p>DeFi · NFT · DAO · 钱包 · 游戏 · 社交</p>
-    </div>
-    <div class="layer layer-l2">
-      <h4>Layer 2 · 扩容层</h4>
-      <p>Optimistic Rollup · ZK Rollup · Validium</p>
-    </div>
-    <div class="layer layer-exec">
-      <h4>执行层 · Execution Layer（原 Eth1）</h4>
-      <p>EVM · 交易池 · 状态树 · JSON-RPC</p>
-    </div>
-    <div class="layer layer-cons">
-      <h4>共识层 · Consensus Layer（原 Eth2 · Beacon Chain）</h4>
-      <p>PoS · 验证者 · 分叉选择 · Finality</p>
-    </div>
-    <div class="layer layer-net">
-      <h4>网络层 · P2P Networking</h4>
-      <p>devp2p · libp2p · Discovery v5 · Gossip</p>
-    </div>
-    <div class="layer layer-data">
-      <h4>数据层 · Storage</h4>
-      <p>LevelDB / Pebble · MPT · Blob 存储（EIP-4844）</p>
-    </div>
-  </div>
-
-  <div class="cards">
+  <div class="cards tt-cards">
     <article class="card">
       <span class="tag">State Machine</span>
       <h3>世界状态</h3>
-      <p>一棵 Merkle Patricia Trie，将地址映射到账户（余额、nonce、代码、storage root）。每个区块是一次状态转移函数 Y(S, T) = S'。</p>
+      <p>一棵 Merkle Patricia Trie,将地址映射到账户(余额、nonce、代码、storage root)。每个区块是一次状态转移函数 Y(S, T) = S'。</p>
     </article>
     <article class="card">
       <span class="tag">Deterministic</span>
       <h3>确定性执行</h3>
-      <p>EVM 是图灵完备且确定性的虚拟机，所有节点重放相同交易都得到相同结果——这是共识的基础。</p>
+      <p>EVM 是图灵完备且确定性的虚拟机,所有节点重放相同交易都得到相同结果——这是共识的基础。</p>
     </article>
     <article class="card">
       <span class="tag">Modular</span>
       <h3>模块化路线</h3>
-      <p>The Merge 后，执行与共识解耦；未来围绕 Rollup、Blob 数据可用性、Verkle Tree 等继续模块化演进。</p>
+      <p>The Merge 后,执行与共识解耦;未来围绕 Rollup、Blob 数据可用性、Verkle Tree 等继续模块化演进。</p>
     </article>
   </div>
 </section>
