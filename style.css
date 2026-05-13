@@ -2087,8 +2087,10 @@ footer {
 }
 .tech-tower .tt-layer {
   opacity: 0.55;
+  cursor: pointer;
   transition: opacity 0.25s ease;
 }
+.tech-tower .tt-layer text { pointer-events: none; }
 .tech-tower-wrap.is-hover-1 .tt-l1,
 .tech-tower-wrap.is-hover-2 .tt-l2,
 .tech-tower-wrap.is-hover-3 .tt-l3,

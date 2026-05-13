@@ -606,15 +606,15 @@ async function fetchBlocks() {
 (function initTechTower() {
   const wrap = document.querySelector(".tech-tower-wrap");
   if (!wrap) return;
-  const steps = wrap.querySelectorAll(".tt-step");
+  const targets = wrap.querySelectorAll("[data-layer]");
   const setHover = (n) => {
     for (let i = 1; i <= 6; i++) wrap.classList.remove("is-hover-" + i);
     if (n) wrap.classList.add("is-hover-" + n);
   };
-  steps.forEach((s) => {
-    const n = s.dataset.layer;
-    s.addEventListener("mouseenter", () => setHover(n));
-    s.addEventListener("focusin", () => setHover(n));
+  targets.forEach((el) => {
+    const n = el.dataset.layer;
+    el.addEventListener("mouseenter", () => setHover(n));
+    el.addEventListener("focusin", () => setHover(n));
   });
   wrap.addEventListener("mouseleave", () => setHover(null));
 })();
