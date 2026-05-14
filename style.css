@@ -2356,6 +2356,52 @@ footer {
   2%, 15% { opacity: 1; }
 }
 
+/* ===== 架构分区(背景色带)===== */
+.tx-flow .tx-zone { transition: opacity 0.4s ease; }
+.tx-flow .tx-zone rect { transition: fill-opacity 0.4s ease; }
+.tx-flow .tx-zone-user rect,
+.tx-flow .tx-zone-el rect,
+.tx-flow .tx-zone-cl rect {
+  animation: tx-zone-pulse 18s linear infinite;
+}
+/* 每个区域在其覆盖的阶段亮起来 */
+.tx-flow .tx-zone-user rect { animation-delay: 0s; }  /* 阶段 ①② = 0-6s */
+.tx-flow .tx-zone-el rect   { animation-delay: 6s; }  /* 阶段 ③④ = 6-12s */
+.tx-flow .tx-zone-cl rect   { animation-delay: 12s; } /* 阶段 ⑤⑥ = 12-18s */
+@keyframes tx-zone-pulse {
+  0%, 33.33%, 100% { fill-opacity: 0.35; }
+  2%, 31%          { fill-opacity: 0.75; }
+}
+
+/* 第二行小字图例 */
+.tx-flow-caption-sub {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: none;
+  font-size: 10.5px;
+}
+
+/* 时间线每条 li 的架构层小徽章(放在 h4 标题右侧) */
+.timeline .t-zone {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  vertical-align: middle;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+.timeline .t-zone-user { color: #4a6b8a; background: #e8eef2; }
+.timeline .t-zone-el   { color: #8b2a2a; background: #f4e8e3; }
+.timeline .t-zone-cl   { color: #2d6a3e; background: #e4ece6; }
+/* 让整条 li 的左侧小圆点染上对应颜色 */
+.timeline li[data-zone="user"] .t-dot { border-color: #4a6b8a; color: #4a6b8a; }
+.timeline li[data-zone="el"]   .t-dot { border-color: #8b2a2a; color: #8b2a2a; }
+.timeline li[data-zone="cl"]   .t-dot { border-color: #2d6a3e; color: #2d6a3e; }
+
 /* 移动端:允许横向滚动查看流程 */
 @media (max-width: 780px) {
   .tx-flow { overflow-x: auto; }
@@ -2463,10 +2509,14 @@ footer {
   .tx-flow .tx-pkg,
   .tx-flow .tx-coin-burn, .tx-flow .tx-coin-tip,
   .tx-flow .tx-burn, .tx-flow .tx-tip,
+  .tx-flow .tx-zone-user rect,
+  .tx-flow .tx-zone-el rect,
+  .tx-flow .tx-zone-cl rect,
   .tx-flow .tx-stage text {
     animation: none !important;
   }
   .tx-flow .tx-node { opacity: 1; }
   .tx-flow .tx-burn, .tx-flow .tx-tip { opacity: 1; }
   .tx-flow .tx-pkg, .tx-flow .tx-coin-burn, .tx-flow .tx-coin-tip { opacity: 0; }
+  .tx-flow .tx-zone rect { fill-opacity: 0.55; }
 }

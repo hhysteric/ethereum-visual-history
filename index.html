@@ -802,11 +802,218 @@
     <p class="page-desc">架构分层、EVM、PoS、账户模型、Gas、交易生命周期——以太坊的工程细节。</p>
   </div>
 
+<!-- ============ 串起来看(全景 · 置顶) ============
+     这一节放在 Tech 页首屏,先给小白一个"一笔交易从发起到永久记录"的全景,
+     并圈出每一步属于哪个架构层。下方再把每层拆开细讲。 -->
+<section id="lifecycle" class="section">
+  <div class="section-head">
+    <h2>串起来看:一笔交易从点击"确认"到"永久记录"</h2>
+    <p>先看全景——你每一次点"确认",背后都会走完下面这 6 步,并且分别发生在 3 个不同的"架构层"里。下方会再把每一层拆开细讲。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🎬</span>
+    <div class="bh-body">
+      <span class="bh-tag">举个例子</span>
+      你在钱包点了"用 0.1 ETH 换 USDC":第 1 步钱包用私钥签字,第 2 步广播给全球节点,第 3 步验证者把它打包进区块,第 4 步 EVM 真正执行换币逻辑,第 5-6 步管委会投票盖章。大约 12.8 分钟后,这笔交易就"板上钉钉"了。
+    </div>
+  </div>
+
+  <!-- ===== 交易生命周期动态流程图 ===== -->
+  <div class="tx-flow">
+    <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="tx-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+        </marker>
+        <pattern id="tx-grid" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+          <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#efe8d5" stroke-width="0.4"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="880" height="400" fill="url(#tx-grid)"/>
+
+      <!-- ===== 架构层次分区(背景色带 + 虚线圈定 + 标签) ===== -->
+      <!-- ① 用户侧 / 网络层:钱包 + Mempool -->
+      <g class="tx-zone tx-zone-user">
+        <rect x="10" y="102" width="300" height="230" fill="#e8eef2" fill-opacity="0.55" stroke="#4a6b8a" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="160" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#4a6b8a" letter-spacing="2">USER &amp; P2P · 用户侧 / 网络层</text>
+      </g>
+      <!-- ③ + ④ 执行层:Builder 打包 + EL 执行 + gas 分流 -->
+      <g class="tx-zone tx-zone-el">
+        <rect x="315" y="10" width="300" height="322" fill="#f4e8e3" fill-opacity="0.55" stroke="#8b2a2a" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="465" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#8b2a2a" letter-spacing="2">EXECUTION LAYER · 执行层(EVM · Gas 结算)</text>
+      </g>
+      <!-- ⑤ + ⑥ 共识层 + 终局 -->
+      <g class="tx-zone tx-zone-cl">
+        <rect x="620" y="102" width="250" height="230" fill="#e4ece6" fill-opacity="0.55" stroke="#2d6a3e" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="745" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#2d6a3e" letter-spacing="2">CONSENSUS LAYER · 共识层 / Finality</text>
+      </g>
+
+      <!-- 6 个主站点 -->
+      <!-- ① 用户钱包 -->
+      <g class="tx-node tx-n1">
+        <rect x="20" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="80" y="158" text-anchor="middle" font-size="22">👛</text>
+        <text x="80" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">① 钱包签名</text>
+        <text x="80" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">USER · WALLET</text>
+      </g>
+
+      <!-- ② mempool 候车厅 -->
+      <g class="tx-node tx-n2">
+        <rect x="170" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="230" y="158" text-anchor="middle" font-size="22">📡</text>
+        <text x="230" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">② Mempool</text>
+        <text x="230" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">BROADCAST · P2P</text>
+      </g>
+
+      <!-- ③ Builder 打包 -->
+      <g class="tx-node tx-n3">
+        <rect x="320" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="380" y="158" text-anchor="middle" font-size="22">📦</text>
+        <text x="380" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">③ Builder 打包</text>
+        <text x="380" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">PROPOSER · PBS</text>
+      </g>
+
+      <!-- ④ 执行层 EL -->
+      <g class="tx-node tx-n4">
+        <rect x="470" y="130" width="130" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="535" y="158" text-anchor="middle" font-size="22">⚙️</text>
+        <text x="535" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">④ EL 执行 · EVM</text>
+        <text x="535" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">GAS 结算 · 改账本</text>
+      </g>
+
+      <!-- ⑤ 共识层 CL -->
+      <g class="tx-node tx-n5">
+        <rect x="630" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="690" y="158" text-anchor="middle" font-size="22">🛡️</text>
+        <text x="690" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">⑤ CL 投票</text>
+        <text x="690" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">ATTEST · 2/3 FFG</text>
+      </g>
+
+      <!-- ⑥ Finality · 终局链 -->
+      <g class="tx-node tx-n6">
+        <rect x="780" y="130" width="80" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="820" y="158" text-anchor="middle" font-size="22">🔒</text>
+        <text x="820" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#1a1a1a">⑥ 终局</text>
+        <text x="820" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">FINAL</text>
+      </g>
+
+      <!-- 主轴连线 -->
+      <g class="tx-edges" stroke="#1a1a1a" stroke-width="1.2" fill="none">
+        <line x1="140" y1="165" x2="168" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="290" y1="165" x2="318" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="440" y1="165" x2="468" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="600" y1="165" x2="628" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="750" y1="165" x2="778" y2="165" marker-end="url(#tx-arr)"/>
+      </g>
+
+      <!-- Gas 分叉:从 EL(④)出两条支线,一条到 🔥 销毁池,一条到 💰 验证者 -->
+      <!-- 🔥 销毁池(上方) -->
+      <g class="tx-burn">
+        <rect x="475" y="30" width="120" height="56" fill="#faf8f3" stroke="#8b2a2a" stroke-width="1.4" stroke-dasharray="0"/>
+        <text x="535" y="54" text-anchor="middle" font-size="18">🔥</text>
+        <text x="535" y="72" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#8b2a2a">Base Fee 销毁</text>
+        <text x="535" y="83" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#8b2a2a" letter-spacing="1">EIP-1559 · BURN</text>
+      </g>
+      <!-- 💰 验证者奖励(下方) -->
+      <g class="tx-tip">
+        <rect x="475" y="244" width="120" height="56" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.4"/>
+        <text x="535" y="268" text-anchor="middle" font-size="18">💰</text>
+        <text x="535" y="286" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#2d6a3e">Tip → 验证者</text>
+        <text x="535" y="297" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#2d6a3e" letter-spacing="1">PROPOSER REWARD</text>
+      </g>
+
+      <!-- Gas 分叉线 -->
+      <g class="tx-edges" stroke-width="1" fill="none">
+        <path d="M 535 130 L 535 86" stroke="#8b2a2a" marker-end="url(#tx-arr)"/>
+        <path d="M 535 200 L 535 244" stroke="#2d6a3e" marker-end="url(#tx-arr)"/>
+      </g>
+
+      <!-- 动画 1:交易胶囊,从 ① 走到 ⑥ -->
+      <g class="tx-pkg">
+        <rect x="-18" y="-10" width="36" height="20" fill="#8b2a2a" rx="2"/>
+        <text x="0" y="4" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="700">TX</text>
+      </g>
+
+      <!-- 动画 2:Gas 金币 🔥 上行(从 EL 到销毁池) -->
+      <text class="tx-coin-burn" font-size="14" fill="#8b2a2a">🔥</text>
+
+      <!-- 动画 3:Gas 金币 💰 下行(从 EL 到验证者) -->
+      <text class="tx-coin-tip" font-size="14" fill="#2d6a3e">💰</text>
+
+      <!-- 阶段标签:当前进行到哪一步 -->
+      <g class="tx-stage">
+        <text class="tx-stage-1" x="80" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-2" x="230" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-3" x="380" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-4" x="535" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-5" x="690" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-6" x="820" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+      </g>
+    </svg>
+
+    <p class="tx-flow-caption">
+      <span><i style="background:#4a6b8a"></i>用户侧 / 网络层 · 签名 + 广播</span>
+      <span><i style="background:#8b2a2a"></i>执行层(EVM) · 打包 + Gas 结算</span>
+      <span><i style="background:#2d6a3e"></i>共识层 · 投票 + Finality</span>
+    </p>
+    <p class="tx-flow-caption tx-flow-caption-sub">
+      <span><b style="color:#8b2a2a">🔥 Base Fee</b> 被协议销毁(ETH 供给减少)</span>
+      <span><b style="color:#2d6a3e">💰 Priority Fee</b> 奖励给当前出块的验证者</span>
+    </p>
+  </div>
+
+  <ol class="timeline">
+    <li data-zone="user">
+      <div class="t-dot">1</div>
+      <div class="t-body">
+        <h4>🖊️ 签名 · 你按下"确认" <span class="t-zone t-zone-user">用户侧</span></h4>
+        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
+      </div>
+    </li>
+    <li data-zone="user">
+      <div class="t-dot">2</div>
+      <div class="t-body">
+        <h4>📡 广播到 mempool · 交易进"候车厅" <span class="t-zone t-zone-user">网络层</span></h4>
+        <p>通过 JSON-RPC 发给节点,节点再通过 P2P 网络转告全球所有节点,大家一起把它塞进等待池。</p>
+      </div>
+    </li>
+    <li data-zone="el">
+      <div class="t-dot">3</div>
+      <div class="t-body">
+        <h4>📦 Builder 打包 · 被选中上车 <span class="t-zone t-zone-el">执行层</span></h4>
+        <p>专业打包者(Builder)从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
+      </div>
+    </li>
+    <li data-zone="el">
+      <div class="t-dot">4</div>
+      <div class="t-body">
+        <h4>⚙️ EVM 执行 · 改账本 <span class="t-zone t-zone-el">执行层</span></h4>
+        <p>每个节点都把这批交易重放一遍,更新 State/Storage/Receipts 三棵树,算出新的状态根。同时 <b style="color:#8b2a2a">Base Fee 被销毁 🔥</b>,<b style="color:#2d6a3e">Priority Fee 归验证者 💰</b>。</p>
+      </div>
+    </li>
+    <li data-zone="cl">
+      <div class="t-dot">5</div>
+      <div class="t-body">
+        <h4>🗳️ 见证投票 · 大家都认可 <span class="t-zone t-zone-cl">共识层</span></h4>
+        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
+      </div>
+    </li>
+    <li data-zone="cl">
+      <div class="t-dot">6</div>
+      <div class="t-body">
+        <h4>🔒 Finality · 盖章永久生效 <span class="t-zone t-zone-cl">共识层</span></h4>
+        <p>经过两个 Epoch(约 12.8 分钟),Casper FFG 把区块最终化,再也无法回滚 —— 你的交易永久写入历史。</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
 <!-- ============ 架构概览(图解 + 概念卡) ============ -->
 <section id="overview" class="section tech-intro">
   <div class="section-head">
-    <h2>架构概览</h2>
-    <p>把以太坊想象成一栋 6 层大楼 —— 从地基到屋顶,每层各司其职。悬停右侧任一卡片,左侧对应楼层会点亮。</p>
+    <h2>架构概览:把以太坊当成一栋 6 层大楼</h2>
+    <p>上面的全景是一笔交易"纵向"流过了多少层,这里换一个视角——把协议本身"横切"开,每一层各司其职。悬停右侧任一卡片,左侧对应楼层会点亮。</p>
   </div>
 
   <div class="tech-tower-wrap">
@@ -1242,188 +1449,6 @@ ISZERO
   </div>
 </section>
 
-<!-- ============ 交易生命周期 (从原 11 号迁入 tech 末尾) ============ -->
-<section id="lifecycle" class="section">
-  <div class="section-head">
-    <h2>串起来看:一笔交易从点击"确认"到"永久记录"</h2>
-    <p>前面讲的各层,放到真实场景里就是下面这 6 步。随便做一次转账或 swap,你的交易就会走一遍这个流程。</p>
-  </div>
-
-  <div class="beginner-hint">
-    <span class="bh-icon">🎬</span>
-    <div class="bh-body">
-      <span class="bh-tag">举个例子</span>
-      你在钱包点了"用 0.1 ETH 换 USDC":第 1 步钱包用私钥签字,第 2 步广播给全球节点,第 3 步验证者把它打包进区块,第 4 步 EVM 真正执行换币逻辑,第 5-6 步管委会投票盖章。大约 12.8 分钟后,这笔交易就"板上钉钉"了。
-    </div>
-  </div>
-
-  <!-- ===== 交易生命周期动态流程图 ===== -->
-  <div class="tx-flow">
-    <svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <marker id="tx-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
-        </marker>
-        <pattern id="tx-grid" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
-          <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#efe8d5" stroke-width="0.4"/>
-        </pattern>
-      </defs>
-      <rect x="0" y="0" width="880" height="360" fill="url(#tx-grid)"/>
-
-      <!-- 6 个主站点 -->
-      <!-- ① 用户钱包 -->
-      <g class="tx-node tx-n1">
-        <rect x="20" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="80" y="158" text-anchor="middle" font-size="22">👛</text>
-        <text x="80" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">① 钱包签名</text>
-        <text x="80" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">USER · WALLET</text>
-      </g>
-
-      <!-- ② mempool 候车厅 -->
-      <g class="tx-node tx-n2">
-        <rect x="170" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="230" y="158" text-anchor="middle" font-size="22">📡</text>
-        <text x="230" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">② Mempool</text>
-        <text x="230" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">BROADCAST · P2P</text>
-      </g>
-
-      <!-- ③ Builder 打包 -->
-      <g class="tx-node tx-n3">
-        <rect x="320" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="380" y="158" text-anchor="middle" font-size="22">📦</text>
-        <text x="380" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">③ Builder 打包</text>
-        <text x="380" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">PROPOSER · PBS</text>
-      </g>
-
-      <!-- ④ 执行层 EL -->
-      <g class="tx-node tx-n4">
-        <rect x="470" y="130" width="130" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="535" y="158" text-anchor="middle" font-size="22">⚙️</text>
-        <text x="535" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">④ EL 执行 · EVM</text>
-        <text x="535" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">GAS 结算 · 改账本</text>
-      </g>
-
-      <!-- ⑤ 共识层 CL -->
-      <g class="tx-node tx-n5">
-        <rect x="630" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="690" y="158" text-anchor="middle" font-size="22">🛡️</text>
-        <text x="690" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">⑤ CL 投票</text>
-        <text x="690" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">ATTEST · 2/3 FFG</text>
-      </g>
-
-      <!-- ⑥ Finality · 终局链 -->
-      <g class="tx-node tx-n6">
-        <rect x="780" y="130" width="80" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
-        <text x="820" y="158" text-anchor="middle" font-size="22">🔒</text>
-        <text x="820" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#1a1a1a">⑥ 终局</text>
-        <text x="820" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">FINAL</text>
-      </g>
-
-      <!-- 主轴连线 -->
-      <g class="tx-edges" stroke="#1a1a1a" stroke-width="1.2" fill="none">
-        <line x1="140" y1="165" x2="168" y2="165" marker-end="url(#tx-arr)"/>
-        <line x1="290" y1="165" x2="318" y2="165" marker-end="url(#tx-arr)"/>
-        <line x1="440" y1="165" x2="468" y2="165" marker-end="url(#tx-arr)"/>
-        <line x1="600" y1="165" x2="628" y2="165" marker-end="url(#tx-arr)"/>
-        <line x1="750" y1="165" x2="778" y2="165" marker-end="url(#tx-arr)"/>
-      </g>
-
-      <!-- Gas 分叉:从 EL(④)出两条支线,一条到 🔥 销毁池,一条到 💰 验证者 -->
-      <!-- 🔥 销毁池(上方) -->
-      <g class="tx-burn">
-        <rect x="475" y="30" width="120" height="56" fill="#faf8f3" stroke="#8b2a2a" stroke-width="1.4" stroke-dasharray="0"/>
-        <text x="535" y="54" text-anchor="middle" font-size="18">🔥</text>
-        <text x="535" y="72" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#8b2a2a">Base Fee 销毁</text>
-        <text x="535" y="83" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#8b2a2a" letter-spacing="1">EIP-1559 · BURN</text>
-      </g>
-      <!-- 💰 验证者奖励(下方) -->
-      <g class="tx-tip">
-        <rect x="475" y="244" width="120" height="56" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.4"/>
-        <text x="535" y="268" text-anchor="middle" font-size="18">💰</text>
-        <text x="535" y="286" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#2d6a3e">Tip → 验证者</text>
-        <text x="535" y="297" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#2d6a3e" letter-spacing="1">PROPOSER REWARD</text>
-      </g>
-
-      <!-- Gas 分叉线 -->
-      <g class="tx-edges" stroke-width="1" fill="none">
-        <path d="M 535 130 L 535 86" stroke="#8b2a2a" marker-end="url(#tx-arr)"/>
-        <path d="M 535 200 L 535 244" stroke="#2d6a3e" marker-end="url(#tx-arr)"/>
-      </g>
-
-      <!-- 动画 1:交易胶囊,从 ① 走到 ⑥ -->
-      <g class="tx-pkg">
-        <rect x="-18" y="-10" width="36" height="20" fill="#8b2a2a" rx="2"/>
-        <text x="0" y="4" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="700">TX</text>
-      </g>
-
-      <!-- 动画 2:Gas 金币 🔥 上行(从 EL 到销毁池) -->
-      <text class="tx-coin-burn" font-size="14" fill="#8b2a2a">🔥</text>
-
-      <!-- 动画 3:Gas 金币 💰 下行(从 EL 到验证者) -->
-      <text class="tx-coin-tip" font-size="14" fill="#2d6a3e">💰</text>
-
-      <!-- 阶段标签:当前进行到哪一步 -->
-      <g class="tx-stage">
-        <text class="tx-stage-1" x="80" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-        <text class="tx-stage-2" x="230" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-        <text class="tx-stage-3" x="380" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-        <text class="tx-stage-4" x="535" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-        <text class="tx-stage-5" x="690" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-        <text class="tx-stage-6" x="820" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
-      </g>
-    </svg>
-
-    <p class="tx-flow-caption">
-      <span><i style="background:#8b2a2a"></i>🔥 Base Fee 被协议销毁(ETH 供给减少)</span>
-      <span><i style="background:#2d6a3e"></i>💰 Priority Fee 奖励给当前出块的验证者</span>
-    </p>
-  </div>
-
-  <ol class="timeline">
-    <li>
-      <div class="t-dot">1</div>
-      <div class="t-body">
-        <h4>🖊️ 签名 · 你按下"确认"</h4>
-        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
-      </div>
-    </li>
-    <li>
-      <div class="t-dot">2</div>
-      <div class="t-body">
-        <h4>📡 广播到 mempool · 交易进"候车厅"</h4>
-        <p>通过 JSON-RPC 发给节点,节点再通过 P2P 网络转告全球所有节点,大家一起把它塞进等待池。</p>
-      </div>
-    </li>
-    <li>
-      <div class="t-dot">3</div>
-      <div class="t-body">
-        <h4>📦 Builder 打包 · 被选中上车</h4>
-        <p>专业打包者(Builder)从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
-      </div>
-    </li>
-    <li>
-      <div class="t-dot">4</div>
-      <div class="t-body">
-        <h4>⚙️ EVM 执行 · 改账本</h4>
-        <p>每个节点都把这批交易重放一遍,更新 State/Storage/Receipts 三棵树,算出新的状态根。</p>
-      </div>
-    </li>
-    <li>
-      <div class="t-dot">5</div>
-      <div class="t-body">
-        <h4>🗳️ 见证投票 · 大家都认可</h4>
-        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
-      </div>
-    </li>
-    <li>
-      <div class="t-dot">6</div>
-      <div class="t-body">
-        <h4>🔒 Finality · 盖章永久生效</h4>
-        <p>经过两个 Epoch(约 12.8 分钟),Casper FFG 把区块最终化,再也无法回滚 —— 你的交易永久写入历史。</p>
-      </div>
-    </li>
-  </ol>
-</section>
 
 </div><!-- /page tech -->
 
