@@ -1465,6 +1465,100 @@ ISZERO
       <li>Tx base<span>21000</span></li>
     </ul>
   </div>
+
+  <!-- ===== Gas 模拟器:让用户自己算一笔交易要多少钱 ===== -->
+  <div class="gas-calc" id="gas-calc">
+    <div class="gas-calc-head">
+      <h4>🧮 Gas 模拟器 · 自己算一笔</h4>
+      <p>选一个常见操作,或自定义 Gas 用量与单价,实时看这笔交易要花多少 ETH / USD,以及其中多少被 🔥 销毁、多少给了 💰 验证者。</p>
+    </div>
+
+    <!-- 预设操作:点一下自动填 Gas Used -->
+    <div class="gc-presets" role="tablist" aria-label="预设操作">
+      <button type="button" class="gc-preset is-active" data-gas="21000" data-label="ETH 转账">
+        <span class="gc-preset-emoji">💸</span>
+        <span class="gc-preset-name">ETH 转账</span>
+        <span class="gc-preset-gas">21,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="65000" data-label="ERC-20 转账">
+        <span class="gc-preset-emoji">🪙</span>
+        <span class="gc-preset-name">ERC-20 转账</span>
+        <span class="gc-preset-gas">65,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="180000" data-label="Uniswap Swap">
+        <span class="gc-preset-emoji">🔄</span>
+        <span class="gc-preset-name">Uniswap 换币</span>
+        <span class="gc-preset-gas">180,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="120000" data-label="NFT Mint">
+        <span class="gc-preset-emoji">🎨</span>
+        <span class="gc-preset-name">NFT Mint</span>
+        <span class="gc-preset-gas">120,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="900000" data-label="部署合约">
+        <span class="gc-preset-emoji">🚀</span>
+        <span class="gc-preset-name">部署合约</span>
+        <span class="gc-preset-gas">900,000</span>
+      </button>
+    </div>
+
+    <!-- 三个滑杆:Gas Used / Base Fee / Priority Fee -->
+    <div class="gc-controls">
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Gas Used</span>
+          <span class="gc-ctrl-val" id="gc-used-val">21,000</span>
+        </span>
+        <input type="range" id="gc-used" min="21000" max="2000000" step="1000" value="21000"/>
+        <span class="gc-ctrl-hint">21k(简单转账) → 2M(大型合约)</span>
+      </label>
+
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Base Fee 🔥</span>
+          <span class="gc-ctrl-val"><span id="gc-base-val">15</span> gwei</span>
+        </span>
+        <input type="range" id="gc-base" min="1" max="200" step="1" value="15"/>
+        <span class="gc-ctrl-hint">由网络拥堵自动调整 · 会被销毁</span>
+      </label>
+
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Priority Fee 💰</span>
+          <span class="gc-ctrl-val"><span id="gc-tip-val">2</span> gwei</span>
+        </span>
+        <input type="range" id="gc-tip" min="0" max="50" step="0.5" value="2"/>
+        <span class="gc-ctrl-hint">小费 · 给验证者 · 越高越快被打包</span>
+      </label>
+    </div>
+
+    <!-- 结果区 -->
+    <div class="gc-result">
+      <div class="gc-result-main">
+        <span class="gc-result-label">这笔交易要花</span>
+        <div class="gc-result-figs">
+          <span class="gc-eth"><b id="gc-eth">0.000345</b> ETH</span>
+          <span class="gc-usd">≈ <b id="gc-usd">$0.00</b></span>
+        </div>
+      </div>
+
+      <!-- Base Fee / Priority Fee 拆分柱:可视化两部分占比 -->
+      <div class="gc-split">
+        <div class="gc-split-bar">
+          <span class="gc-split-burn" id="gc-bar-burn" style="width:88%"></span>
+          <span class="gc-split-tip"  id="gc-bar-tip"  style="width:12%"></span>
+        </div>
+        <div class="gc-split-legend">
+          <span><i style="background:#8b2a2a"></i>🔥 销毁 <b id="gc-burn">0.000315</b> ETH (<span id="gc-burn-pct">88%</span>)</span>
+          <span><i style="background:#2d6a3e"></i>💰 给验证者 <b id="gc-tip">0.000042</b> ETH (<span id="gc-tip-pct">12%</span>)</span>
+        </div>
+      </div>
+
+      <p class="gc-formula">
+        <code><span id="gc-used-mini">21,000</span> × (<span id="gc-base-mini">15</span> + <span id="gc-tip-mini">2</span>) gwei = <b><span id="gc-total-gwei">357,000</span> gwei</b></code>
+      </p>
+    </div>
+  </div>
 </section>
 
 

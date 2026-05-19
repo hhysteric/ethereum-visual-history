@@ -691,6 +691,134 @@ async function fetchBlocks() {
 })();
 
 // =======================================================
+// Gas 模拟器：用户拖滑杆,实时算 ETH / USD 花费 + 销毁/给验证者拆分
+// =======================================================
+(function initGasCalc() {
+  const root = document.getElementById("gas-calc");
+  if (!root) return;
+
+  const $used = root.querySelector("#gc-used");
+  const $base = root.querySelector("#gc-base");
+  const $tip  = root.querySelector("#gc-tip");
+
+  const $usedVal = root.querySelector("#gc-used-val");
+  const $baseVal = root.querySelector("#gc-base-val");
+  const $tipVal  = root.querySelector("#gc-tip-val");
+
+  const $eth   = root.querySelector("#gc-eth");
+  const $usd   = root.querySelector("#gc-usd");
+  const $burn  = root.querySelector("#gc-burn");
+  const $tipE  = root.querySelector("#gc-tip");
+  const $burnP = root.querySelector("#gc-burn-pct");
+  const $tipP  = root.querySelector("#gc-tip-pct");
+  const $barB  = root.querySelector("#gc-bar-burn");
+  const $barT  = root.querySelector("#gc-bar-tip");
+
+  const $usedMini  = root.querySelector("#gc-used-mini");
+  const $baseMini  = root.querySelector("#gc-base-mini");
+  const $tipMini   = root.querySelector("#gc-tip-mini");
+  const $totalGwei = root.querySelector("#gc-total-gwei");
+
+  const fmtInt = (n) => n.toLocaleString("en-US");
+  const fmtETH = (n) => {
+    if (n === 0) return "0";
+    if (n < 0.0001) return n.toFixed(8).replace(/0+$/, "").replace(/\.$/, "");
+    if (n < 1) return n.toFixed(6).replace(/0+$/, "").replace(/\.$/, "");
+    return n.toFixed(4);
+  };
+  const fmtUSD = (n) => {
+    if (n < 0.01) return "$" + n.toFixed(4);
+    if (n < 100) return "$" + n.toFixed(2);
+    return "$" + Math.round(n).toLocaleString("en-US");
+  };
+
+  // 从顶部"实时数据"取 ETH 价格(若已加载),否则用一个合理默认值
+  const getEthPrice = () => {
+    const el = document.getElementById("live-price");
+    if (!el) return 3200;
+    const txt = (el.textContent || "").replace(/[^0-9.]/g, "");
+    const v = parseFloat(txt);
+    return v && v > 0 ? v : 3200;
+  };
+
+  const recompute = () => {
+    const used = parseInt($used.value, 10);
+    const base = parseFloat($base.value);
+    const tip  = parseFloat($tip.value);
+
+    const totalGwei = used * (base + tip);
+    const burnGwei  = used * base;
+    const tipGwei   = used * tip;
+
+    // gwei → ETH:1 ETH = 1e9 gwei
+    const ethTotal = totalGwei / 1e9;
+    const ethBurn  = burnGwei  / 1e9;
+    const ethTip   = tipGwei   / 1e9;
+
+    const price = getEthPrice();
+    const usd = ethTotal * price;
+
+    // 文案
+    $usedVal.textContent = fmtInt(used);
+    $baseVal.textContent = base;
+    $tipVal.textContent  = tip;
+
+    $eth.textContent  = fmtETH(ethTotal);
+    $usd.textContent  = fmtUSD(usd);
+    $burn.textContent = fmtETH(ethBurn);
+    $tipE.textContent = fmtETH(ethTip);
+
+    const sum = base + tip || 1;
+    const burnPct = (base / sum) * 100;
+    const tipPct  = (tip  / sum) * 100;
+    $burnP.textContent = burnPct.toFixed(0) + "%";
+    $tipP.textContent  = tipPct.toFixed(0) + "%";
+    $barB.style.width = burnPct + "%";
+    $barT.style.width = tipPct  + "%";
+
+    // 公式行
+    $usedMini.textContent  = fmtInt(used);
+    $baseMini.textContent  = base;
+    $tipMini.textContent   = tip;
+    $totalGwei.textContent = fmtInt(Math.round(totalGwei));
+  };
+
+  // 预设按钮:点一下填入 Gas Used + 高亮自身
+  root.querySelectorAll(".gc-preset").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      root.querySelectorAll(".gc-preset").forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const g = parseInt(btn.getAttribute("data-gas"), 10);
+      // 若超出 max,扩展 max
+      if (g > parseInt($used.max, 10)) $used.max = String(g);
+      $used.value = String(g);
+      recompute();
+    });
+  });
+
+  // 滑杆变化 → 重算;用户手动拖时取消预设高亮
+  [$used, $base, $tip].forEach((el) => {
+    el.addEventListener("input", () => {
+      if (el === $used) {
+        const cur = parseInt($used.value, 10);
+        const matched = root.querySelector('.gc-preset[data-gas="' + cur + '"]');
+        root.querySelectorAll(".gc-preset").forEach((b) => b.classList.remove("is-active"));
+        if (matched) matched.classList.add("is-active");
+      }
+      recompute();
+    });
+  });
+
+  // 实时价格刷新后再算一次
+  const priceEl = document.getElementById("live-price");
+  if (priceEl) {
+    new MutationObserver(recompute).observe(priceEl, { childList: true, characterData: true, subtree: true });
+  }
+
+  recompute();
+})();
+
+// =======================================================
 (function autoOpenDetails() {
   const open = () => {
     const h = location.hash.replace(/^#/, "");
