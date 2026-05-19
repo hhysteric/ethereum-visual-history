@@ -1601,54 +1601,286 @@ ISZERO
 <div class="page" data-page="today">
   <div class="page-header">
     <p class="page-eyebrow">TODAY · 现状</p>
-    <h1>现状:扩容、挑战、生态</h1>
-    <p class="page-desc">当前以太坊的主战场:Rollup 扩容、协议待解难题、以及跑在它上面的千行百业。</p>
+    <h1>现状:今天的以太坊长什么样</h1>
+    <p class="page-desc">2026 年的 ETH 不是一条单链——它已经分裂成"L1 主网 + 一群 L2 + 数据层 + 再质押"的<b>模块化栈</b>。下面带你看清这一栈、当前升级路线进度,以及还在路上的痛点和生态。</p>
   </div>
+
+<!-- ============ 当前架构总览(模块化栈) ============ -->
+<section id="stack" class="section">
+  <div class="section-head">
+    <h2>① 当前架构 · 模块化以太坊栈</h2>
+    <p>从 2022 年 The Merge + 2024 年 Dencun 之后,以太坊不再"一条链干所有事",而是<b>每一层各司其职</b>。悬停任一层查看代表项目。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🏛️</span>
+    <div class="bh-body">
+      <span class="bh-tag">一句话理解</span>
+      把以太坊想象成一栋"功能分租的大楼":<b>地基</b>(L1 主网)负责安全和最终裁决;<b>仓库</b>(Blob/DA)负责廉价存数据;<b>厂房</b>(L2 Rollup)负责高速执行;<b>电力公司</b>(Restaking)把 L1 的安全租给其他服务;<b>商铺</b>(Apps)是真正面向用户的应用。
+    </div>
+  </div>
+
+  <div class="mod-stack" id="mod-stack">
+    <!-- 5 层从下到上 -->
+    <div class="mod-layer ml-l1" data-layer="l1">
+      <div class="ml-head">
+        <span class="ml-tag">LAYER 1 · 结算 / 共识</span>
+        <h4>🛡️ 以太坊主网</h4>
+      </div>
+      <p class="ml-body">最终裁判 + 安全锚。所有 L2 的状态根、Blob、争议都最终回到这里裁决。PoS 验证者(~100 万)守护这一层。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>~15</b> TPS</span>
+        <span class="ml-stat"><b>32 ETH</b> 验证者门槛</span>
+        <span class="ml-stat"><b>~12.8 min</b> 终局</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-da" data-layer="da">
+      <div class="ml-head">
+        <span class="ml-tag">DATA AVAILABILITY · 数据层</span>
+        <h4>📦 Blob 数据层(EIP-4844)</h4>
+      </div>
+      <p class="ml-body">2024 年 Dencun 升级新增的"廉价仓库",专给 L2 上传压缩数据用。每块最多 6 个 ~128KB Blob,只保留 ~18 天但已足够 Rollup 拉取证明。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>~128KB</b> /Blob</span>
+        <span class="ml-stat"><b>6/块</b> 上限(目标 64MB)</span>
+        <span class="ml-stat"><b>L2 费用 ↓ 90%</b></span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-l2" data-layer="l2">
+      <div class="ml-head">
+        <span class="ml-tag">LAYER 2 · 执行</span>
+        <h4>🚀 Rollup 执行层</h4>
+      </div>
+      <p class="ml-body">真正跑用户交易的地方。把成千上万笔交易压缩后回写 L1,享受 L1 的安全、又比 L1 便宜数十倍。OP-Rollup 与 ZK-Rollup 两条技术路线并存。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>40+</b> 主流 L2</span>
+        <span class="ml-stat"><b>$40B+</b> TVL</span>
+        <span class="ml-stat"><b>~2000+</b> TPS(总和)</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-rs" data-layer="rs">
+      <div class="ml-head">
+        <span class="ml-tag">RESTAKING · 安全市场</span>
+        <h4>🔁 再质押层(EigenLayer 等)</h4>
+      </div>
+      <p class="ml-body">把 L1 验证者的"安全押金"二次出租给其他服务(预言机、跨链桥、DA 替代方案)。让以太坊的信任成为一个可定价的商品。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>$15B+</b> 再质押 TVL</span>
+        <span class="ml-stat"><b>20+</b> AVS 服务</span>
+        <span class="ml-stat"><b>共享</b> 安全模型</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-app" data-layer="app">
+      <div class="ml-head">
+        <span class="ml-tag">APPLICATIONS · 应用层</span>
+        <h4>🎨 钱包 / DeFi / NFT / 社交</h4>
+      </div>
+      <p class="ml-body">用户真正点击、签名、看到 UI 的地方。今天大部分新应用直接部署在 L2,通过钱包(MetaMask/Rabby)+ 账户抽象(ERC-4337)与协议交互。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>3000+</b> 活跃 dApp</span>
+        <span class="ml-stat"><b>2500万+</b> 月活地址</span>
+        <span class="ml-stat"><b>账户抽象</b> 普及中</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="mod-stack-caption">
+    <b>关键变化:</b>2020 年以前 = 全部跑在 L1;2024 Dencun 之后 = L1 退到"安全 + DA",执行外包给 L2,
+    EigenLayer 又把 L1 安全做成商品 —— 这就是<b>"模块化以太坊"</b>。
+  </p>
+</section>
+
+<!-- ============ 升级路线进度 ============ -->
+<section id="progress" class="section alt">
+  <div class="section-head">
+    <h2>② 升级路线进度 · 我们走到哪了</h2>
+    <p>Vitalik 把以太坊路线图分成六个阶段,每阶段对应一类核心问题。下方这条进度条标出当前位置——同时进行多阶段是常态。</p>
+  </div>
+
+  <div class="progress-rail">
+    <div class="pr-line">
+      <span class="pr-fill"></span>
+    </div>
+
+    <div class="pr-step is-done">
+      <div class="pr-dot">✓</div>
+      <div class="pr-card">
+        <span class="pr-label">已完成 · 2022.09</span>
+        <h4>🔀 The Merge</h4>
+        <p>PoW → PoS 切换,能耗骤降 99.95%。EIP-3675 / 4895。</p>
+      </div>
+    </div>
+
+    <div class="pr-step is-active">
+      <div class="pr-dot">●</div>
+      <div class="pr-card">
+        <span class="pr-label">进行中 · 主战场</span>
+        <h4>🌊 The Surge</h4>
+        <p>扩容到 10 万 TPS。Dencun(2024)交付 Proto-Danksharding;<b>下一步 PeerDAS、完整 Danksharding</b>。</p>
+      </div>
+    </div>
+
+    <div class="pr-step is-active">
+      <div class="pr-dot">●</div>
+      <div class="pr-card">
+        <span class="pr-label">进行中 · 早期</span>
+        <h4>⚡ The Scourge</h4>
+        <p>解决 MEV、质押中心化。当前推进 PBS、加密内存池、Solo 质押友好化。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">规划中</span>
+        <h4>🌳 The Verge</h4>
+        <p>用 Verkle Tree 替代 MPT,让"无状态客户端"成为可能,手机也能验证以太坊。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">规划中</span>
+        <h4>🧹 The Purge</h4>
+        <p>EIP-4444:节点不必永久保存全部历史数据,降低运行门槛。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">长期</span>
+        <h4>🎉 The Splurge</h4>
+        <p>账户抽象、EVM 改进、量子安全等"杂项升级"的总称。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ 扩容 ============ -->
 <section id="scaling" class="section">
   <div class="section-head">
-    <h2>Rollup-centric 路线</h2>
-    <p>以太坊主网专注于「结算 + 数据可用性」，把执行外包给 L2 Rollup，实现「信任 L1，执行在 L2」。</p>
+    <h2>③ Rollup-centric 路线 · 三大技术分支</h2>
+    <p>L1 主网专注于「结算 + DA」,把执行外包给 L2。今天主流的 L2 落在 3 条技术线上 —— 取舍在于<b>速度、成本、安全模型</b>。</p>
   </div>
 
-  <div class="rollup-compare">
+  <div class="rollup-compare rollup-compare-3">
     <div class="rc-card optim">
       <h3>Optimistic Rollup</h3>
-      <p>默认乐观，挑战期内允许欺诈证明（Fraud Proof）</p>
+      <p class="rc-tag">默认乐观 · 欺诈证明</p>
+      <p>"先打包,有问题再打官司"。挑战期(7 天)内任何人可提交欺诈证明,推翻错误状态。</p>
       <ul>
-        <li>✅ EVM 等价，迁移成本低</li>
-        <li>✅ 成本低</li>
-        <li>⚠️ 提现等待 7 天</li>
+        <li>✅ EVM 等价,合约可几乎无改动迁移</li>
+        <li>✅ 成本低,生态成熟</li>
+        <li>⚠️ 提现需等 7 天挑战期</li>
       </ul>
-      <div class="rc-eg">Arbitrum · Optimism · Base</div>
+      <div class="rc-eg">Arbitrum · Optimism · Base · Mantle</div>
     </div>
     <div class="rc-card zk">
       <h3>ZK Rollup</h3>
-      <p>用零知识证明（SNARK/STARK）直接验证正确性</p>
+      <p class="rc-tag">零知识证明 · 数学保证</p>
+      <p>每个区块附带一个密码学证明,L1 一验就知道有没有错——不需要等待挑战期。</p>
       <ul>
-        <li>✅ 秒级终局性</li>
-        <li>✅ 密码学安全</li>
-        <li>⚠️ 证明生成开销大</li>
+        <li>✅ 终局性极快(分钟级提现)</li>
+        <li>✅ 密码学安全,不需要"乐观假设"</li>
+        <li>⚠️ 证明生成成本高,zkEVM 仍在演进</li>
       </ul>
-      <div class="rc-eg">zkSync · StarkNet · Scroll · Linea</div>
+      <div class="rc-eg">zkSync · StarkNet · Scroll · Linea · Polygon zkEVM</div>
+    </div>
+    <div class="rc-card validium">
+      <h3>Validium / Volition</h3>
+      <p class="rc-tag">数据放链下 · 极致便宜</p>
+      <p>用 ZK 证明保证状态正确,但<b>把交易数据放链下</b>(DAC 委员会或 EigenDA 等)。安全假设比 Rollup 弱,但费用极低。</p>
+      <ul>
+        <li>✅ 单笔成本可低至几厘美元</li>
+        <li>✅ 适合游戏、社交等高频低值场景</li>
+        <li>⚠️ 数据可用性依赖外部委员会</li>
+      </ul>
+      <div class="rc-eg">Immutable X · Sorare · X Layer · Polygon Miden</div>
     </div>
   </div>
 
-  <div class="danksharding">
-    <h4>EIP-4844 Proto-Danksharding</h4>
-    <p>引入 <b>Blob-carrying Transaction</b>：每块最多携带 6 个 ~128KB blob，仅保留 ~18 天，但对 Rollup 足够。完整 Danksharding 目标为每块 64 MB 数据带宽。</p>
-    <div class="blob-row">
-      <div class="blob"></div><div class="blob"></div><div class="blob"></div>
-      <div class="blob"></div><div class="blob"></div><div class="blob"></div>
+  <!-- L2 成熟度阶梯(L2BEAT 标准) -->
+  <div class="l2-stages">
+    <h4>L2 成熟度阶梯 · L2BEAT Stage 标准</h4>
+    <p class="l2-stages-desc">不是所有"自称 L2"的链都同样去中心化。L2BEAT 用三档 Stage 衡量它们对 L1 安全的真实继承程度。</p>
+    <div class="l2-stage-row">
+      <div class="l2-stage l2s-0">
+        <span class="l2s-badge">Stage 0</span>
+        <h5>训练轮</h5>
+        <p>团队仍可单方面升级合约 / 暂停链。多数早期 L2 起步阶段。</p>
+        <div class="l2s-eg">大部分新 L2 · 早期阶段</div>
+      </div>
+      <div class="l2-stage l2s-1">
+        <span class="l2s-badge">Stage 1</span>
+        <h5>有限信任</h5>
+        <p>有安全委员会 + 6 人门槛升级时间锁,普通人可发起强制提款。</p>
+        <div class="l2s-eg">Arbitrum One · Optimism · Base</div>
+      </div>
+      <div class="l2-stage l2s-2">
+        <span class="l2s-badge">Stage 2</span>
+        <h5>完全无信任</h5>
+        <p>升级权完全交给链上治理 / 时间锁,不依赖任何"管理员"。</p>
+        <div class="l2s-eg">极少数 L2 已达成 · 大多数仍在路上</div>
+      </div>
     </div>
+  </div>
+
+  <!-- Blob / DA 现状 -->
+  <div class="da-status">
+    <div class="da-head">
+      <h4>📦 Blob 数据层现状(EIP-4844 → Danksharding)</h4>
+      <p>2024 年 3 月 Dencun 升级带来"Proto-Danksharding"——给 Rollup 开了一条<b>独立的廉价数据通道</b>,L2 平均费用瞬间降了 90%+。</p>
+    </div>
+
+    <div class="da-grid">
+      <div class="da-now">
+        <span class="da-label">现在(Proto-Danksharding)</span>
+        <div class="da-blob-row">
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+        </div>
+        <p class="da-cap">每块最多 <b>6 个 Blob</b> · 共 ~768 KB · 保留 18 天</p>
+      </div>
+
+      <div class="da-arrow">→</div>
+
+      <div class="da-future">
+        <span class="da-label">目标(完整 Danksharding)</span>
+        <div class="da-blob-row da-blob-row-many">
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+        </div>
+        <p class="da-cap"><b>~128 个 Blob</b>/块 · 每块 16 MB → 64 MB · 配 PeerDAS 抽样验证</p>
+      </div>
+    </div>
+
+    <p class="da-foot">
+      🎯 <b>下一站:</b>PeerDAS(数据可用性抽样)让普通节点不用下载全部数据,只抽样验证一小段就够 ——
+      这是从 6 Blob 走向 128 Blob 的关键一步。
+    </p>
   </div>
 </section>
 
 <!-- ============ 11 当前痛点 ============ -->
 <section id="pain" class="section alt">
   <div class="section-head">
-    <h2>当前痛点与挑战</h2>
+    <h2>④ 当前痛点与挑战</h2>
     <p>没有完美的系统。了解以太坊尚未解决的问题,才能理解未来路线图的动力来源。</p>
   </div>
 
@@ -1707,7 +1939,7 @@ ISZERO
 <!-- ============ 13 生态项目 (迁至 today 末尾) ============ -->
 <section id="ecosystem" class="section">
   <div class="section-head">
-    <h2>生态全景 · 在以太坊之上</h2>
+    <h2>⑤ 生态全景 · 在以太坊之上</h2>
     <p>以太坊最大的价值不是链本身,而是它之上跑着的几千个应用。这里是各赛道头部项目一览。</p>
   </div>
 
