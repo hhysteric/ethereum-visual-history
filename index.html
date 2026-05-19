@@ -1455,15 +1455,46 @@ ISZERO
 
   <div class="op-cost">
     <h4>典型指令 Gas 成本</h4>
+    <p class="op-cost-intro">
+      EVM 把每段合约代码拆成一条条<b>指令(opcode)</b>逐条执行,每条指令都标好了"价格"。
+      规律很简单:<b>纯计算 ≈ 几个 gas</b>,<b>读链上数据 ≈ 几千 gas</b>(磁盘 IO),
+      <b>写/改链上数据 ≈ 一两万 gas</b>(全网每个节点都得存一份,所以最贵)。
+    </p>
     <ul>
-      <li><code>ADD / SUB</code><span>3</span></li>
-      <li><code>MUL / DIV</code><span>5</span></li>
-      <li><code>SLOAD</code> (cold)<span>2100</span></li>
-      <li><code>SSTORE</code> (zero → non-zero)<span>20000</span></li>
-      <li><code>CREATE</code><span>32000</span></li>
-      <li><code>CALL</code><span>~700+</span></li>
-      <li>Tx base<span>21000</span></li>
+      <li>
+        <div class="op-row"><code>ADD / SUB</code><span>3</span></div>
+        <em>加 / 减 —— 纯算术,最便宜</em>
+      </li>
+      <li>
+        <div class="op-row"><code>MUL / DIV</code><span>5</span></div>
+        <em>乘 / 除 —— 比加减略复杂</em>
+      </li>
+      <li>
+        <div class="op-row"><code>SLOAD</code> (cold)<span>2100</span></div>
+        <em>从合约存储里读一个值 —— 第一次读叫 cold,贵</em>
+      </li>
+      <li>
+        <div class="op-row"><code>SSTORE</code> (zero → non-zero)<span>20000</span></div>
+        <em>往存储里写一个新值 —— 全网都得记下,最贵</em>
+      </li>
+      <li>
+        <div class="op-row"><code>CREATE</code><span>32000</span></div>
+        <em>部署一个新合约 —— 占用永久空间</em>
+      </li>
+      <li>
+        <div class="op-row"><code>CALL</code><span>~700+</span></div>
+        <em>调用另一个合约 —— 视参数和访问情况而定</em>
+      </li>
+      <li>
+        <div class="op-row"><code>Tx base</code><span>21000</span></div>
+        <em>每笔交易的"门票费",哪怕什么都不干也要付</em>
+      </li>
     </ul>
+    <p class="op-cost-note">
+      💡 <b>所以你看到的 Gas Used 数字其实是这些指令费的总和:</b>简单转账只用门票钱(21,000);
+      Uniswap 换币要 SLOAD/SSTORE 一堆存储槽,所以涨到 ~180,000;部署合约 CREATE + 一长串 SSTORE,
+      轻松到 90 万。下方模拟器可以自己拨一拨试试。
+    </p>
   </div>
 
   <!-- ===== Gas 模拟器:让用户自己算一笔交易要多少钱 ===== -->

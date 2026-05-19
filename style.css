@@ -865,15 +865,48 @@ code, pre { font-family: var(--mono); }
   grid-template-columns: repeat(2, 1fr);
   gap: 8px 30px;
 }
+.op-cost-intro {
+  margin: -6px 0 18px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-light);
+}
+.op-cost-intro b { color: #1a1a1a; }
 .op-cost li {
   display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
   border-bottom: 1px dashed var(--border);
   font-size: 14px;
 }
+.op-cost li .op-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 .op-cost li code { color: var(--accent-3); }
 .op-cost li span { color: var(--warn); font-weight: 600; font-family: monospace; }
+.op-cost li em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.op-cost-note {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: #f4e8e3;
+  border: 1px dashed var(--accent);
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-light);
+}
+.op-cost-note b { color: var(--accent); }
 
 /* ---------- Gas 模拟器 ---------- */
 .gas-calc {
