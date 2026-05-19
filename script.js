@@ -653,6 +653,44 @@ async function fetchBlocks() {
 // =======================================================
 // 若锚点落到 <details id="..."> 内,自动展开
 // =======================================================
+// 交易生命周期流程图：图 + 卡片双向悬停联动
+// =======================================================
+(function initTxFlow() {
+  const flow = document.querySelector(".tx-flow");
+  if (!flow) return;
+  const stops = flow.querySelectorAll(".tx-stop");
+  const nodes = flow.querySelectorAll("svg .tx-node");
+  if (!stops.length) return;
+
+  const setStep = (n) => {
+    flow.classList.remove(
+      "is-step-1","is-step-2","is-step-3","is-step-4","is-step-5","is-step-6"
+    );
+    if (n) flow.classList.add("is-step-" + n);
+  };
+
+  // 卡片 → SVG 节点
+  stops.forEach((card) => {
+    const n = card.getAttribute("data-step");
+    card.addEventListener("mouseenter", () => setStep(n));
+    card.addEventListener("focusin",   () => setStep(n));
+    card.addEventListener("mouseleave",() => setStep(null));
+    card.addEventListener("focusout", () => setStep(null));
+  });
+
+  // SVG 节点 → 卡片(根据 class tx-n1..tx-n6 推出 step 序号)
+  nodes.forEach((node) => {
+    const cls = node.getAttribute("class") || "";
+    const m = cls.match(/tx-n([1-6])/);
+    if (!m) return;
+    const n = m[1];
+    node.style.cursor = "default";
+    node.addEventListener("mouseenter", () => setStep(n));
+    node.addEventListener("mouseleave", () => setStep(null));
+  });
+})();
+
+// =======================================================
 (function autoOpenDetails() {
   const open = () => {
     const h = location.hash.replace(/^#/, "");

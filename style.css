@@ -2252,6 +2252,153 @@ footer {
   height: auto;
   display: block;
 }
+
+/* ===== 6 张说明卡片(图下文,列与节点对齐)===== */
+.tx-stops {
+  /* 6 列宽度比例 ≈ SVG 中各节点矩形的相对位置:
+     ① x=20 w=120  ≈ 14%
+     ② x=170 w=120 ≈ 14%
+     ③ x=320 w=120 ≈ 14%
+     ④ x=470 w=130 ≈ 15%(EL 略宽,容纳 gas 结算多一点字)
+     ⑤ x=630 w=120 ≈ 14%
+     ⑥ x=780 w=80  ≈ 9%
+     总计 ≈ 80%,剩余 20% 分给 5 个间隙(每个 ~4%)
+  */
+  display: grid;
+  grid-template-columns: 14fr 14fr 14fr 16fr 14fr 9fr;
+  gap: 0 14px;
+  margin-top: -2px;
+  padding-top: 16px;
+  position: relative;
+}
+/* 顶部水平线,连接 SVG 与卡片群 —— 视觉上让卡片像挂在节点下方 */
+.tx-stops::before {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 8px;
+  height: 1px;
+  border-top: 1px dashed var(--rule-light);
+  pointer-events: none;
+}
+.tx-stop {
+  position: relative;
+  padding: 18px 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--rule-light);
+  border-top: 3px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.3s ease;
+  opacity: 0.55;
+  animation: tx-node-pulse 18s linear infinite;
+}
+.tx-stop[data-step="1"] { animation-delay: 0s;  border-top-color: #4a6b8a; }
+.tx-stop[data-step="2"] { animation-delay: 3s;  border-top-color: #4a6b8a; }
+.tx-stop[data-step="3"] { animation-delay: 6s;  border-top-color: #8b2a2a; }
+.tx-stop[data-step="4"] { animation-delay: 9s;  border-top-color: #8b2a2a; }
+.tx-stop[data-step="5"] { animation-delay: 12s; border-top-color: #2d6a3e; }
+.tx-stop[data-step="6"] { animation-delay: 15s; border-top-color: #2d6a3e; }
+
+/* 顶部小三角"插针",指向上方对应的 SVG 节点 */
+.tx-stop-pin {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #1a1a1a;
+}
+.tx-stop[data-step="1"] .tx-stop-pin,
+.tx-stop[data-step="2"] .tx-stop-pin { border-bottom-color: #4a6b8a; }
+.tx-stop[data-step="3"] .tx-stop-pin,
+.tx-stop[data-step="4"] .tx-stop-pin { border-bottom-color: #8b2a2a; }
+.tx-stop[data-step="5"] .tx-stop-pin,
+.tx-stop[data-step="6"] .tx-stop-pin { border-bottom-color: #2d6a3e; }
+
+.tx-stop-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.tx-stop-num {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+.tx-stop-zone {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+.tx-stop-zone.tx-zone-user { color: #4a6b8a; background: #e8eef2; }
+.tx-stop-zone.tx-zone-el   { color: #8b2a2a; background: #f4e8e3; }
+.tx-stop-zone.tx-zone-cl   { color: #2d6a3e; background: #e4ece6; }
+.tx-stop h4 {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.35;
+}
+.tx-stop p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-light);
+}
+
+/* 悬停 / 聚焦:卡片自身高亮 + 通过 JS 把 .is-step-N 加到 .tx-flow,反向点亮上方节点 */
+.tx-stop:hover,
+.tx-stop:focus-visible {
+  opacity: 1;
+  animation-play-state: paused;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -10px rgba(0, 0, 0, 0.35);
+  outline: none;
+  z-index: 2;
+}
+
+/* 当 .tx-flow 带 is-step-N 时,对应节点 / 卡片立刻点亮,其他变更暗 */
+.tx-flow.is-step-1 .tx-node:not(.tx-n1),
+.tx-flow.is-step-2 .tx-node:not(.tx-n2),
+.tx-flow.is-step-3 .tx-node:not(.tx-n3),
+.tx-flow.is-step-4 .tx-node:not(.tx-n4),
+.tx-flow.is-step-5 .tx-node:not(.tx-n5),
+.tx-flow.is-step-6 .tx-node:not(.tx-n6) { animation-play-state: paused; opacity: 0.4; }
+
+.tx-flow.is-step-1 .tx-n1,
+.tx-flow.is-step-2 .tx-n2,
+.tx-flow.is-step-3 .tx-n3,
+.tx-flow.is-step-4 .tx-n4,
+.tx-flow.is-step-5 .tx-n5,
+.tx-flow.is-step-6 .tx-n6 { animation-play-state: paused; opacity: 1; }
+
+/* 同步:.tx-flow 上加了 is-step-N 时,对应卡片也点亮(.tx-stops 是子元素) */
+.tx-flow.is-step-1 .tx-stops .tx-stop:not([data-step="1"]),
+.tx-flow.is-step-2 .tx-stops .tx-stop:not([data-step="2"]),
+.tx-flow.is-step-3 .tx-stops .tx-stop:not([data-step="3"]),
+.tx-flow.is-step-4 .tx-stops .tx-stop:not([data-step="4"]),
+.tx-flow.is-step-5 .tx-stops .tx-stop:not([data-step="5"]),
+.tx-flow.is-step-6 .tx-stops .tx-stop:not([data-step="6"]) { opacity: 0.4; animation-play-state: paused; }
+.tx-flow.is-step-1 .tx-stops .tx-stop[data-step="1"],
+.tx-flow.is-step-2 .tx-stops .tx-stop[data-step="2"],
+.tx-flow.is-step-3 .tx-stops .tx-stop[data-step="3"],
+.tx-flow.is-step-4 .tx-stops .tx-stop[data-step="4"],
+.tx-flow.is-step-5 .tx-stops .tx-stop[data-step="5"],
+.tx-flow.is-step-6 .tx-stops .tx-stop[data-step="6"] { opacity: 1; animation-play-state: paused; transform: translateY(-2px); box-shadow: 0 6px 18px -10px rgba(0,0,0,0.35); }
 .tx-flow-caption {
   display: flex;
   flex-wrap: wrap;
@@ -2402,10 +2549,21 @@ footer {
 .timeline li[data-zone="el"]   .t-dot { border-color: #8b2a2a; color: #8b2a2a; }
 .timeline li[data-zone="cl"]   .t-dot { border-color: #2d6a3e; color: #2d6a3e; }
 
-/* 移动端:允许横向滚动查看流程 */
+/* 移动端:SVG 横向滚动,卡片改成两列堆叠 */
 @media (max-width: 780px) {
   .tx-flow { overflow-x: auto; }
   .tx-flow svg { min-width: 760px; }
+  .tx-stops {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 0;
+  }
+  .tx-stops::before { display: none; }
+  .tx-stop-pin { display: none; }
+}
+@media (max-width: 480px) {
+  .tx-stops { grid-template-columns: 1fr; }
 }
 
 /* 折叠展开:EVM / PoS 等技术细节默认收起 */
@@ -2512,11 +2670,13 @@ footer {
   .tx-flow .tx-zone-user rect,
   .tx-flow .tx-zone-el rect,
   .tx-flow .tx-zone-cl rect,
-  .tx-flow .tx-stage text {
+  .tx-flow .tx-stage text,
+  .tx-flow .tx-stop {
     animation: none !important;
   }
   .tx-flow .tx-node { opacity: 1; }
   .tx-flow .tx-burn, .tx-flow .tx-tip { opacity: 1; }
   .tx-flow .tx-pkg, .tx-flow .tx-coin-burn, .tx-flow .tx-coin-tip { opacity: 0; }
   .tx-flow .tx-zone rect { fill-opacity: 0.55; }
+  .tx-flow .tx-stop { opacity: 1; }
 }

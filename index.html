@@ -802,13 +802,13 @@
     <p class="page-desc">架构分层、EVM、PoS、账户模型、Gas、交易生命周期——以太坊的工程细节。</p>
   </div>
 
-<!-- ============ 串起来看(全景 · 置顶) ============
+<!-- ============ 一笔交易的全景(置顶) ============
      这一节放在 Tech 页首屏,先给小白一个"一笔交易从发起到永久记录"的全景,
      并圈出每一步属于哪个架构层。下方再把每层拆开细讲。 -->
 <section id="lifecycle" class="section">
   <div class="section-head">
-    <h2>串起来看:一笔交易从点击"确认"到"永久记录"</h2>
-    <p>先看全景——你每一次点"确认",背后都会走完下面这 6 步,并且分别发生在 3 个不同的"架构层"里。下方会再把每一层拆开细讲。</p>
+    <h2>一笔交易:从点击"确认"到"永久记录"</h2>
+    <p>你每一次点"确认",背后都会走完下面这 6 步,分别发生在 3 个不同的"架构层"里。下方会再把每一层拆开细讲。</p>
   </div>
 
   <div class="beginner-hint">
@@ -952,6 +952,69 @@
       </g>
     </svg>
 
+    <!-- ===== 6 张说明卡片:每一张正对上方一个节点,形成"图 + 文"一体 ===== -->
+    <div class="tx-stops" role="list">
+      <div class="tx-stop" data-step="1" data-zone="user" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">①</span>
+          <span class="tx-stop-zone tx-zone-user">用户侧</span>
+        </div>
+        <h4>🖊️ 签名 · 按下"确认"</h4>
+        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
+      </div>
+
+      <div class="tx-stop" data-step="2" data-zone="user" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">②</span>
+          <span class="tx-stop-zone tx-zone-user">网络层</span>
+        </div>
+        <h4>📡 广播到 mempool</h4>
+        <p>通过 JSON-RPC 发给节点,再经 P2P 网络扩散到全球节点,塞进等待池。</p>
+      </div>
+
+      <div class="tx-stop" data-step="3" data-zone="el" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">③</span>
+          <span class="tx-stop-zone tx-zone-el">执行层</span>
+        </div>
+        <h4>📦 Builder 打包</h4>
+        <p>Builder 从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
+      </div>
+
+      <div class="tx-stop" data-step="4" data-zone="el" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">④</span>
+          <span class="tx-stop-zone tx-zone-el">执行层</span>
+        </div>
+        <h4>⚙️ EVM 执行 · 改账本</h4>
+        <p>每个节点重放交易,更新 State/Storage/Receipts 三棵树。<b style="color:#8b2a2a">Base Fee 销毁 🔥</b>,<b style="color:#2d6a3e">Priority Fee 给验证者 💰</b>。</p>
+      </div>
+
+      <div class="tx-stop" data-step="5" data-zone="cl" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">⑤</span>
+          <span class="tx-stop-zone tx-zone-cl">共识层</span>
+        </div>
+        <h4>🗳️ 见证投票</h4>
+        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
+      </div>
+
+      <div class="tx-stop" data-step="6" data-zone="cl" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">⑥</span>
+          <span class="tx-stop-zone tx-zone-cl">共识层</span>
+        </div>
+        <h4>🔒 Finality · 盖章</h4>
+        <p>两个 Epoch(约 12.8 分钟)后,Casper FFG 把区块最终化,再也无法回滚——交易永久写入历史。</p>
+      </div>
+    </div>
+
     <p class="tx-flow-caption">
       <span><i style="background:#4a6b8a"></i>用户侧 / 网络层 · 签名 + 广播</span>
       <span><i style="background:#8b2a2a"></i>执行层(EVM) · 打包 + Gas 结算</span>
@@ -962,51 +1025,6 @@
       <span><b style="color:#2d6a3e">💰 Priority Fee</b> 奖励给当前出块的验证者</span>
     </p>
   </div>
-
-  <ol class="timeline">
-    <li data-zone="user">
-      <div class="t-dot">1</div>
-      <div class="t-body">
-        <h4>🖊️ 签名 · 你按下"确认" <span class="t-zone t-zone-user">用户侧</span></h4>
-        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
-      </div>
-    </li>
-    <li data-zone="user">
-      <div class="t-dot">2</div>
-      <div class="t-body">
-        <h4>📡 广播到 mempool · 交易进"候车厅" <span class="t-zone t-zone-user">网络层</span></h4>
-        <p>通过 JSON-RPC 发给节点,节点再通过 P2P 网络转告全球所有节点,大家一起把它塞进等待池。</p>
-      </div>
-    </li>
-    <li data-zone="el">
-      <div class="t-dot">3</div>
-      <div class="t-body">
-        <h4>📦 Builder 打包 · 被选中上车 <span class="t-zone t-zone-el">执行层</span></h4>
-        <p>专业打包者(Builder)从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
-      </div>
-    </li>
-    <li data-zone="el">
-      <div class="t-dot">4</div>
-      <div class="t-body">
-        <h4>⚙️ EVM 执行 · 改账本 <span class="t-zone t-zone-el">执行层</span></h4>
-        <p>每个节点都把这批交易重放一遍,更新 State/Storage/Receipts 三棵树,算出新的状态根。同时 <b style="color:#8b2a2a">Base Fee 被销毁 🔥</b>,<b style="color:#2d6a3e">Priority Fee 归验证者 💰</b>。</p>
-      </div>
-    </li>
-    <li data-zone="cl">
-      <div class="t-dot">5</div>
-      <div class="t-body">
-        <h4>🗳️ 见证投票 · 大家都认可 <span class="t-zone t-zone-cl">共识层</span></h4>
-        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
-      </div>
-    </li>
-    <li data-zone="cl">
-      <div class="t-dot">6</div>
-      <div class="t-body">
-        <h4>🔒 Finality · 盖章永久生效 <span class="t-zone t-zone-cl">共识层</span></h4>
-        <p>经过两个 Epoch(约 12.8 分钟),Casper FFG 把区块最终化,再也无法回滚 —— 你的交易永久写入历史。</p>
-      </div>
-    </li>
-  </ol>
 </section>
 
 <!-- ============ 架构概览(图解 + 概念卡) ============ -->
