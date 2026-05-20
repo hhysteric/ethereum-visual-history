@@ -1774,25 +1774,25 @@ ISZERO
 <!-- ============ 扩容 ============ -->
 <section id="scaling" class="section">
   <div class="section-head">
-    <h2>③ Rollup-centric 路线 · 三大技术分支</h2>
-    <p>L1 主网专注于「结算 + DA」,把执行外包给 L2。今天主流的 L2 落在 3 条技术线上 —— 取舍在于<b>速度、成本、安全模型</b>。</p>
+    <h2>③ Rollup-centric 路线 · L2 技术分支</h2>
+    <p>L1 主网专注于「结算 + DA」,把执行外包给 L2。按 <b>证明类型 × 数据放哪</b> 两两组合,主流 L2 落在 4 个象限上 —— 取舍在于<b>速度、成本、安全模型</b>。</p>
   </div>
 
-  <div class="rollup-compare rollup-compare-3">
+  <div class="rollup-compare rollup-compare-4">
     <div class="rc-card optim">
       <h3>Optimistic Rollup</h3>
-      <p class="rc-tag">默认乐观 · 欺诈证明</p>
+      <p class="rc-tag">欺诈证明 · 数据上 L1</p>
       <p>"先打包,有问题再打官司"。挑战期(7 天)内任何人可提交欺诈证明,推翻错误状态。</p>
       <ul>
         <li>✅ EVM 等价,合约可几乎无改动迁移</li>
-        <li>✅ 成本低,生态成熟</li>
-        <li>⚠️ 提现需等 7 天挑战期</li>
+        <li>✅ 成本低,生态最成熟</li>
+        <li>⚠️ 原生提现需等 7 天挑战期</li>
       </ul>
       <div class="rc-eg">Arbitrum · Optimism · Base · Mantle</div>
     </div>
     <div class="rc-card zk">
       <h3>ZK Rollup</h3>
-      <p class="rc-tag">零知识证明 · 数学保证</p>
+      <p class="rc-tag">有效性证明 · 数据上 L1</p>
       <p>每个区块附带一个密码学证明,L1 一验就知道有没有错——不需要等待挑战期。</p>
       <ul>
         <li>✅ 终局性极快(分钟级提现)</li>
@@ -1801,10 +1801,21 @@ ISZERO
       </ul>
       <div class="rc-eg">zkSync · StarkNet · Scroll · Linea · Polygon zkEVM</div>
     </div>
+    <div class="rc-card optimium">
+      <h3>Optimium</h3>
+      <p class="rc-tag">欺诈证明 · 数据放链下</p>
+      <p>把 Optimistic 的数据从 L1 Blob 搬到外部 DA(EigenDA / Celestia / Avail)。费用更低,安全弱于纯 Rollup。</p>
+      <ul>
+        <li>✅ TPS 高、单笔成本接近零</li>
+        <li>✅ 适合大规模消费级应用</li>
+        <li>⚠️ 数据可用性依赖外部网络</li>
+      </ul>
+      <div class="rc-eg">Mantle(早期)· Metis · Manta Pacific</div>
+    </div>
     <div class="rc-card validium">
       <h3>Validium / Volition</h3>
-      <p class="rc-tag">数据放链下 · 极致便宜</p>
-      <p>用 ZK 证明保证状态正确,但<b>把交易数据放链下</b>(DAC 委员会或 EigenDA 等)。安全假设比 Rollup 弱,但费用极低。</p>
+      <p class="rc-tag">有效性证明 · 数据放链下</p>
+      <p>用 ZK 证明保证状态正确,但<b>把交易数据放链下</b>(DAC 委员会或 EigenDA 等)。Volition 让用户每笔自选 DA。</p>
       <ul>
         <li>✅ 单笔成本可低至几厘美元</li>
         <li>✅ 适合游戏、社交等高频低值场景</li>
@@ -1812,6 +1823,12 @@ ISZERO
       </ul>
       <div class="rc-eg">Immutable X · Sorare · X Layer · Polygon Miden</div>
     </div>
+  </div>
+
+  <!-- DA 维度补充 -->
+  <div class="da-dim-note">
+    <span class="da-dim-tag">另一个维度</span>
+    <p>同一个 L2 还可以选不同的 <b>DA 数据可用性层</b>:<b>Ethereum Blob</b>(最贵但最安全)· <b>Celestia</b> · <b>EigenDA</b>(基于 Restaking)· <b>Avail</b>。Volition 模式下,用户甚至可以为每笔交易单独选 DA —— "贵但稳" 还是 "便宜但弱信任",由你自己决定。</p>
   </div>
 
   <!-- L2 成熟度阶梯(L2BEAT 标准) -->
@@ -1844,12 +1861,12 @@ ISZERO
   <div class="da-status">
     <div class="da-head">
       <h4>📦 Blob 数据层现状(EIP-4844 → Danksharding)</h4>
-      <p>2024 年 3 月 Dencun 升级带来"Proto-Danksharding"——给 Rollup 开了一条<b>独立的廉价数据通道</b>,L2 平均费用瞬间降了 90%+。</p>
+      <p>2024 年 3 月 Dencun 升级带来"Proto-Danksharding"——给 Rollup 开了一条<b>独立的廉价数据通道</b>,L2 平均费用瞬间降了 90%+。2025 年 Pectra 升级再把 Blob 容量翻倍。</p>
     </div>
 
     <div class="da-grid">
       <div class="da-now">
-        <span class="da-label">现在(Proto-Danksharding)</span>
+        <span class="da-label">现在(Pectra 后 · 2025-05)</span>
         <div class="da-blob-row">
           <div class="da-blob is-on"></div>
           <div class="da-blob is-on"></div>
@@ -1857,8 +1874,11 @@ ISZERO
           <div class="da-blob is-on"></div>
           <div class="da-blob is-on"></div>
           <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
         </div>
-        <p class="da-cap">每块最多 <b>6 个 Blob</b> · 共 ~768 KB · 保留 18 天</p>
+        <p class="da-cap">target <b>6</b> / max <b>9 个 Blob</b>/块 · 共 ~1.1 MB · 保留 18 天</p>
       </div>
 
       <div class="da-arrow">→</div>
@@ -1880,8 +1900,8 @@ ISZERO
     </div>
 
     <p class="da-foot">
-      🎯 <b>下一站:</b>PeerDAS(数据可用性抽样)让普通节点不用下载全部数据,只抽样验证一小段就够 ——
-      这是从 6 Blob 走向 128 Blob 的关键一步。
+      🎯 <b>下一站(Fusaka 升级):</b>引入 <b>PeerDAS</b>(数据可用性抽样)—— 让普通节点不用下载全部 Blob,只抽样验证一小段就够。
+      Fusaka 计划把 max blob 进一步推到 <b>12+</b>,这是从今天的 9 Blob 走向 128 Blob 完整 Danksharding 的关键一步。
     </p>
   </div>
 </section>

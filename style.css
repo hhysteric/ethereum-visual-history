@@ -1459,14 +1459,22 @@ code, pre { font-family: var(--mono); }
 }
 .progress-note a:hover { text-decoration-style: solid; }
 
-/* ---------- 三栏 Rollup 对比 ---------- */
+/* ---------- 三栏 / 四栏 Rollup 对比 ---------- */
 .rollup-compare-3 {
   grid-template-columns: repeat(3, 1fr);
+}
+.rollup-compare-4 {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 .rc-card.validium {
   border-top: 3px solid #6a3e8b;
 }
 .rc-card.validium h3 { color: #6a3e8b; }
+.rc-card.optimium {
+  border-top: 3px solid #b8762a;
+}
+.rc-card.optimium h3 { color: #b8762a; }
 .rc-card .rc-tag {
   display: inline-block;
   margin-top: 0;
@@ -1481,8 +1489,46 @@ code, pre { font-family: var(--mono); }
   border-radius: 2px;
 }
 
+@media (max-width: 1180px) {
+  .rollup-compare-4 { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 980px) {
   .rollup-compare-3 { grid-template-columns: 1fr; }
+  .rollup-compare-4 { grid-template-columns: 1fr; }
+}
+
+/* ---------- DA 维度补充 note ---------- */
+.da-dim-note {
+  margin-top: 18px;
+  padding: 14px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid #4a6b8a;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.da-dim-tag {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #4a6b8a;
+  background: rgba(74,107,138,0.08);
+  border: 1px solid rgba(74,107,138,0.3);
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.da-dim-note p {
+  flex: 1 1 320px;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #2a2a2a;
 }
 
 /* ---------- L2 成熟度阶梯 ---------- */
@@ -1601,10 +1647,10 @@ code, pre { font-family: var(--mono); }
 .da-future .da-label { color: var(--accent); }
 .da-blob-row {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 3px;
   width: 100%;
-  max-width: 220px;
+  max-width: 260px;
 }
 .da-blob-row-many {
   grid-template-columns: repeat(8, 1fr);
