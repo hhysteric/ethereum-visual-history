@@ -591,10 +591,10 @@
 
       <a class="entry-card entry-future" href="#/future">
         <h3>未来 · Future</h3>
-        <p>Vitalik 六阶段路线图 + FAQ。</p>
+        <p>Vitalik 六阶段 + 2029 路线全景。</p>
         <ul>
           <li>六阶段路线图</li>
-          <li>常见问答 FAQ</li>
+          <li>2029 关键里程碑</li>
         </ul>
         <span class="entry-go">进入 →</span>
       </a>
@@ -2094,8 +2094,8 @@ ISZERO
 <div class="page" data-page="future">
   <div class="page-header">
     <p class="page-eyebrow">FUTURE · 未来</p>
-    <h1>未来:路线图与高频问答</h1>
-    <p class="page-desc">Vitalik 六阶段 + 十道社区最常问的问题,为你勾勒以太坊的未来轮廓。</p>
+    <h1>未来:路线图与 2029 全景</h1>
+    <p class="page-desc">从 Vitalik 的六阶段框架,到 2026 → 2029 已敲定的硬分叉与关键里程碑 —— 看懂以太坊未来 4 年的演进节奏。</p>
   </div>
 
 <!-- ============ 14 路线图 ============ -->
@@ -2167,55 +2167,119 @@ ISZERO
   </div>
 </section>
 
-<!-- ============ 15 FAQ (迁至 future 页末尾) ============ -->
-<section id="faq" class="section alt">
+<!-- ============ 15 2029 路线全景 ============ -->
+<section id="roadmap-2029" class="section alt">
   <div class="section-head">
-    <h2>常见问答 FAQ</h2>
-    <p>新手最常问的 10 个关于以太坊的问题。</p>
+    <h2>2026 → 2029 路线全景</h2>
+    <p>把六阶段框架投影到时间轴上 —— 哪些升级已经定档、哪些还在研究中?以下是 2026 年 5 月的最新共识。</p>
   </div>
 
-  <div class="faq-list">
-    <details class="faq-item">
-      <summary>什么是以太坊?和比特币有什么区别?</summary>
-      <p>比特币是「数字现金」,主要功能是转账;以太坊则是一台「世界计算机」,不仅能转账,还能运行任意代码(智能合约),支撑 DeFi、NFT、DAO 等应用。比特币使用受限脚本且至今维持 PoW,以太坊则在 2022 年切换为更节能的 PoS。</p>
-    </details>
-    <details class="faq-item">
-      <summary>PoS 安全可靠吗?会有人作弊出块吗?</summary>
-      <p>以太坊 PoS 设计了严格的惩罚机制(Slashing):双签、矛盾投票会被罚没一部分质押 ETH 并强制退出。作恶成本极高,而诚实参与则稳定获奖。经过几年主网运行,PoS 在安全性上达到预期。</p>
-    </details>
-    <details class="faq-item">
-      <summary>为什么从 PoW 转成 PoS?有什么好处?</summary>
-      <p>三点:① 能耗下降约 99.95%,摆脱「挖矿耗电」的争议;② 硬件门槛降低,普通人也能参与验证;③ 协议可对恶意行为精准惩罚,而 PoW 只能被动依赖算力竞争。</p>
-    </details>
-    <details class="faq-item">
-      <summary>以太坊交易费为什么这么高?</summary>
-      <p>主网区块容量有限(约 30M Gas / 12 秒),需求激增时拥堵推高 Base Fee。2021 年 NFT 热潮让平均费用曾超过 $50。现在大多数交易迁至 L2,主网则通过 EIP-4844 降低 Rollup 上链成本,平均费用已回落至 $1 以下。</p>
-    </details>
-    <details class="faq-item">
-      <summary>质押后可以随时取回我的 ETH 吗?</summary>
-      <p>可以。2023 年 4 月上海升级(EIP-4895)开启质押提现后,验证者可以正常申请退出,经过一段退出队列后拿回本金与奖励。流动性质押代币(如 stETH)则可在 DeFi 市场随时兑换。</p>
-    </details>
-    <details class="faq-item">
-      <summary>什么是 Rollup?为什么需要它们?</summary>
-      <p>Rollup 是 L2 扩容方案,将大量交易在链外执行,再把压缩后的数据提交到以太坊主网作为「数据可用性 + 结算层」。这样既大幅降低了单笔交易成本,又继承了主网的安全性。分两种:Optimistic(欺诈证明)与 ZK(零知识证明)。</p>
-    </details>
-    <details class="faq-item">
-      <summary>Danksharding 是什么?还会有「分片」吗?</summary>
-      <p>原计划的状态分片已经放弃,取而代之的是 Danksharding——一种「数据可用性分片」,让主链为 Rollup 提供大容量数据层。2024 年 Dencun 升级的 EIP-4844(Proto-Danksharding)是第一步;完整版目标是每块 ~64 MB 数据。</p>
-    </details>
-    <details class="faq-item">
-      <summary>客户端多样性为什么重要?</summary>
-      <p>以太坊节点可以选择不同软件(Geth、Nethermind、Besu、Erigon、Reth 等)。若某个客户端占比过高且出现严重 Bug,全网最终性可能受威胁。保持多客户端均衡分布,是网络韧性的重要保障。</p>
-    </details>
-    <details class="faq-item">
-      <summary>以太坊真能达到 10 万 TPS 吗?</summary>
-      <p>主链本身 TPS 不会大幅提升。真正的「10 万 TPS」是通过 L1(结算+数据) + 多个 L2(执行) + Danksharding(扩容数据)协同实现的——用户在 L2 上体验高吞吐,L1 负责最终安全结算。</p>
-    </details>
-    <details class="faq-item">
-      <summary>零基础如何入门以太坊?</summary>
-      <p>建议路径:① ethereum.org 中文版入门教程;② 动手装一个钱包(MetaMask / Rabby);③ 在测试网(Sepolia)领水玩一次转账;④ 读本页的 FAQ 与术语;⑤ 通过 Etherscan 观察一笔真实交易的所有细节。</p>
-    </details>
+  <!-- 时间轴 -->
+  <div class="rm29-timeline">
+    <div class="rm29-track"></div>
+
+    <div class="rm29-year rm29-done">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2025 · 已完成</span>
+          <h3>Pectra</h3>
+        </div>
+        <ul>
+          <li><b>EIP-7702</b> · EOA 临时升级为合约钱包(账户抽象大众化)</li>
+          <li><b>Blob 翻倍</b> · target 3→6, max 6→9</li>
+          <li><b>EIP-7251</b> · 验证者最大有效余额 32 → 2048 ETH</li>
+          <li><b>EIP-6110</b> · 存款合约迁入信标链,新验证者上线时间从 ~12h 降到 ~13min</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-active">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2026 · 即将上线</span>
+          <h3>Fusaka</h3>
+        </div>
+        <ul>
+          <li><b>PeerDAS</b> · 数据可用性抽样,节点不再需要下载完整 Blob</li>
+          <li><b>Blob 容量</b> · max 9 → 12+,L2 上链成本再降一档</li>
+          <li><b>EVM Object Format(EOF)</b> · 字节码模块化,合约更易验证</li>
+          <li>客户端更轻量,Reth / Nimbus 等普及在即</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-planned">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2027 · 设计中</span>
+          <h3>Glamsterdam(暂定名)</h3>
+        </div>
+        <ul>
+          <li><b>Slot 时间</b> · 12s → 6s(出块速度翻倍)</li>
+          <li><b>ePBS</b> · 提议者-构建者分离写入协议层,削弱 MEV 中心化</li>
+          <li><b>Verkle Tree</b> · 替代 MPT,无状态客户端关键一步</li>
+          <li><b>Inclusion Lists</b> · 抗审查机制写入共识</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-research">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2028+ · 研究中</span>
+          <h3>The Verge / Purge 收尾</h3>
+        </div>
+        <ul>
+          <li><b>EIP-4444</b> · 历史数据过期,全节点磁盘占用从 TB 级降回 GB 级</li>
+          <li><b>SSF</b> · 单 slot 终局性,12 秒内不可逆</li>
+          <li><b>完整 Danksharding</b> · 128 Blob/块 → 1.3 MB/s 持续 DA 带宽</li>
+          <li><b>Account Abstraction</b> 全面替换 EOA(EIP-7702 后续)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-vision">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2029 · 愿景</span>
+          <h3>Snarkified Ethereum</h3>
+        </div>
+        <ul>
+          <li><b>L1 zkVM(RISC-V)</b> · Vitalik 提案的"极简执行层",EVM 通过解释器兼容</li>
+          <li><b>实时证明</b> · 区块出块即附带 ZK 证明,无需信任客户端实现</li>
+          <li><b>Stage 2 L2 普及</b> · 大部分主流 L2 完成完全无信任化</li>
+          <li><b>10 万+ TPS</b> · L1 + 完整 DAS + 成熟 zkVM 协同</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <!-- 阶段进度对照 -->
+  <div class="rm29-pillars">
+    <h4>对照六阶段:每条战线走到哪一步了?</h4>
+    <div class="rm29-pillar-grid">
+      <div class="rm29-pillar"><b>The Merge</b><span>✅ 完成</span><p>PoS 已平稳运行 4 年</p></div>
+      <div class="rm29-pillar"><b>The Surge</b><span>🛠 进行中</span><p>Blob 翻倍 → PeerDAS → 完整 DAS</p></div>
+      <div class="rm29-pillar"><b>The Scourge</b><span>🧪 研究中</span><p>ePBS / Inclusion Lists 推进中</p></div>
+      <div class="rm29-pillar"><b>The Verge</b><span>📐 设计中</span><p>Verkle Tree 锁定 Glamsterdam</p></div>
+      <div class="rm29-pillar"><b>The Purge</b><span>🔍 准备中</span><p>EIP-4444 历史过期接近落地</p></div>
+      <div class="rm29-pillar"><b>The Splurge</b><span>🌌 长期</span><p>EOF / 7702 / zkVM 持续推进</p></div>
+    </div>
+  </div>
+
+  <p class="rm29-note">
+    📅 <b>截止 2026 年 5 月。</b>
+    上方时间轴中 Glamsterdam、Snarkified 等项目命名与时点尚未完全敲定,以
+    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a>
+    与
+    <a href="https://ethroadmap.com" target="_blank" rel="noopener">ethroadmap.com</a>
+    为准。
+  </p>
 </section>
 
 </div><!-- /page future -->
