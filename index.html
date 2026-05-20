@@ -2532,12 +2532,39 @@ ISZERO
   </div>
 
   <div class="recent-disclaimer">
-    📌 <b>数据来源:</b>
-    <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a>(Vitalik 个人博客)·
-    <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a>(EF 官方博客)·
-    <a href="https://ethereum-magicians.org" target="_blank" rel="noopener">ethereum-magicians.org</a>(EIP 讨论) ·
-    <a href="https://github.com/ethereum/EIPs" target="_blank" rel="noopener">EIPs Repo</a>。
-    本卡片需手工维护,内容截止 <b>2026 年 5 月</b>。
+    📌 <b>数据来源</b>(按权威程度分组):
+    <br>
+    <b class="rd-cat">官方 · Official</b>
+    <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a> ·
+    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a> ·
+    <a href="https://github.com/ethereum/EIPs" target="_blank" rel="noopener">EIPs Repo</a> ·
+    <a href="https://eips.ethereum.org" target="_blank" rel="noopener">eips.ethereum.org</a> ·
+    <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a>
+    <br>
+    <b class="rd-cat">个人 · Vitalik</b>
+    <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a> ·
+    <a href="https://x.com/VitalikButerin" target="_blank" rel="noopener">@VitalikButerin</a> ·
+    <a href="https://hackmd.io/@vbuterin" target="_blank" rel="noopener">hackmd.io/@vbuterin</a>
+    <br>
+    <b class="rd-cat">研究 · Research</b>
+    <a href="https://ethereum-magicians.org" target="_blank" rel="noopener">ethereum-magicians.org</a> ·
+    <a href="https://ethresear.ch" target="_blank" rel="noopener">ethresear.ch</a> ·
+    <a href="https://notes.ethereum.org" target="_blank" rel="noopener">notes.ethereum.org</a>
+    <br>
+    <b class="rd-cat">数据 · Metrics</b>
+    <a href="https://l2beat.com" target="_blank" rel="noopener">l2beat.com</a> ·
+    <a href="https://dune.com" target="_blank" rel="noopener">dune.com</a> ·
+    <a href="https://etherscan.io" target="_blank" rel="noopener">etherscan.io</a> ·
+    <a href="https://ultrasound.money" target="_blank" rel="noopener">ultrasound.money</a> ·
+    <a href="https://clientdiversity.org" target="_blank" rel="noopener">clientdiversity.org</a>
+    <br>
+    <b class="rd-cat">媒体 · Press</b>
+    <a href="https://galaxy.com/insights" target="_blank" rel="noopener">Galaxy Research</a> ·
+    <a href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk</a> ·
+    <a href="https://www.theblock.co" target="_blank" rel="noopener">The Block</a> ·
+    <a href="https://newsletter.banklesshq.com" target="_blank" rel="noopener">Bankless</a>
+    <br><br>
+    本卡片需手工维护,内容截止 <b>2026 年 5 月</b>。引用前请<b>点击源链接核对</b>原文。
   </div>
 
   <!-- 时间窗格 -->
@@ -2548,12 +2575,17 @@ ISZERO
       <div class="recent-col-head">
         <span class="recent-tag">近一周</span>
         <h3>≤ 7 天</h3>
-        <p class="recent-col-desc">仅列已可在公开渠道核实的条目。如本周无重大事件,此列可能为空。</p>
+        <p class="recent-col-desc">仅列已可在公开渠道核实的条目。</p>
       </div>
-      <div class="recent-empty">
-        <p>暂无可在 vitalik.eth.limo / blog.ethereum.org 公开核实的重大动态。</p>
-        <p class="recent-empty-hint">建议每周日手动检查并补充。</p>
-      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.05.13</span>
+          <span class="recent-source recent-src-erc">ERC-7730</span>
+          <p>Clear Signing 在生态层面进入强制阶段 —— Ledger 等硬件钱包对未提供 ERC-7730 元数据的 dApp 调用触发"盲签警告"。dApp 需提交结构化 JSON,使签名画面以人类可读方式呈现交易意图。</p>
+          <a class="recent-link" href="https://eips.ethereum.org/EIPS/eip-7730" target="_blank" rel="noopener">EIP-7730 规范 →</a>
+          <a class="recent-link" href="https://github.com/LedgerHQ/clear-signing-erc7730-registry" target="_blank" rel="noopener">Ledger 注册库 →</a>
+        </li>
+      </ul>
     </div>
 
     <!-- 近一月 -->

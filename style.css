@@ -3188,6 +3188,19 @@ footer {
   text-underline-offset: 2px;
 }
 .recent-disclaimer a:hover { text-decoration-style: solid; }
+.recent-disclaimer .rd-cat {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 1px 7px;
+  margin: 4px 8px 4px 0;
+  color: var(--card);
+  background: var(--ink);
+  border-radius: 2px;
+  text-transform: uppercase;
+}
 
 .recent-grid {
   display: grid;
@@ -3285,6 +3298,7 @@ footer {
 .recent-src-ef      { background: #4a6b8a; }
 .recent-src-eips    { background: #b8762a; }
 .recent-src-mainnet { background: #2d6a3e; }
+.recent-src-erc     { background: #6a3e8b; }
 .recent-item p {
   margin: 4px 0 8px;
   font-size: 13px;
