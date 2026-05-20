@@ -1831,6 +1831,43 @@ ISZERO
     <p>同一个 L2 还可以选不同的 <b>DA 数据可用性层</b>:<b>Ethereum Blob</b>(最贵但最安全)· <b>Celestia</b> · <b>EigenDA</b>(基于 Restaking)· <b>Avail</b>。Volition 模式下,用户甚至可以为每笔交易单独选 DA —— "贵但稳" 还是 "便宜但弱信任",由你自己决定。</p>
   </div>
 
+  <!-- 执行层演进路径:EVM → zkEVM → zkVM(RISC-V) -->
+  <div class="vm-evolution">
+    <div class="vme-head">
+      <h4>🧬 执行层演进 · EVM → zkEVM → zkVM(RISC-V)</h4>
+      <p>L2 的"虚拟机"也在迭代。zkEVM 是当下最实用的方案,但未必是终局 —— Vitalik 在 2025 年 4 月提案 L1 长期可迁向 RISC-V zkVM。</p>
+    </div>
+    <div class="vme-row">
+      <div class="vme-step vme-past">
+        <div class="vme-era">过去 · 2015+</div>
+        <div class="vme-name">EVM</div>
+        <p class="vme-tag">专用虚拟机 · 256 位字长</p>
+        <p class="vme-body">为智能合约共识设计,但<b>对 ZK 不友好</b>:Keccak256 哈希在电路里成本极高,256 位运算贵。</p>
+        <div class="vme-meta">代表:L1 主网 / 所有 EVM 链</div>
+      </div>
+      <div class="vme-arrow">→</div>
+      <div class="vme-step vme-now">
+        <div class="vme-era">现在 · 2023+</div>
+        <div class="vme-name">zkEVM</div>
+        <p class="vme-tag">在 ZK 电路里复刻 EVM</p>
+        <p class="vme-body">兼容 Solidity,合约几乎无改动迁移。代价:证明慢、电路复杂。Vitalik 把它分成 Type 1~4 五档兼容性。</p>
+        <div class="vme-meta">代表:Scroll · Linea · zkSync · Polygon zkEVM</div>
+      </div>
+      <div class="vme-arrow">→</div>
+      <div class="vme-step vme-future">
+        <div class="vme-era">未来 · 2027?</div>
+        <div class="vme-name">zkVM(RISC-V)</div>
+        <p class="vme-tag">通用指令集 · ZK 原生</p>
+        <p class="vme-body">证明 RISC-V 这种<b>简单通用</b>的指令集。Rust/C/Go 都能编译进来,证明速度比 zkEVM 快 1~2 个数量级。EVM 通过解释器向后兼容。</p>
+        <div class="vme-meta">代表:RISC Zero · SP1 · Succinct · Jolt</div>
+      </div>
+    </div>
+    <p class="vme-foot">
+      💡 <b>关键洞察:</b>zkEVM 证明的是「EVM 这台特定虚拟机」;zkVM 证明的是「任何 CPU 程序」——
+      后者一旦成熟,zkEVM 只是它的一个<b>特例</b>(把 EVM 解释器编译到 RISC-V 上跑)。
+    </p>
+  </div>
+
   <!-- L2 成熟度阶梯(L2BEAT 标准) -->
   <div class="l2-stages">
     <h4>L2 成熟度阶梯 · L2BEAT Stage 标准</h4>
