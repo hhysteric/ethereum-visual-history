@@ -2289,37 +2289,111 @@ ISZERO
     <p>EF Protocol 团队提出的 <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a> 是一份"草案版"L1 路线图——把上面那条时间轴拆成 <b>3 个执行层</b> × <b>5 个长期目标</b> 的二维视图,供研究者协调讨论。</p>
   </div>
 
-  <!-- 五大北极星(North Stars) -->
-  <div class="sm-stars">
-    <div class="sm-star sm-s1">
-      <div class="sm-star-icon">⚡</div>
-      <h4>Fast L1</h4>
-      <p class="sm-star-tag">秒级终局性</p>
-      <p class="sm-star-body">把 12 秒 slot 砍到 6 秒,推进 SSF(单 slot 终局)—— 让 L1 反应速度追上中心化交易所。</p>
+  <!-- 五大北极星(按"性能 / 韧性 / 体验"三大类划分) -->
+  <div class="sm-groups">
+    <!-- 性能组(3 颗) -->
+    <div class="sm-group sm-g-perf">
+      <div class="sm-group-head">
+        <span class="sm-group-icon">🏎</span>
+        <div>
+          <h3>性能 · Performance</h3>
+          <p>让链跑得更快、更宽。三颗星共同目标:把 L1+L2 推进到亿级用户级别。</p>
+        </div>
+      </div>
+      <div class="sm-stars sm-stars-3">
+        <div class="sm-star sm-s1">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">⚡</div>
+            <span class="sm-stage sm-stage-design">📐 设计中</span>
+          </div>
+          <h4>Fast L1</h4>
+          <p class="sm-star-tag">秒级终局性</p>
+          <p class="sm-star-body">把 12 秒 slot 砍到 6 秒,推进 SSF(单 slot 终局)—— 让 L1 反应速度追上中心化交易所。</p>
+          <div class="sm-progress" data-pct="35">
+            <div class="sm-progress-bar"><div class="sm-progress-fill" style="width:35%"></div></div>
+            <div class="sm-progress-meta"><b>35%</b><span>Slot 6s 锁定 Glamsterdam</span></div>
+          </div>
+        </div>
+        <div class="sm-star sm-s2">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">🚀</div>
+            <span class="sm-stage sm-stage-research">🔬 研究中</span>
+          </div>
+          <h4>Gigagas L1</h4>
+          <p class="sm-star-tag">10K TPS · 主网</p>
+          <p class="sm-star-body">把 L1 区块 Gas 上限推到 G 级,让主网自己也能扛住高频应用,不再完全依赖 L2。</p>
+          <div class="sm-progress" data-pct="15">
+            <div class="sm-progress-bar"><div class="sm-progress-fill" style="width:15%"></div></div>
+            <div class="sm-progress-meta"><b>15%</b><span>Gas limit 渐增 + EOF 准备</span></div>
+          </div>
+        </div>
+        <div class="sm-star sm-s3">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">🌌</div>
+            <span class="sm-stage sm-stage-active">🛠 进行中</span>
+          </div>
+          <h4>Teragas L2</h4>
+          <p class="sm-star-tag">10M TPS · L2 总和</p>
+          <p class="sm-star-body">完整 Danksharding + PeerDAS,把 Blob 总带宽推到所有 L2 加起来 1000 万 TPS 的水平。</p>
+          <div class="sm-progress" data-pct="45">
+            <div class="sm-progress-bar"><div class="sm-progress-fill" style="width:45%"></div></div>
+            <div class="sm-progress-meta"><b>45%</b><span>Pectra Blob×2 已交付,Fusaka PeerDAS</span></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="sm-star sm-s2">
-      <div class="sm-star-icon">🚀</div>
-      <h4>Gigagas L1</h4>
-      <p class="sm-star-tag">10K TPS · 主网</p>
-      <p class="sm-star-body">把 L1 区块 Gas 上限提升到 G 级,让主网自己也能扛住高频应用,不再完全依赖 L2。</p>
-    </div>
-    <div class="sm-star sm-s3">
-      <div class="sm-star-icon">🌌</div>
-      <h4>Teragas L2</h4>
-      <p class="sm-star-tag">10M TPS · L2 总和</p>
-      <p class="sm-star-body">通过完整 Danksharding + PeerDAS,把 Blob 总带宽推到所有 L2 加起来 1000 万 TPS 的水平。</p>
-    </div>
-    <div class="sm-star sm-s4">
-      <div class="sm-star-icon">🛡️</div>
-      <h4>Post-Quantum</h4>
-      <p class="sm-star-tag">抗量子安全</p>
-      <p class="sm-star-body">用基于哈希的签名(STARK 友好)替换椭圆曲线,即使 Shor 算法落地也不会一夜崩盘。</p>
-    </div>
-    <div class="sm-star sm-s5">
-      <div class="sm-star-icon">🕶️</div>
-      <h4>Native Privacy</h4>
-      <p class="sm-star-tag">隐私转账原生化</p>
-      <p class="sm-star-body">把 Privacy Pools / 屏蔽转账纳入协议层,让"不暴露余额"成为默认能力,而非外挂应用。</p>
+
+    <!-- 韧性 + 体验(2 颗,并排一行) -->
+    <div class="sm-group-row">
+      <div class="sm-group sm-g-resil">
+        <div class="sm-group-head">
+          <span class="sm-group-icon">🛡</span>
+          <div>
+            <h3>韧性 · Resilience</h3>
+            <p>让链长期活下去 —— 即使密码学假设被推翻。</p>
+          </div>
+        </div>
+        <div class="sm-stars sm-stars-1">
+          <div class="sm-star sm-s4">
+            <div class="sm-star-top">
+              <div class="sm-star-icon">🛡️</div>
+              <span class="sm-stage sm-stage-early">🌱 早期研究</span>
+            </div>
+            <h4>Post-Quantum</h4>
+            <p class="sm-star-tag">抗量子安全</p>
+            <p class="sm-star-body">用基于哈希的签名(STARK 友好)替换椭圆曲线,即使 Shor 算法落地也不会一夜崩盘。</p>
+            <div class="sm-progress" data-pct="8">
+              <div class="sm-progress-bar"><div class="sm-progress-fill" style="width:8%"></div></div>
+              <div class="sm-progress-meta"><b>8%</b><span>STARK 友好签名仍在选型</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sm-group sm-g-exp">
+        <div class="sm-group-head">
+          <span class="sm-group-icon">🕶</span>
+          <div>
+            <h3>体验 · Experience</h3>
+            <p>让用户用起来更舒服 —— 隐私是其中最难补的一块。</p>
+          </div>
+        </div>
+        <div class="sm-stars sm-stars-1">
+          <div class="sm-star sm-s5">
+            <div class="sm-star-top">
+              <div class="sm-star-icon">🕶️</div>
+              <span class="sm-stage sm-stage-early">🌱 早期研究</span>
+            </div>
+            <h4>Native Privacy</h4>
+            <p class="sm-star-tag">隐私转账原生化</p>
+            <p class="sm-star-body">把 Privacy Pools / 屏蔽转账纳入协议层,让"不暴露余额"成为默认能力,而非外挂应用。</p>
+            <div class="sm-progress" data-pct="12">
+              <div class="sm-progress-bar"><div class="sm-progress-fill" style="width:12%"></div></div>
+              <div class="sm-progress-meta"><b>12%</b><span>Privacy Pools 应用层先行</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
