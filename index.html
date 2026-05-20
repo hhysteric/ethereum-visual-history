@@ -2282,6 +2282,140 @@ ISZERO
   </p>
 </section>
 
+<!-- ============ 16 EF Strawmap · 五大北极星 ============ -->
+<section id="strawmap" class="section">
+  <div class="section-head">
+    <h2>EF Strawmap · 五大北极星</h2>
+    <p>EF Protocol 团队提出的 <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a> 是一份"草案版"L1 路线图——把上面那条时间轴拆成 <b>3 个执行层</b> × <b>5 个长期目标</b> 的二维视图,供研究者协调讨论。</p>
+  </div>
+
+  <!-- 五大北极星(North Stars) -->
+  <div class="sm-stars">
+    <div class="sm-star sm-s1">
+      <div class="sm-star-icon">⚡</div>
+      <h4>Fast L1</h4>
+      <p class="sm-star-tag">秒级终局性</p>
+      <p class="sm-star-body">把 12 秒 slot 砍到 6 秒,推进 SSF(单 slot 终局)—— 让 L1 反应速度追上中心化交易所。</p>
+    </div>
+    <div class="sm-star sm-s2">
+      <div class="sm-star-icon">🚀</div>
+      <h4>Gigagas L1</h4>
+      <p class="sm-star-tag">10K TPS · 主网</p>
+      <p class="sm-star-body">把 L1 区块 Gas 上限提升到 G 级,让主网自己也能扛住高频应用,不再完全依赖 L2。</p>
+    </div>
+    <div class="sm-star sm-s3">
+      <div class="sm-star-icon">🌌</div>
+      <h4>Teragas L2</h4>
+      <p class="sm-star-tag">10M TPS · L2 总和</p>
+      <p class="sm-star-body">通过完整 Danksharding + PeerDAS,把 Blob 总带宽推到所有 L2 加起来 1000 万 TPS 的水平。</p>
+    </div>
+    <div class="sm-star sm-s4">
+      <div class="sm-star-icon">🛡️</div>
+      <h4>Post-Quantum</h4>
+      <p class="sm-star-tag">抗量子安全</p>
+      <p class="sm-star-body">用基于哈希的签名(STARK 友好)替换椭圆曲线,即使 Shor 算法落地也不会一夜崩盘。</p>
+    </div>
+    <div class="sm-star sm-s5">
+      <div class="sm-star-icon">🕶️</div>
+      <h4>Native Privacy</h4>
+      <p class="sm-star-tag">隐私转账原生化</p>
+      <p class="sm-star-body">把 Privacy Pools / 屏蔽转账纳入协议层,让"不暴露余额"成为默认能力,而非外挂应用。</p>
+    </div>
+  </div>
+
+  <!-- 三层视角 -->
+  <div class="sm-layers">
+    <div class="sm-layer sm-cl">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">CL</span>
+        <h4>Consensus Layer · 共识层</h4>
+      </div>
+      <p>验证者怎么投票、怎么出块、怎么达成最终性。</p>
+      <ul>
+        <li><b>SSF</b> · 单 slot 终局性</li>
+        <li><b>ePBS</b> · 协议层 PBS</li>
+        <li><b>Inclusion Lists</b> · 抗审查</li>
+        <li><b>Account Aggregation</b> · 验证者整合</li>
+      </ul>
+    </div>
+    <div class="sm-layer sm-dl">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">DL</span>
+        <h4>Data Layer · 数据层</h4>
+      </div>
+      <p>L2 把数据上传到哪里、节点如何低成本地验证它存在。</p>
+      <ul>
+        <li><b>PeerDAS</b> · 数据可用性抽样</li>
+        <li><b>Blob Scaling</b> · max 9 → 12 → 128</li>
+        <li><b>Full Danksharding</b> · 1.3 MB/s 持续 DA</li>
+        <li><b>EIP-4444</b> · 历史数据过期</li>
+      </ul>
+    </div>
+    <div class="sm-layer sm-el">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">EL</span>
+        <h4>Execution Layer · 执行层</h4>
+      </div>
+      <p>EVM 怎么演化,合约怎么验证、状态怎么存。</p>
+      <ul>
+        <li><b>EOF</b> · 字节码模块化</li>
+        <li><b>Verkle Tree</b> · 无状态客户端</li>
+        <li><b>RISC-V zkVM</b> · 极简执行层</li>
+        <li><b>EIP-7702</b> 后续 · AA 全面化</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 七 fork 节奏轴 -->
+  <div class="sm-forks">
+    <h4>七次硬分叉 · 每 6 个月一次</h4>
+    <p class="sm-forks-desc">strawmap 假设 2029 年前每 ~6 个月一次硬分叉,共 7 次。前两次已命名,后几次仍是占位符 I* / J* / L*。</p>
+    <div class="sm-fork-track">
+      <div class="sm-fork sm-fork-done">
+        <span class="sm-fork-when">2024.03</span>
+        <b>Dencun</b>
+        <em>EIP-4844 Blob</em>
+      </div>
+      <div class="sm-fork sm-fork-done">
+        <span class="sm-fork-when">2025.05</span>
+        <b>Pectra</b>
+        <em>EIP-7702 / Blob×2</em>
+      </div>
+      <div class="sm-fork sm-fork-active">
+        <span class="sm-fork-when">2026 H2</span>
+        <b>Fusaka</b>
+        <em>PeerDAS</em>
+      </div>
+      <div class="sm-fork sm-fork-planned">
+        <span class="sm-fork-when">2027 H1</span>
+        <b>Glamsterdam</b>
+        <em>ePBS · BALs · Slot 6s</em>
+      </div>
+      <div class="sm-fork sm-fork-planned">
+        <span class="sm-fork-when">2027 H2</span>
+        <b>Hegotá</b>
+        <em>Verkle / EOF 收尾</em>
+      </div>
+      <div class="sm-fork sm-fork-future">
+        <span class="sm-fork-when">2028</span>
+        <b>I*</b>
+        <em>占位 · SSF / Privacy</em>
+      </div>
+      <div class="sm-fork sm-fork-future">
+        <span class="sm-fork-when">2029</span>
+        <b>J* / L*</b>
+        <em>占位 · zkVM / PQ</em>
+      </div>
+    </div>
+  </div>
+
+  <p class="sm-note">
+    🧪 <b>这是 strawman(草案),不是承诺。</b>
+    Fork 命名按希腊语/字母表轮换(A→B→C…),具体内容会随研究进展调整。完整可视化大图见
+    <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a>。
+  </p>
+</section>
+
 </div><!-- /page future -->
 
 <!-- ================================================
