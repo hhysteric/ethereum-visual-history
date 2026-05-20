@@ -3220,10 +3220,11 @@ footer {
 .recent-half  { border-top: 3px solid #2d6a3e; }
 
 .recent-col-head {
-  margin-bottom: 16px;
-  padding-bottom: 14px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
   border-bottom: 1px dashed var(--border);
 }
+.recent-col-head .recent-tag { margin-bottom: 0; }
 .recent-tag {
   display: inline-block;
   font-family: var(--mono);
