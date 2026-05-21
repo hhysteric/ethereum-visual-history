@@ -95,7 +95,7 @@
   <section class="section">
     <div class="section-head">
       <h2>主题索引</h2>
-      <p>五大板块,每一块聚焦一个主题。</p>
+      <p>五大板块,每一块聚焦一个主题。下方滚动可看「近期动态」。</p>
     </div>
 
     <div class="entry-grid">
@@ -139,12 +139,11 @@
 
       <a class="entry-card entry-future" href="#/future">
         <h3>未来 · Future</h3>
-        <p>Vitalik 六阶段、2029 路线、Strawmap 五大北极星、近期动态。</p>
+        <p>Vitalik 六阶段、2029 路线、Strawmap 五大北极星。</p>
         <ul>
           <li>Vitalik 六阶段路线图</li>
           <li>2026 → 2029 路线全景</li>
           <li>EF Strawmap · 五大北极星</li>
-          <li>近期动态 · Vitalik 与 EF 事件</li>
         </ul>
         <span class="entry-go">进入 →</span>
       </a>
@@ -156,12 +155,191 @@
           <li>💰 质押收益计算器</li>
           <li>⛽ Gas 费模拟器</li>
           <li>🔍 迷你区块浏览器</li>
-          <li>📷 一键导出周报(在「未来」页)</li>
+          <li>📷 一键导出周报(在首页「近期动态」)</li>
         </ul>
         <span class="entry-go">进入 →</span>
       </a>
     </div>
   </section>
+
+<!-- ============ 17 近期动态 · Vitalik / EF 公开事件 ============ -->
+<section id="recent" class="section alt">
+  <div class="section-head section-head-with-action">
+    <div>
+      <h2>近期动态 · Vitalik 与 EF 公开事件</h2>
+      <p>近一周 / 近一月 / 近半年内,Vitalik 个人发表与 EF 官方的<b>可查证公开事件</b>。每条带原始链接,只列事实,不做主观影响解读。</p>
+    </div>
+    <button class="export-btn" id="export-weekly-btn" type="button">
+      <span class="export-btn-icon">📷</span>
+      <span class="export-btn-label">导出周报</span>
+    </button>
+  </div>
+
+  <div class="recent-disclaimer">
+    📌 <b>数据来源</b>(按权威程度分组):
+    <br>
+    <b class="rd-cat">官方 · Official</b>
+    <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a> ·
+    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a> ·
+    <a href="https://github.com/ethereum/EIPs" target="_blank" rel="noopener">EIPs Repo</a> ·
+    <a href="https://eips.ethereum.org" target="_blank" rel="noopener">eips.ethereum.org</a> ·
+    <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a>
+    <br>
+    <b class="rd-cat">个人 · Vitalik</b>
+    <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a> ·
+    <a href="https://x.com/VitalikButerin" target="_blank" rel="noopener">@VitalikButerin</a> ·
+    <a href="https://hackmd.io/@vbuterin" target="_blank" rel="noopener">hackmd.io/@vbuterin</a>
+    <br>
+    <b class="rd-cat">研究 · Research</b>
+    <a href="https://ethereum-magicians.org" target="_blank" rel="noopener">ethereum-magicians.org</a> ·
+    <a href="https://ethresear.ch" target="_blank" rel="noopener">ethresear.ch</a> ·
+    <a href="https://notes.ethereum.org" target="_blank" rel="noopener">notes.ethereum.org</a>
+    <br>
+    <b class="rd-cat">数据 · Metrics</b>
+    <a href="https://l2beat.com" target="_blank" rel="noopener">l2beat.com</a> ·
+    <a href="https://dune.com" target="_blank" rel="noopener">dune.com</a> ·
+    <a href="https://etherscan.io" target="_blank" rel="noopener">etherscan.io</a> ·
+    <a href="https://ultrasound.money" target="_blank" rel="noopener">ultrasound.money</a> ·
+    <a href="https://clientdiversity.org" target="_blank" rel="noopener">clientdiversity.org</a>
+    <br>
+    <b class="rd-cat">媒体 · Press</b>
+    <a href="https://galaxy.com/insights" target="_blank" rel="noopener">Galaxy Research</a> ·
+    <a href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk</a> ·
+    <a href="https://www.theblock.co" target="_blank" rel="noopener">The Block</a> ·
+    <a href="https://newsletter.banklesshq.com" target="_blank" rel="noopener">Bankless</a>
+    <br><br>
+    ⚠️ <b>注:</b>X / Twitter 自 2023 年起对未认证抓取关闭。
+    本页所列 Vitalik / EF 动态来自其<b>博客 RSS(可公开核实)</b>,非 X 推文。
+    如需 X 实时动态,请直接访问
+    <a href="https://x.com/ethereum" target="_blank" rel="noopener">@ethereum</a> 与
+    <a href="https://x.com/VitalikButerin" target="_blank" rel="noopener">@VitalikButerin</a>。
+  </div>
+
+  <!-- 时间窗格 -->
+  <div class="recent-grid">
+
+    <!-- 近一周 -->
+    <div class="recent-col recent-week">
+      <div class="recent-col-head">
+        <span class="recent-tag">近一周</span>
+      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.05.19</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表《<b>A shallow dive into formal verification</b>》,讨论形式化验证对客户端正确性与 zkVM 安全性的作用。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.12</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 联合钱包厂商与安全公司启动 <b>Clear Signing 开放标准(ERC-7730)</b>,目标终结"盲签"——原文称该结构性缺陷已造成<b>数十亿美元损失,包括 Bybit 黑客事件</b>。由 EF Trillion Dollar Security Initiative 协调。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+          <a class="recent-link" href="https://eips.ethereum.org/EIPS/eip-7730" target="_blank" rel="noopener">ERC-7730 规范 →</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 近一月 -->
+    <div class="recent-col recent-month">
+      <div class="recent-col-head">
+        <span class="recent-tag">近一月</span>
+      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.05.11</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 发布 <b>Protocol Cluster Updates: May 2026</b>。核心开发者在挪威 Svalbard 召开 Soldøgn Interop,确立 Glamsterdam 升级 <b>gas limit 下限 200M</b>。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.02</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p><b>Soldøgn Interop Recap</b> 发布。100+ 以太坊核心贡献者北极圈以北聚会进行密集协议工作。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.30</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 公告 <b>Ethereum Protocol Fellowship 第 7 期(EPF7)</b> 招募,申请截止 5 月 13 日,5 月 6 日召开 town hall。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.29</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 发布 <b>Allocation Update Q1 2026</b>。本季度持续投入密码学、零知识证明、安全与协议研究方向。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 近半年 -->
+    <div class="recent-col recent-half">
+      <div class="recent-col-head">
+        <span class="recent-tag">近半年</span>
+      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.04.16</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p><b>ETH Rangers Program Recap</b>。EF 为以太坊生态独立公共物品安全研究提供长期津贴的项目阶段总结。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.10</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p><b>Checkpoint #9 · Apr 2026</b>。EF 高频度路线图同步,汇总近期核心开发者电话与协议研究进度。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.02</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表 <b>《My self-sovereign / local / private / secure LLM setup, April 2026》</b>。延续他对"用户主权 + 本地 + 隐私"长期主题的实践记录。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2025.12.30</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表 <b>《Balance of power》</b>,2025 年最后一篇博客,讨论权力分散与多元社会议题。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2025.12.17</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表 <b>《Let a thousand societies bloom》</b>,讨论可信中立基础设施承载多元价值社区的可能。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2025.11.07</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表 <b>《Galaxy brain resistance》</b>。在 ZK 与 AI 议题之间讨论可验证推理的边界。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2025.10.19</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表 <b>《A GKR Tutorial》</b>。深入交互式证明基础组件 GKR 协议,zkVM 性能讨论的重要前置。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2025.05</span>
+          <span class="recent-source recent-src-mainnet">主网</span>
+          <p><b>Pectra 升级激活</b>。EIP-7702 / 7251 / 6110 + Blob target 3→6 / max 6→9 同步上线。<i>(对照保留 — 已超 6 个月)</i></p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF Pectra 公告 →</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <p class="recent-foot">
+    🔄 <b>维护建议:</b>
+    每周从 <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a> 与 <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a> 抓取 RSS;
+    EIP 状态变化以 <a href="https://github.com/ethereum/EIPs/pulls" target="_blank" rel="noopener">EIPs/pulls</a> 为准。
+    <b>本页不做主观"行业影响"判断</b> —— 影响留给读者根据原文自行评估。
+  </p>
+</section>
+
 </div><!-- /page home -->
 
 <!-- ================================================
@@ -2532,183 +2710,6 @@ ISZERO
   </p>
 </section>
 
-<!-- ============ 17 近期动态 · Vitalik / EF 公开事件 ============ -->
-<section id="recent" class="section alt">
-  <div class="section-head section-head-with-action">
-    <div>
-      <h2>近期动态 · Vitalik 与 EF 公开事件</h2>
-      <p>近一周 / 近一月 / 近半年内,Vitalik 个人发表与 EF 官方的<b>可查证公开事件</b>。每条带原始链接,只列事实,不做主观影响解读。</p>
-    </div>
-    <button class="export-btn" id="export-weekly-btn" type="button">
-      <span class="export-btn-icon">📷</span>
-      <span class="export-btn-label">导出周报</span>
-    </button>
-  </div>
-
-  <div class="recent-disclaimer">
-    📌 <b>数据来源</b>(按权威程度分组):
-    <br>
-    <b class="rd-cat">官方 · Official</b>
-    <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a> ·
-    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a> ·
-    <a href="https://github.com/ethereum/EIPs" target="_blank" rel="noopener">EIPs Repo</a> ·
-    <a href="https://eips.ethereum.org" target="_blank" rel="noopener">eips.ethereum.org</a> ·
-    <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a>
-    <br>
-    <b class="rd-cat">个人 · Vitalik</b>
-    <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a> ·
-    <a href="https://x.com/VitalikButerin" target="_blank" rel="noopener">@VitalikButerin</a> ·
-    <a href="https://hackmd.io/@vbuterin" target="_blank" rel="noopener">hackmd.io/@vbuterin</a>
-    <br>
-    <b class="rd-cat">研究 · Research</b>
-    <a href="https://ethereum-magicians.org" target="_blank" rel="noopener">ethereum-magicians.org</a> ·
-    <a href="https://ethresear.ch" target="_blank" rel="noopener">ethresear.ch</a> ·
-    <a href="https://notes.ethereum.org" target="_blank" rel="noopener">notes.ethereum.org</a>
-    <br>
-    <b class="rd-cat">数据 · Metrics</b>
-    <a href="https://l2beat.com" target="_blank" rel="noopener">l2beat.com</a> ·
-    <a href="https://dune.com" target="_blank" rel="noopener">dune.com</a> ·
-    <a href="https://etherscan.io" target="_blank" rel="noopener">etherscan.io</a> ·
-    <a href="https://ultrasound.money" target="_blank" rel="noopener">ultrasound.money</a> ·
-    <a href="https://clientdiversity.org" target="_blank" rel="noopener">clientdiversity.org</a>
-    <br>
-    <b class="rd-cat">媒体 · Press</b>
-    <a href="https://galaxy.com/insights" target="_blank" rel="noopener">Galaxy Research</a> ·
-    <a href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk</a> ·
-    <a href="https://www.theblock.co" target="_blank" rel="noopener">The Block</a> ·
-    <a href="https://newsletter.banklesshq.com" target="_blank" rel="noopener">Bankless</a>
-    <br><br>
-    ⚠️ <b>注:</b>X / Twitter 自 2023 年起对未认证抓取关闭。
-    本页所列 Vitalik / EF 动态来自其<b>博客 RSS(可公开核实)</b>,非 X 推文。
-    如需 X 实时动态,请直接访问
-    <a href="https://x.com/ethereum" target="_blank" rel="noopener">@ethereum</a> 与
-    <a href="https://x.com/VitalikButerin" target="_blank" rel="noopener">@VitalikButerin</a>。
-  </div>
-
-  <!-- 时间窗格 -->
-  <div class="recent-grid">
-
-    <!-- 近一周 -->
-    <div class="recent-col recent-week">
-      <div class="recent-col-head">
-        <span class="recent-tag">近一周</span>
-      </div>
-      <ul class="recent-list">
-        <li class="recent-item">
-          <span class="recent-when">2026.05.19</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表《<b>A shallow dive into formal verification</b>》,讨论形式化验证对客户端正确性与 zkVM 安全性的作用。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.05.12</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p>EF 联合钱包厂商与安全公司启动 <b>Clear Signing 开放标准(ERC-7730)</b>,目标终结"盲签"——原文称该结构性缺陷已造成<b>数十亿美元损失,包括 Bybit 黑客事件</b>。由 EF Trillion Dollar Security Initiative 协调。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-          <a class="recent-link" href="https://eips.ethereum.org/EIPS/eip-7730" target="_blank" rel="noopener">ERC-7730 规范 →</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 近一月 -->
-    <div class="recent-col recent-month">
-      <div class="recent-col-head">
-        <span class="recent-tag">近一月</span>
-      </div>
-      <ul class="recent-list">
-        <li class="recent-item">
-          <span class="recent-when">2026.05.11</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p>EF 发布 <b>Protocol Cluster Updates: May 2026</b>。核心开发者在挪威 Svalbard 召开 Soldøgn Interop,确立 Glamsterdam 升级 <b>gas limit 下限 200M</b>。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.05.02</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>Soldøgn Interop Recap</b> 发布。100+ 以太坊核心贡献者北极圈以北聚会进行密集协议工作。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.30</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p>EF 公告 <b>Ethereum Protocol Fellowship 第 7 期(EPF7)</b> 招募,申请截止 5 月 13 日,5 月 6 日召开 town hall。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.29</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p>EF 发布 <b>Allocation Update Q1 2026</b>。本季度持续投入密码学、零知识证明、安全与协议研究方向。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 近半年 -->
-    <div class="recent-col recent-half">
-      <div class="recent-col-head">
-        <span class="recent-tag">近半年</span>
-      </div>
-      <ul class="recent-list">
-        <li class="recent-item">
-          <span class="recent-when">2026.04.16</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>ETH Rangers Program Recap</b>。EF 为以太坊生态独立公共物品安全研究提供长期津贴的项目阶段总结。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.10</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>Checkpoint #9 · Apr 2026</b>。EF 高频度路线图同步,汇总近期核心开发者电话与协议研究进度。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.02</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《My self-sovereign / local / private / secure LLM setup, April 2026》</b>。延续他对"用户主权 + 本地 + 隐私"长期主题的实践记录。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.12.30</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Balance of power》</b>,2025 年最后一篇博客,讨论权力分散与多元社会议题。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.12.17</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Let a thousand societies bloom》</b>,讨论可信中立基础设施承载多元价值社区的可能。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.11.07</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Galaxy brain resistance》</b>。在 ZK 与 AI 议题之间讨论可验证推理的边界。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.10.19</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《A GKR Tutorial》</b>。深入交互式证明基础组件 GKR 协议,zkVM 性能讨论的重要前置。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.05</span>
-          <span class="recent-source recent-src-mainnet">主网</span>
-          <p><b>Pectra 升级激活</b>。EIP-7702 / 7251 / 6110 + Blob target 3→6 / max 6→9 同步上线。<i>(对照保留 — 已超 6 个月)</i></p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF Pectra 公告 →</a>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-
-  <p class="recent-foot">
-    🔄 <b>维护建议:</b>
-    每周从 <a href="https://blog.ethereum.org" target="_blank" rel="noopener">blog.ethereum.org</a> 与 <a href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo</a> 抓取 RSS;
-    EIP 状态变化以 <a href="https://github.com/ethereum/EIPs/pulls" target="_blank" rel="noopener">EIPs/pulls</a> 为准。
-    <b>本页不做主观"行业影响"判断</b> —— 影响留给读者根据原文自行评估。
-  </p>
-</section>
 
 </div><!-- /page future -->
 
