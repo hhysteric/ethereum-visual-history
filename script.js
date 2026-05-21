@@ -929,7 +929,6 @@ initLiveData();
 
         <div class="ex-title-band">
           <h1>Vitalik 与 EF 公开事件 · 五大北极星进度</h1>
-          <p>仅列可在 blog.ethereum.org / vitalik.eth.limo / EIP repo 公开核实的事实条目。</p>
         </div>
 
         <section class="ex-cols">
@@ -954,7 +953,7 @@ initLiveData();
 
         <footer class="ex-foot">
           <span>来源:blog.ethereum.org · vitalik.eth.limo · strawmap.org · EIPs Repo</span>
-          <span class="ex-foot-mark">本图由站点自动生成 · 不构成投资建议</span>
+          <span class="ex-foot-mark">ethereum-visual-history</span>
         </footer>
       </div>
     `;
