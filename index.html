@@ -92,8 +92,139 @@
     </div>
   </header>
 
-  <!-- ============ 鸟瞰图:以太坊上都有谁在干什么 ============ -->
-  <section class="section eth-map">
+  <section class="section">
+    <div class="section-head">
+      <h2>主题索引</h2>
+      <p>五大板块,每一块聚焦一个主题。</p>
+    </div>
+
+    <div class="entry-grid">
+      <a class="entry-card entry-basics" href="#/basics">
+        <h3>入门 · Basics</h3>
+        <p>什么是以太坊、为什么会有它、十年大事记与共识切换。</p>
+        <ul>
+          <li>什么是以太坊 · 5 步拆解</li>
+          <li>演进史 · 关键里程碑</li>
+          <li>PoW vs PoS · 共识对比</li>
+          <li>一笔交易:从点击到永久记录</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-tech" href="#/tech">
+        <h3>技术 · Technology</h3>
+        <p>6 层架构、执行 × 共识、账户、Gas、EVM → zkEVM → zkVM 演进。</p>
+        <ul>
+          <li>架构概览 · 6 层大楼</li>
+          <li>执行层 × 共识层(EVM + PoS)</li>
+          <li>账户与账本 · 状态树</li>
+          <li>Gas 与 EIP-1559</li>
+          <li>EVM → zkEVM → zkVM 演进</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-today" href="#/today">
+        <h3>现状 · Today</h3>
+        <p>模块化栈、升级进度、L2 四大分支、痛点与生态全景。</p>
+        <ul>
+          <li>① 模块化以太坊栈</li>
+          <li>② 升级路线进度</li>
+          <li>③ Rollup-centric · L2 四大分支</li>
+          <li>④ 当前痛点与挑战</li>
+          <li>⑤ 生态全景</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-future" href="#/future">
+        <h3>未来 · Future</h3>
+        <p>Vitalik 六阶段、2029 路线、Strawmap 五大北极星、近期动态。</p>
+        <ul>
+          <li>Vitalik 六阶段路线图</li>
+          <li>2026 → 2029 路线全景</li>
+          <li>EF Strawmap · 五大北极星</li>
+          <li>近期动态 · Vitalik 与 EF 事件</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-tools" href="#/tools">
+        <h3>工具 · Tools</h3>
+        <p>亲手感受以太坊:质押收益、Gas、区块浏览器,以及一键导出周报。</p>
+        <ul>
+          <li>💰 质押收益计算器</li>
+          <li>⛽ Gas 费模拟器</li>
+          <li>🔍 迷你区块浏览器</li>
+          <li>📷 一键导出周报(在「未来」页)</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+    </div>
+  </section>
+</div><!-- /page home -->
+
+<!-- ================================================
+     PAGE · BASICS
+     ================================================ -->
+<div class="page" data-page="basics">
+  <div class="page-header">
+    <p class="page-eyebrow">BASICS · 入门</p>
+    <h1>入门:理解以太坊</h1>
+    <p class="page-desc">从「它是什么」到「它怎么改变」——三节课看懂以太坊的骨架。</p>
+  </div>
+
+<!-- ============ 01 简介 ============ -->
+<section id="intro" class="section">
+  <div class="section-head">
+    <h2>什么是以太坊</h2>
+    <p>以太坊是一个开源的、全球分布式的「世界计算机」——不仅能转账，还能运行代码（智能合约），让去中心化金融、NFT、DAO 成为可能。</p>
+  </div>
+
+  <div class="intro-grid">
+    <article class="intro-card">
+      <div class="intro-icon">🌍</div>
+      <h3>世界计算机</h3>
+      <p>一台由成千上万节点共同维护的全球公共计算机，任何人都能部署代码并确保它被诚实地执行。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">📜</div>
+      <h3>智能合约</h3>
+      <p>由代码定义的协议，满足条件自动执行，无需中间人。Uniswap、Aave、ENS 都是它的产物。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">🔓</div>
+      <h3>无需许可</h3>
+      <p>任何人无需身份审批即可部署 DApp、持有资产、参与治理。抗审查是其核心价值之一。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">💎</div>
+      <h3>ETH 资产</h3>
+      <p>原生加密资产，既是支付 Gas 的「燃料」，也是通过质押保护网络安全的「权益」。</p>
+    </article>
+  </div>
+
+  <div class="vs-table">
+    <h4>以太坊 vs 比特币 · 一张表看懂</h4>
+    <table>
+      <thead>
+        <tr><th>维度</th><th class="col-btc">Bitcoin · 比特币</th><th class="col-eth">Ethereum · 以太坊</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>定位</td><td>数字黄金 / 点对点现金</td><td>全球去中心化计算平台</td></tr>
+        <tr><td>脚本能力</td><td>受限脚本，不图灵完备</td><td>EVM 图灵完备,可运行任意合约</td></tr>
+        <tr><td>区块时间</td><td>~10 分钟</td><td>12 秒(1 slot)</td></tr>
+        <tr><td>共识机制</td><td>PoW(工作量证明)</td><td>PoS(权益证明,2022 起)</td></tr>
+        <tr><td>发行上限</td><td>2100 万枚</td><td>无硬顶,但 EIP-1559 销毁机制让 ETH 可能通缩</td></tr>
+        <tr><td>应用生态</td><td>支付 · Lightning</td><td>DeFi · NFT · DAO · L2 · ENS · 游戏</td></tr>
+        <tr><td>能耗</td><td>高(挖矿)</td><td>极低(下降 ~99.95%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 鸟瞰图:以太坊上都有谁在干什么 ============ -->
+  <section id="overview-map" class="section eth-map alt">
     <div class="section-head">
       <h2>鸟瞰以太坊 · 谁在上面干什么</h2>
       <p>以太坊主网在中间,四类角色各自扮演着不同职责 —— 这是理解细节前的参照。</p>
@@ -237,8 +368,8 @@
     </div>
   </section>
 
-  <!-- ============ 以太坊 5 步看懂 · 从大到小拆解 ============ -->
-  <section class="section eth-101">
+<!-- ============ 以太坊 5 步看懂 · 从大到小拆解 ============ -->
+  <section id="story-101" class="section eth-101">
     <div class="section-head">
       <h2>以太坊是什么?5 步拆解</h2>
       <p>从最宏观的比喻,一层层下钻到具体机制 —— 完全零基础,跟着看完这 5 张图就能建立直觉。</p>
@@ -548,136 +679,6 @@
     <p class="story-tail">这 5 步已覆盖以太坊 90% 的核心概念,余下的细节分散在五大板块中。</p>
   </section>
 
-  <section class="section">
-    <div class="section-head">
-      <h2>主题索引</h2>
-      <p>五大板块,每一块聚焦一个主题。</p>
-    </div>
-
-    <div class="entry-grid">
-      <a class="entry-card entry-basics" href="#/basics">
-        <h3>入门 · Basics</h3>
-        <p>什么是以太坊、为什么会有它、十年大事记与共识切换。</p>
-        <ul>
-          <li>什么是以太坊 · 5 步拆解</li>
-          <li>演进史 · 关键里程碑</li>
-          <li>PoW vs PoS · 共识对比</li>
-          <li>一笔交易:从点击到永久记录</li>
-        </ul>
-        <span class="entry-go">进入 →</span>
-      </a>
-
-      <a class="entry-card entry-tech" href="#/tech">
-        <h3>技术 · Technology</h3>
-        <p>6 层架构、执行 × 共识、账户、Gas、EVM → zkEVM → zkVM 演进。</p>
-        <ul>
-          <li>架构概览 · 6 层大楼</li>
-          <li>执行层 × 共识层(EVM + PoS)</li>
-          <li>账户与账本 · 状态树</li>
-          <li>Gas 与 EIP-1559</li>
-          <li>EVM → zkEVM → zkVM 演进</li>
-        </ul>
-        <span class="entry-go">进入 →</span>
-      </a>
-
-      <a class="entry-card entry-today" href="#/today">
-        <h3>现状 · Today</h3>
-        <p>模块化栈、升级进度、L2 四大分支、痛点与生态全景。</p>
-        <ul>
-          <li>① 模块化以太坊栈</li>
-          <li>② 升级路线进度</li>
-          <li>③ Rollup-centric · L2 四大分支</li>
-          <li>④ 当前痛点与挑战</li>
-          <li>⑤ 生态全景</li>
-        </ul>
-        <span class="entry-go">进入 →</span>
-      </a>
-
-      <a class="entry-card entry-future" href="#/future">
-        <h3>未来 · Future</h3>
-        <p>Vitalik 六阶段、2029 路线、Strawmap 五大北极星、近期动态。</p>
-        <ul>
-          <li>Vitalik 六阶段路线图</li>
-          <li>2026 → 2029 路线全景</li>
-          <li>EF Strawmap · 五大北极星</li>
-          <li>近期动态 · Vitalik 与 EF 事件</li>
-        </ul>
-        <span class="entry-go">进入 →</span>
-      </a>
-
-      <a class="entry-card entry-tools" href="#/tools">
-        <h3>工具 · Tools</h3>
-        <p>亲手感受以太坊:质押收益、Gas、区块浏览器,以及一键导出周报。</p>
-        <ul>
-          <li>💰 质押收益计算器</li>
-          <li>⛽ Gas 费模拟器</li>
-          <li>🔍 迷你区块浏览器</li>
-          <li>📷 一键导出周报(在「未来」页)</li>
-        </ul>
-        <span class="entry-go">进入 →</span>
-      </a>
-    </div>
-  </section>
-</div><!-- /page home -->
-
-<!-- ================================================
-     PAGE · BASICS
-     ================================================ -->
-<div class="page" data-page="basics">
-  <div class="page-header">
-    <p class="page-eyebrow">BASICS · 入门</p>
-    <h1>入门:理解以太坊</h1>
-    <p class="page-desc">从「它是什么」到「它怎么改变」——三节课看懂以太坊的骨架。</p>
-  </div>
-
-<!-- ============ 01 简介 ============ -->
-<section id="intro" class="section">
-  <div class="section-head">
-    <h2>什么是以太坊</h2>
-    <p>以太坊是一个开源的、全球分布式的「世界计算机」——不仅能转账，还能运行代码（智能合约），让去中心化金融、NFT、DAO 成为可能。</p>
-  </div>
-
-  <div class="intro-grid">
-    <article class="intro-card">
-      <div class="intro-icon">🌍</div>
-      <h3>世界计算机</h3>
-      <p>一台由成千上万节点共同维护的全球公共计算机，任何人都能部署代码并确保它被诚实地执行。</p>
-    </article>
-    <article class="intro-card">
-      <div class="intro-icon">📜</div>
-      <h3>智能合约</h3>
-      <p>由代码定义的协议，满足条件自动执行，无需中间人。Uniswap、Aave、ENS 都是它的产物。</p>
-    </article>
-    <article class="intro-card">
-      <div class="intro-icon">🔓</div>
-      <h3>无需许可</h3>
-      <p>任何人无需身份审批即可部署 DApp、持有资产、参与治理。抗审查是其核心价值之一。</p>
-    </article>
-    <article class="intro-card">
-      <div class="intro-icon">💎</div>
-      <h3>ETH 资产</h3>
-      <p>原生加密资产，既是支付 Gas 的「燃料」，也是通过质押保护网络安全的「权益」。</p>
-    </article>
-  </div>
-
-  <div class="vs-table">
-    <h4>以太坊 vs 比特币 · 一张表看懂</h4>
-    <table>
-      <thead>
-        <tr><th>维度</th><th class="col-btc">Bitcoin · 比特币</th><th class="col-eth">Ethereum · 以太坊</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>定位</td><td>数字黄金 / 点对点现金</td><td>全球去中心化计算平台</td></tr>
-        <tr><td>脚本能力</td><td>受限脚本，不图灵完备</td><td>EVM 图灵完备,可运行任意合约</td></tr>
-        <tr><td>区块时间</td><td>~10 分钟</td><td>12 秒(1 slot)</td></tr>
-        <tr><td>共识机制</td><td>PoW(工作量证明)</td><td>PoS(权益证明,2022 起)</td></tr>
-        <tr><td>发行上限</td><td>2100 万枚</td><td>无硬顶,但 EIP-1559 销毁机制让 ETH 可能通缩</td></tr>
-        <tr><td>应用生态</td><td>支付 · Lightning</td><td>DeFi · NFT · DAO · L2 · ENS · 游戏</td></tr>
-        <tr><td>能耗</td><td>高(挖矿)</td><td>极低(下降 ~99.95%)</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
 
 <!-- ============ 02 历史时间线 ============ -->
 <section id="history" class="section alt">
