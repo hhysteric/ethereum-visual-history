@@ -834,3 +834,168 @@ async function fetchBlocks() {
 // 启动：实时数据
 // =======================================================
 initLiveData();
+
+// =======================================================
+// 周报导出 · 抓取 #recent 三栏 → 渲染专用容器 → html2canvas → 下载 PNG
+// =======================================================
+(function initWeeklyExport() {
+  const btn = document.getElementById("export-weekly-btn");
+  if (!btn) return;
+
+  const today = () => {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return { iso: `${y}-${m}-${day}`, cn: `${y} 年 ${parseInt(m,10)} 月 ${parseInt(day,10)} 日` };
+  };
+
+  // 从原 .recent-col 中抽出条目纯数据
+  function collectColumn(selector) {
+    const col = document.querySelector(selector);
+    if (!col) return [];
+    return Array.from(col.querySelectorAll(".recent-item")).map((it) => ({
+      when: (it.querySelector(".recent-when")?.textContent || "").trim(),
+      source: (it.querySelector(".recent-source")?.textContent || "").trim(),
+      sourceClass: it.querySelector(".recent-source")?.className || "",
+      body: it.querySelector("p")?.innerHTML || "",
+    }));
+  }
+
+  // 北极星阶段
+  function collectStars() {
+    return Array.from(document.querySelectorAll(".sm-star")).map((s) => {
+      const stage = s.querySelector(".sm-stage")?.textContent.trim() || "";
+      const name = s.querySelector("h4")?.textContent.trim() || "";
+      const tag = s.querySelector(".sm-star-tag")?.textContent.trim() || "";
+      const detail = s.querySelector(".sm-stage-detail")?.innerHTML || "";
+      const stageClass = s.className.match(/sm-s\d/)?.[0] || "";
+      return { name, tag, stage, detail, stageClass };
+    });
+  }
+
+  function buildExportNode() {
+    const wk  = collectColumn(".recent-week");
+    const mo  = collectColumn(".recent-month");
+    const hf  = collectColumn(".recent-half");
+    const stars = collectStars();
+    const t = today();
+
+    const sourceClassMap = {
+      "recent-src-vitalik": "s-vitalik",
+      "recent-src-ef":      "s-ef",
+      "recent-src-eips":    "s-eips",
+      "recent-src-mainnet": "s-mainnet",
+      "recent-src-erc":     "s-erc",
+    };
+    const remapSourceClass = (raw) => {
+      const found = Object.keys(sourceClassMap).find((k) => raw.includes(k));
+      return "ex-source " + (found ? sourceClassMap[found] : "");
+    };
+
+    const itemHTML = (it) => `
+      <div class="ex-item">
+        <div class="ex-item-meta">
+          <span class="ex-when">${it.when}</span>
+          <span class="${remapSourceClass(it.sourceClass)}">${it.source}</span>
+        </div>
+        <p class="ex-body">${it.body}</p>
+      </div>`;
+
+    const starHTML = (s) => `
+      <div class="ex-star ${s.stageClass}">
+        <div class="ex-star-row">
+          <h4>${s.name}</h4>
+          <span class="ex-stage">${s.stage}</span>
+        </div>
+        <div class="ex-star-tag">${s.tag}</div>
+        <div class="ex-star-detail">${s.detail}</div>
+      </div>`;
+
+    const node = document.createElement("div");
+    node.className = "weekly-export-canvas";
+    node.innerHTML = `
+      <div class="ex-frame">
+        <header class="ex-header">
+          <div class="ex-brand">
+            <span class="ex-mast">ETHEREUM</span>
+            <span class="ex-mast-sub">WEEKLY · 以太坊周报</span>
+          </div>
+          <div class="ex-date">
+            <span class="ex-date-label">出版日期</span>
+            <b>${t.cn}</b>
+          </div>
+        </header>
+
+        <div class="ex-title-band">
+          <h1>Vitalik 与 EF 公开事件 · 五大北极星进度</h1>
+          <p>仅列可在 blog.ethereum.org / vitalik.eth.limo / EIP repo 公开核实的事实条目。</p>
+        </div>
+
+        <section class="ex-cols">
+          <div class="ex-col ex-col-week">
+            <div class="ex-col-head"><span class="ex-tag">近一周</span></div>
+            ${wk.map(itemHTML).join("") || '<p class="ex-empty">本周无重大公开事件。</p>'}
+          </div>
+          <div class="ex-col ex-col-month">
+            <div class="ex-col-head"><span class="ex-tag">近一月</span></div>
+            ${mo.map(itemHTML).join("")}
+          </div>
+          <div class="ex-col ex-col-half">
+            <div class="ex-col-head"><span class="ex-tag">近半年</span></div>
+            ${hf.map(itemHTML).join("")}
+          </div>
+        </section>
+
+        <section class="ex-stars-band">
+          <h2>📍 五大北极星进度速览</h2>
+          <div class="ex-stars-grid">${stars.map(starHTML).join("")}</div>
+        </section>
+
+        <footer class="ex-foot">
+          <span>来源:blog.ethereum.org · vitalik.eth.limo · strawmap.org · EIPs Repo</span>
+          <span class="ex-foot-mark">本图由站点自动生成 · 不构成投资建议</span>
+        </footer>
+      </div>
+    `;
+    return node;
+  }
+
+  async function exportWeekly() {
+    if (typeof html2canvas !== "function") {
+      alert("html2canvas 还在加载,稍候重试。");
+      return;
+    }
+    btn.disabled = true;
+    const originalText = btn.querySelector(".export-btn-label").textContent;
+    btn.querySelector(".export-btn-label").textContent = "生成中…";
+
+    const node = buildExportNode();
+    document.body.appendChild(node);
+
+    try {
+      const canvas = await html2canvas(node, {
+        backgroundColor: "#faf8f3",
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      });
+      const url = canvas.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ethereum-weekly-${today().iso}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (err) {
+      console.error(err);
+      alert("导出失败,请检查浏览器控制台。");
+    } finally {
+      node.remove();
+      btn.disabled = false;
+      btn.querySelector(".export-btn-label").textContent = originalText;
+    }
+  }
+
+  btn.addEventListener("click", exportWeekly);
+})();

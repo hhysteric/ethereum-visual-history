@@ -4531,3 +4531,323 @@ footer {
   .tx-flow .tx-zone rect { fill-opacity: 0.55; }
   .tx-flow .tx-stop { opacity: 1; }
 }
+
+/* =====================================================
+   一键导出周报 Weekly Export
+   ===================================================== */
+.section-head-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.section-head-with-action > div { flex: 1 1 auto; min-width: 0; }
+
+.export-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.export-btn:hover {
+  background: #6f1f1f;
+  border-color: #6f1f1f;
+  transform: translateY(-1px);
+}
+.export-btn:disabled {
+  background: var(--muted);
+  border-color: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+}
+.export-btn-icon { font-size: 14px; line-height: 1; }
+.export-btn-label { line-height: 1; }
+
+/* ---------- 离屏渲染画布 ---------- */
+.weekly-export-canvas {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 1200px;
+  background: var(--bg);
+  font-family: var(--serif);
+  color: var(--ink);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ex-frame {
+  width: 1200px;
+  padding: 48px 56px 40px;
+  background: var(--bg);
+  border-top: 6px double var(--ink);
+  border-bottom: 6px double var(--ink);
+}
+
+/* ---------- 报头 ---------- */
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--ink);
+}
+.ex-brand { display: flex; flex-direction: column; gap: 4px; }
+.ex-mast {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  color: var(--ink);
+}
+.ex-mast-sub {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.ex-date { text-align: right; }
+.ex-date-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.ex-date strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- 标题条 ---------- */
+.ex-title-band {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 24px 0 18px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule-light);
+  border-bottom: 1px solid var(--rule-light);
+}
+.ex-title-band h1,
+.ex-title-band h2 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  flex: 1 1 auto;
+}
+.ex-title-band p,
+.ex-title-band .ex-title-meta {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  flex: 0 0 auto;
+  margin-left: 18px;
+  text-align: right;
+  max-width: 50%;
+}
+
+/* ---------- 三列事件 ---------- */
+.ex-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 28px;
+}
+.ex-col {
+  padding: 0 16px;
+  border-right: 1px solid var(--rule-light);
+}
+.ex-col:first-child { padding-left: 0; }
+.ex-col:last-child { padding-right: 0; border-right: none; }
+
+.ex-col-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.ex-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.ex-col-head h3 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ex-item {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--rule-light);
+}
+.ex-item:last-child { border-bottom: none; }
+.ex-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ex-when {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.ex-source {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  background: var(--bg-2);
+  color: var(--ink-2);
+  text-transform: uppercase;
+}
+.ex-source.s-vitalik { background: #f4e3e3; color: #8b2a2a; }
+.ex-source.s-ef      { background: #e3eaf4; color: #2a4a8b; }
+.ex-source.s-eips    { background: #efe6d9; color: #8b5a1a; }
+.ex-source.s-mainnet { background: #e0ecdf; color: #2d6a3e; }
+.ex-source.s-erc     { background: #ece3f4; color: #6a3e8b; }
+
+.ex-body {
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.ex-empty {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--muted-2);
+  font-style: italic;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* ---------- 北极星 ---------- */
+.ex-stars-band {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid var(--ink);
+}
+.ex-stars-band h2,
+.ex-stars-band h3 {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.ex-stars-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.ex-star {
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--rule-light);
+  border-top: 3px solid var(--ink);
+}
+.ex-star.sm-s1 { border-top-color: #4a6b8a; }
+.ex-star.sm-s2 { border-top-color: #2d6a3e; }
+.ex-star.sm-s3 { border-top-color: #8b5a1a; }
+.ex-star.sm-s4 { border-top-color: #6a3e8b; }
+.ex-star.sm-s5 { border-top-color: #b8762a; }
+
+.ex-star-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  gap: 6px;
+}
+.ex-star-row h4 {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ex-stage {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  background: var(--ink);
+  color: var(--bg);
+}
+.ex-star-tag {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ex-star-detail {
+  font-family: var(--serif);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* ---------- 报脚 ---------- */
+.ex-foot {
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.ex-foot-mark {
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* ---------- 响应式: 按钮在窄屏下另起一行 ---------- */
+@media (max-width: 720px) {
+  .section-head-with-action { align-items: flex-start; }
+  .export-btn { align-self: flex-end; }
+}

@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
@@ -2526,9 +2527,15 @@ ISZERO
 
 <!-- ============ 17 近期动态 · Vitalik / EF 公开事件 ============ -->
 <section id="recent" class="section alt">
-  <div class="section-head">
-    <h2>近期动态 · Vitalik 与 EF 公开事件</h2>
-    <p>近一周 / 近一月 / 近半年内,Vitalik 个人发表与 EF 官方的<b>可查证公开事件</b>。每条带原始链接,只列事实,不做主观影响解读。</p>
+  <div class="section-head section-head-with-action">
+    <div>
+      <h2>近期动态 · Vitalik 与 EF 公开事件</h2>
+      <p>近一周 / 近一月 / 近半年内,Vitalik 个人发表与 EF 官方的<b>可查证公开事件</b>。每条带原始链接,只列事实,不做主观影响解读。</p>
+    </div>
+    <button class="export-btn" id="export-weekly-btn" type="button">
+      <span class="export-btn-icon">📷</span>
+      <span class="export-btn-label">导出周报</span>
+    </button>
   </div>
 
   <div class="recent-disclaimer">
