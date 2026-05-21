@@ -175,7 +175,7 @@
   </div>
 
   <!-- 时间窗格 -->
-  <div class="recent-grid">
+  <div class="recent-grid recent-grid-top">
 
     <!-- 近一周 -->
     <div class="recent-col recent-week">
@@ -244,94 +244,131 @@
       </ul>
     </div>
 
-    <!-- 近半年 -->
-    <div class="recent-col recent-half">
-      <div class="recent-col-head">
-        <span class="recent-tag">近半年</span>
-      </div>
-      <ul class="recent-list">
-        <li class="recent-item">
-          <span class="recent-when">2026.04.16</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>ETH Rangers Program Recap</b>。EF 为以太坊生态独立公共物品安全研究提供长期津贴的项目阶段总结。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.10</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>Checkpoint #9 · Apr 2026</b>。EF 高频度路线图同步,汇总近期核心开发者电话与协议研究进度。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客原文 →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.04.02</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《My self-sovereign / local / private / secure LLM setup, April 2026》</b>。延续他对"用户主权 + 本地 + 隐私"长期主题的实践记录。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.03.16</span>
-          <span class="recent-source recent-src-press">媒体</span>
-          <p>CoinDesk 报道:<b>EF 新授权(new mandate)引发外界争论</b>,焦点是 EF 自身角色与优先级——这一组织重定向是后续 5 月离职潮的背景。</p>
-          <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.03.14</span>
-          <span class="recent-source recent-src-market">市场</span>
-          <p><b>EF 向 Tom Lee 旗下 BitMine 出售 5,000 ETH</b>,成交约 1,020 万美元(均价 ~$2,040/ETH)。EF 出售自有 ETH 用于运营开支属常规操作,但本次因接盘方为公开 ETH 财政部公司而被广泛报道。</p>
-          <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.02.26</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p>EF 公布<b>"近年最进取"的路线图</b>:目标 2029 年前实现秒级终局性,并把以太坊定位为承载万亿美元价值的"价值互联网"基础层。</p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
-          <a class="recent-link" href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.02.24</span>
-          <span class="recent-source recent-src-ef">EF</span>
-          <p><b>EF 将 70,000 ETH 投入质押</b>,首次将国库主动用于 PoS 安全与收益,被视为 EF 财政管理新阶段的标志。</p>
-          <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2026.02.13</span>
-          <span class="recent-source recent-src-press">媒体</span>
-          <p><b>EF 高层调整:Tomasz Stańczak 卸任联合执行董事</b>。CoinDesk 将其与 EF 内部组织 transition 联系起来,是 5 月离职潮前的重要节点。</p>
-          <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.12.30</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Balance of power》</b>,2025 年最后一篇博客,讨论权力分散与多元社会议题。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.12.17</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Let a thousand societies bloom》</b>,讨论可信中立基础设施承载多元价值社区的可能。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.11.07</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《Galaxy brain resistance》</b>。在 ZK 与 AI 议题之间讨论可验证推理的边界。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.10.19</span>
-          <span class="recent-source recent-src-vitalik">Vitalik</span>
-          <p>发表 <b>《A GKR Tutorial》</b>。深入交互式证明基础组件 GKR 协议,zkVM 性能讨论的重要前置。</p>
-          <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">vitalik.eth.limo →</a>
-        </li>
-        <li class="recent-item">
-          <span class="recent-when">2025.05</span>
-          <span class="recent-source recent-src-mainnet">主网</span>
-          <p><b>Pectra 升级激活</b>。EIP-7702 / 7251 / 6110 + Blob target 3→6 / max 6→9 同步上线。<i>(对照保留 — 已超 6 个月)</i></p>
-          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF Pectra 公告 →</a>
-        </li>
-      </ul>
+  </div>
+
+  <!-- 近半年:横向时间轴 -->
+  <div class="recent-half-band recent-col recent-half">
+    <div class="recent-col-head">
+      <span class="recent-tag">近半年</span>
     </div>
 
+    <div class="rh-track">
+      <!-- 时间轴底线 -->
+      <div class="rh-axis"></div>
+
+      <!-- 2025.05 Pectra(对照基线) -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2025.05</b><span>Pectra</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-source recent-src-mainnet">主网</span>
+            <p><b>Pectra 升级激活</b>。EIP-7702 / 7251 / 6110 + Blob target 3→6 / max 6→9 同步上线。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF Pectra 公告 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2025 Q4 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2025.Q4</b><span>Vitalik 集中输出</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">12.30</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Balance of power</b>》—— 权力分散与多元社会。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">12.17</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Let a thousand societies bloom</b>》—— 可信中立基础设施。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">11.07</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Galaxy brain resistance</b>》—— ZK × AI 可验证推理边界。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">10.19</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>A GKR Tutorial</b>》—— zkVM 性能讨论前置。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.02 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.02</b><span>EF 重定向 + 进取路线图</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">02.26</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p>EF 公布<b>"近年最进取"的路线图</b>:2029 年前秒级终局,以太坊定位"价值互联网"基础层。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">02.24</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>EF 将 70,000 ETH 投入质押</b>,首次国库主动 staking,被视为财政管理新阶段。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">02.13</span>
+            <span class="recent-source recent-src-press">媒体</span>
+            <p><b>Tomasz Stańczak 卸任联合执行董事</b>,与 EF 内部 transition 相关,是 5 月离职潮前的关键节点。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.03 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.03</b><span>新授权与财政部动作</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">03.16</span>
+            <span class="recent-source recent-src-press">媒体</span>
+            <p>CoinDesk:<b>EF 新授权(new mandate)引发争论</b>,焦点是 EF 自身角色与优先级——5 月离职潮的组织背景。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">03.14</span>
+            <span class="recent-source recent-src-market">市场</span>
+            <p><b>EF 向 BitMine(Tom Lee)出售 5,000 ETH</b>,成交 ~$10.2M。属常规出售但接盘方为公开 ETH 财政部公司而被广泛报道。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.04 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.04</b><span>研究节奏与公益项目</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">04.16</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>ETH Rangers Program Recap</b>。生态独立公共物品安全研究津贴项目阶段总结。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">04.10</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>Checkpoint #9</b>。EF 高频度路线图同步,汇总核心开发者电话与协议研究进度。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">04.02</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>My self-sovereign / local / private / secure LLM setup</b>》——"用户主权 + 本地 + 隐私"实践。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
   </div>
 </section>
 

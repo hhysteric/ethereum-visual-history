@@ -3207,6 +3207,10 @@ footer {
   grid-template-columns: 1fr 1fr 1.4fr;
   gap: 16px;
 }
+.recent-grid-top {
+  grid-template-columns: 1fr 1.6fr;
+  margin-bottom: 18px;
+}
 .recent-col {
   padding: 18px 18px 20px;
   background: var(--card);
@@ -3363,12 +3367,109 @@ footer {
 .recent-foot a:hover { text-decoration-style: solid; }
 
 @media (max-width: 1100px) {
-  .recent-grid { grid-template-columns: 1fr 1fr; }
-  .recent-half { grid-column: 1 / -1; }
+  .recent-grid-top { grid-template-columns: 1fr; }
+  .rh-track { grid-template-columns: repeat(3, minmax(220px, 1fr)) !important; }
 }
 @media (max-width: 720px) {
-  .recent-grid { grid-template-columns: 1fr; }
-  .recent-half { grid-column: auto; }
+  .rh-track { grid-template-columns: 1fr !important; }
+  .rh-axis { display: none; }
+}
+
+/* ---------- 近半年:横向时间轴 ---------- */
+.recent-half-band {
+  padding: 18px 18px 22px;
+}
+.rh-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.rh-axis {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 22px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(45, 106, 62, 0.35),
+    rgba(45, 106, 62, 0.55),
+    rgba(45, 106, 62, 0.35)
+  );
+  z-index: 0;
+}
+.rh-stop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 0;
+}
+.rh-month {
+  position: relative;
+  padding: 6px 10px 8px 18px;
+  border-left: 2px solid #2d6a3e;
+  background: rgba(45, 106, 62, 0.04);
+  margin-bottom: 4px;
+}
+.rh-month::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  background: #2d6a3e;
+  border: 2px solid var(--card);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #2d6a3e;
+}
+.rh-month b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d6a3e;
+  letter-spacing: 0.04em;
+}
+.rh-month span {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.rh-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+.rh-list .recent-item {
+  padding: 10px 12px;
+  font-size: 13px;
+}
+.rh-list .recent-item p {
+  font-size: 12.5px;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+.rh-list .recent-when {
+  font-family: var(--mono);
+  font-size: 10.5px;
+}
+.rh-list .recent-source {
+  font-size: 10px;
+  padding: 1px 5px;
+}
+.rh-list .recent-link {
+  font-size: 11px;
 }
 
 /* ================================
@@ -4678,6 +4779,10 @@ footer {
   gap: 0;
   margin-bottom: 28px;
 }
+.ex-cols-2 {
+  grid-template-columns: 1fr 1.5fr;
+  margin-bottom: 22px;
+}
 .ex-col {
   padding: 0 16px;
   border-right: 1px solid var(--rule-light);
@@ -4762,6 +4867,55 @@ footer {
 }
 
 /* ---------- 北极星 ---------- */
+/* ---------- 近半年:导出 PNG 横向时间轴 ---------- */
+.ex-half-band {
+  margin-bottom: 24px;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed var(--rule-light);
+}
+.ex-half-band .ex-col-head { margin-bottom: 16px; }
+.ex-stops {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+.ex-stop {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px 12px;
+  background: rgba(45, 106, 62, 0.04);
+  border-left: 2px solid #2d6a3e;
+}
+.ex-stop-head {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(45, 106, 62, 0.25);
+}
+.ex-stop-head b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #2d6a3e;
+}
+.ex-stop-head span {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.ex-stop .ex-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(45, 106, 62, 0.2);
+}
+.ex-stop .ex-item:last-child { border-bottom: none; }
+.ex-stop .ex-body { font-size: 11.5px; line-height: 1.5; }
+.ex-stop .ex-when { font-size: 10px; }
+.ex-stop .ex-source { font-size: 9.5px; padding: 1px 4px; }
+
 .ex-stars-band {
   margin-top: 24px;
   padding-top: 20px;

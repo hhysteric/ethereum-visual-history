@@ -877,7 +877,17 @@ initLiveData();
   function buildExportNode() {
     const wk  = collectColumn(".recent-week");
     const mo  = collectColumn(".recent-month");
-    const hf  = collectColumn(".recent-half");
+    // 近半年:按月份柱采集
+    const halfStops = Array.from(document.querySelectorAll(".recent-half-band .rh-stop")).map((s) => ({
+      label: s.querySelector(".rh-month b")?.textContent.trim() || "",
+      sub:   s.querySelector(".rh-month span")?.textContent.trim() || "",
+      items: Array.from(s.querySelectorAll(".recent-item")).map((it) => ({
+        when:   (it.querySelector(".recent-when")?.textContent || "").trim(),
+        source: (it.querySelector(".recent-source")?.textContent || "").trim(),
+        sourceClass: it.querySelector(".recent-source")?.className || "",
+        body:   it.querySelector("p")?.innerHTML || "",
+      })),
+    }));
     const stars = collectStars();
     const t = today();
 
@@ -898,10 +908,19 @@ initLiveData();
     const itemHTML = (it) => `
       <div class="ex-item">
         <div class="ex-item-meta">
-          <span class="ex-when">${it.when}</span>
+          ${it.when ? `<span class="ex-when">${it.when}</span>` : ""}
           <span class="${remapSourceClass(it.sourceClass)}">${it.source}</span>
         </div>
         <p class="ex-body">${it.body}</p>
+      </div>`;
+
+    const halfStopHTML = (s) => `
+      <div class="ex-stop">
+        <div class="ex-stop-head">
+          <b>${s.label}</b>
+          <span>${s.sub}</span>
+        </div>
+        ${s.items.map(itemHTML).join("")}
       </div>`;
 
     const starHTML = (s) => `
@@ -933,7 +952,7 @@ initLiveData();
           <h1>Vitalik 与 EF 公开事件 · 五大北极星进度</h1>
         </div>
 
-        <section class="ex-cols">
+        <section class="ex-cols ex-cols-2">
           <div class="ex-col ex-col-week">
             <div class="ex-col-head"><span class="ex-tag">近一周</span></div>
             ${wk.map(itemHTML).join("") || '<p class="ex-empty">本周无重大公开事件。</p>'}
@@ -942,9 +961,12 @@ initLiveData();
             <div class="ex-col-head"><span class="ex-tag">近一月</span></div>
             ${mo.map(itemHTML).join("")}
           </div>
-          <div class="ex-col ex-col-half">
-            <div class="ex-col-head"><span class="ex-tag">近半年</span></div>
-            ${hf.map(itemHTML).join("")}
+        </section>
+
+        <section class="ex-half-band">
+          <div class="ex-col-head"><span class="ex-tag">近半年</span></div>
+          <div class="ex-stops">
+            ${halfStops.map(halfStopHTML).join("")}
           </div>
         </section>
 
