@@ -3300,6 +3300,8 @@ footer {
 .recent-src-eips    { background: #b8762a; }
 .recent-src-mainnet { background: #2d6a3e; }
 .recent-src-erc     { background: #6a3e8b; }
+.recent-src-press   { background: #5a5a5a; }
+.recent-src-market  { background: #1a1a1a; }
 .recent-item p {
   margin: 4px 0 8px;
   font-size: 13px;
@@ -4741,6 +4743,8 @@ footer {
 .ex-source.s-eips    { background: #efe6d9; color: #8b5a1a; }
 .ex-source.s-mainnet { background: #e0ecdf; color: #2d6a3e; }
 .ex-source.s-erc     { background: #ece3f4; color: #6a3e8b; }
+.ex-source.s-press   { background: #e3e3e3; color: #3a3a3a; }
+.ex-source.s-market  { background: #d9d3c4; color: #1a1a1a; }
 
 .ex-body {
   font-family: var(--serif);

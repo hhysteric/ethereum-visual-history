@@ -887,6 +887,8 @@ initLiveData();
       "recent-src-eips":    "s-eips",
       "recent-src-mainnet": "s-mainnet",
       "recent-src-erc":     "s-erc",
+      "recent-src-press":   "s-press",
+      "recent-src-market":  "s-market",
     };
     const remapSourceClass = (raw) => {
       const found = Object.keys(sourceClassMap).find((k) => raw.includes(k));
