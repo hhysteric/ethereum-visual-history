@@ -836,7 +836,8 @@ async function fetchBlocks() {
 initLiveData();
 
 // =======================================================
-// 周报导出 · 抓取 #recent 三栏 → 渲染专用容器 → html2canvas → 下载 PDF
+// 周报导出 · 优化版：使用 jsPDF 原生 HTML 渲染
+// 文本可复制 · 文件体积更小 · 导出性能更好
 // =======================================================
 (function initWeeklyExport() {
   const btn = document.getElementById("export-weekly-btn");
@@ -900,174 +901,174 @@ initLiveData();
       "recent-src-press":   "s-press",
       "recent-src-market":  "s-market",
     };
-	    const remapSourceClass = (raw) => {
-	      const found = Object.keys(sourceClassMap).find((k) => raw.includes(k));
-	      return "ex-source " + (found ? sourceClassMap[found] : "");
-	    };
+    const remapSourceClass = (raw) => {
+      const found = Object.keys(sourceClassMap).find((k) => raw.includes(k));
+      return "ex-source " + (found ? sourceClassMap[found] : "");
+    };
 
-	    const impactRules = [
-	      {
-	        match: /原生隐私|Privacy|Kohaku|private reads|keyed nonces/i,
-	        impacts: [
-	          { label: "Native Privacy / 隐私转账原生化", cls: "i-privacy" },
-	          { label: "架构: AA + FOCIL + RPC 访问层", cls: "i-arch" },
-	        ],
-	      },
-	      {
-	        match: /Clear Signing|ERC-7730|盲签|签名/i,
-	        impacts: [
-	          { label: "应用层: 钱包-DApp 签名安全", cls: "i-app" },
-	          { label: "体验: 可读交易意图", cls: "i-ux" },
-	        ],
-	      },
-	      {
-	        match: /formal verification|形式化验证|zkVM|后量子|AI 辅助/i,
-	        impacts: [
-	          { label: "Post-Quantum / 长期安全", cls: "i-resilience" },
-	          { label: "架构: 客户端 + zk 系统正确性", cls: "i-arch" },
-	        ],
-	      },
-	      {
-	        match: /200M gas|Gigagas|gas limit|EIP-8037|repricing/i,
-	        impacts: [
-	          { label: "Gigagas L1 / 主网吞吐", cls: "i-gigagas" },
-	          { label: "架构: 执行层资源重定价", cls: "i-arch" },
-	        ],
-	      },
-	      {
-	        match: /Glamsterdam|6s|slot|SSF|秒级终局/i,
-	        impacts: [
-	          { label: "Fast L1 / 秒级终局性", cls: "i-fast" },
-	          { label: "架构: 共识节奏与升级打包", cls: "i-arch" },
-	        ],
-	      },
-	      {
-	        match: /ePBS|BAL|Hegot|Soldøgn|Interop|多客户端|Protocol Cluster/i,
-	        impacts: [
-	          { label: "架构: 提议者-构建者分离与抗审查", cls: "i-arch" },
-	          { label: "路线图: Glamsterdam / Hegotá 协同", cls: "i-roadmap" },
-	        ],
-	      },
-	      {
-	        match: /Danksharding|PeerDAS|Blob|L2|rollup/i,
-	        impacts: [
-	          { label: "Teragas L2 / Blob 带宽", cls: "i-teragas" },
-	          { label: "架构: Rollup-centric 数据可用性", cls: "i-arch" },
-	        ],
-	      },
-	    ];
-	    const noDirectImpact = /ETF|净流出|净赎回|EPF|Fellowship|Allocation Update|资金继续投向|资金|招募|出售 ETH|Bankless/i;
+    const impactRules = [
+      {
+        match: /原生隐私|Privacy|Kohaku|private reads|keyed nonces/i,
+        impacts: [
+          { label: "Native Privacy / 隐私转账原生化", cls: "i-privacy" },
+          { label: "架构: AA + FOCIL + RPC 访问层", cls: "i-arch" },
+        ],
+      },
+      {
+        match: /Clear Signing|ERC-7730|盲签|签名/i,
+        impacts: [
+          { label: "应用层: 钱包-DApp 签名安全", cls: "i-app" },
+          { label: "体验: 可读交易意图", cls: "i-ux" },
+        ],
+      },
+      {
+        match: /formal verification|形式化验证|zkVM|后量子|AI 辅助/i,
+        impacts: [
+          { label: "Post-Quantum / 长期安全", cls: "i-resilience" },
+          { label: "架构: 客户端 + zk 系统正确性", cls: "i-arch" },
+        ],
+      },
+      {
+        match: /200M gas|Gigagas|gas limit|EIP-8037|repricing/i,
+        impacts: [
+          { label: "Gigagas L1 / 主网吞吐", cls: "i-gigagas" },
+          { label: "架构: 执行层资源重定价", cls: "i-arch" },
+        ],
+      },
+      {
+        match: /Glamsterdam|6s|slot|SSF|秒级终局/i,
+        impacts: [
+          { label: "Fast L1 / 秒级终局性", cls: "i-fast" },
+          { label: "架构: 共识节奏与升级打包", cls: "i-arch" },
+        ],
+      },
+      {
+        match: /ePBS|BAL|Hegot|Soldøgn|Interop|多客户端|Protocol Cluster/i,
+        impacts: [
+          { label: "架构: 提议者-构建者分离与抗审查", cls: "i-arch" },
+          { label: "路线图: Glamsterdam / Hegotá 协同", cls: "i-roadmap" },
+        ],
+      },
+      {
+        match: /Danksharding|PeerDAS|Blob|L2|rollup/i,
+        impacts: [
+          { label: "Teragas L2 / Blob 带宽", cls: "i-teragas" },
+          { label: "架构: Rollup-centric 数据可用性", cls: "i-arch" },
+        ],
+      },
+    ];
+    const noDirectImpact = /ETF|净流出|净赎回|EPF|Fellowship|Allocation Update|资金继续投向|资金|招募|出售 ETH|Bankless/i;
 
-	    const projectRules = [
-	      {
-	        match: /原生隐私|Privacy|Kohaku|private reads|keyed nonces/i,
-	        projects: [
-	          { tone: "利好/关注", name: "RAILGUN ($RAIL)", reason: "Kohaku/隐私工具链与 shielded transfer 叙事相关", cls: "p-positive" },
-	          { tone: "利好/关注", name: "Privacy Pools", reason: "原生隐私路线提高合规隐私方案能见度", cls: "p-positive" },
-	          { tone: "利好/关注", name: "Kohaku", reason: "作为访问层隐私与钱包 SDK 方向被点名", cls: "p-positive" },
-	        ],
-	      },
-	      {
-	        match: /Clear Signing|ERC-7730|盲签|签名/i,
-	        projects: [
-	          { tone: "利好/关注", name: "Ledger / Trezor", reason: "硬件签名与 ERC-7730 元数据标准直接相关", cls: "p-positive" },
-	          { tone: "利好/关注", name: "MetaMask / WalletConnect", reason: "钱包连接与交易展示层可能优先受益", cls: "p-positive" },
-	          { tone: "利好/关注", name: "Sourcify / Cyfrin / Fireblocks", reason: "合约验证、安全审计与机构签名基础设施相关", cls: "p-positive" },
-	        ],
-	      },
-	      {
-	        match: /formal verification|形式化验证|zkVM|后量子|AI 辅助/i,
-	        projects: [
-	          { tone: "利好/关注", name: "zkVM / ZK infra", reason: "验证工具链、安全证明与客户端正确性需求上升", cls: "p-positive" },
-	          { tone: "利好/关注", name: "形式化验证工具", reason: "AI 辅助证明与审计可能提升采用", cls: "p-positive" },
-	        ],
-	      },
-	      {
-	        match: /200M gas|Gigagas|gas limit|EIP-8037|repricing/i,
-	        projects: [
-	          { tone: "利好/关注", name: "L1 高频应用", reason: "更高 gas 上限改善主网吞吐空间", cls: "p-positive" },
-	          { tone: "利好/关注", name: "Uniswap / Aave 等 L1 DeFi", reason: "主网容量提升有利于高价值 DeFi 交互", cls: "p-positive" },
-	          { tone: "潜在压力", name: "依赖低费叙事的部分 L2", reason: "若 L1 容量显著提升,部分需求可能回流主网", cls: "p-risk" },
-	        ],
-	      },
-	      {
-	        match: /Glamsterdam|6s|slot|SSF|秒级终局/i,
-	        projects: [
-	          { tone: "利好/关注", name: "L1 DeFi / 支付应用", reason: "更短确认时间改善交互体验", cls: "p-positive" },
-	          { tone: "利好/关注", name: "预确认 / 排序基础设施", reason: "更快 L1 节奏改变交易确认与排序设计空间", cls: "p-positive" },
-	        ],
-	      },
-	      {
-	        match: /ePBS|BAL|Hegot|Soldøgn|Interop|多客户端|Protocol Cluster/i,
-	        projects: [
-	          { tone: "影响/重构", name: "MEV-Boost / relay 生态", reason: "ePBS 把 PBS 机制纳入协议,削弱对中间件信任依赖", cls: "p-neutral" },
-	          { tone: "影响/重构", name: "block builder / searcher", reason: "区块构建与支付路径可能被协议化重塑", cls: "p-neutral" },
-	          { tone: "利好/关注", name: "客户端团队", reason: "多客户端 devnet 与互操作测试重要性上升", cls: "p-positive" },
-	        ],
-	      },
-	      {
-	        match: /Danksharding|PeerDAS|Blob|L2|rollup/i,
-	        projects: [
-	          { tone: "利好/关注", name: "Optimism / Arbitrum / Base", reason: "Blob 带宽与 DA 改善直接影响 rollup 成本", cls: "p-positive" },
-	          { tone: "利好/关注", name: "DA / rollup infra", reason: "数据可用性扩容提高 L2 总吞吐天花板", cls: "p-positive" },
-	        ],
-	      },
-	    ];
+    const projectRules = [
+      {
+        match: /原生隐私|Privacy|Kohaku|private reads|keyed nonces/i,
+        projects: [
+          { tone: "利好/关注", name: "RAILGUN ($RAIL)", reason: "Kohaku/隐私工具链与 shielded transfer 叙事相关", cls: "p-positive" },
+          { tone: "利好/关注", name: "Privacy Pools", reason: "原生隐私路线提高合规隐私方案能见度", cls: "p-positive" },
+          { tone: "利好/关注", name: "Kohaku", reason: "作为访问层隐私与钱包 SDK 方向被点名", cls: "p-positive" },
+        ],
+      },
+      {
+        match: /Clear Signing|ERC-7730|盲签|签名/i,
+        projects: [
+          { tone: "利好/关注", name: "Ledger / Trezor", reason: "硬件签名与 ERC-7730 元数据标准直接相关", cls: "p-positive" },
+          { tone: "利好/关注", name: "MetaMask / WalletConnect", reason: "钱包连接与交易展示层可能优先受益", cls: "p-positive" },
+          { tone: "利好/关注", name: "Sourcify / Cyfrin / Fireblocks", reason: "合约验证、安全审计与机构签名基础设施相关", cls: "p-positive" },
+        ],
+      },
+      {
+        match: /formal verification|形式化验证|zkVM|后量子|AI 辅助/i,
+        projects: [
+          { tone: "利好/关注", name: "zkVM / ZK infra", reason: "验证工具链、安全证明与客户端正确性需求上升", cls: "p-positive" },
+          { tone: "利好/关注", name: "形式化验证工具", reason: "AI 辅助证明与审计可能提升采用", cls: "p-positive" },
+        ],
+      },
+      {
+        match: /200M gas|Gigagas|gas limit|EIP-8037|repricing/i,
+        projects: [
+          { tone: "利好/关注", name: "L1 高频应用", reason: "更高 gas 上限改善主网吞吐空间", cls: "p-positive" },
+          { tone: "利好/关注", name: "Uniswap / Aave 等 L1 DeFi", reason: "主网容量提升有利于高价值 DeFi 交互", cls: "p-positive" },
+          { tone: "潜在压力", name: "依赖低费叙事的部分 L2", reason: "若 L1 容量显著提升,部分需求可能回流主网", cls: "p-risk" },
+        ],
+      },
+      {
+        match: /Glamsterdam|6s|slot|SSF|秒级终局/i,
+        projects: [
+          { tone: "利好/关注", name: "L1 DeFi / 支付应用", reason: "更短确认时间改善交互体验", cls: "p-positive" },
+          { tone: "利好/关注", name: "预确认 / 排序基础设施", reason: "更快 L1 节奏改变交易确认与排序设计空间", cls: "p-positive" },
+        ],
+      },
+      {
+        match: /ePBS|BAL|Hegot|Soldøgn|Interop|多客户端|Protocol Cluster/i,
+        projects: [
+          { tone: "影响/重构", name: "MEV-Boost / relay 生态", reason: "ePBS 把 PBS 机制纳入协议,削弱对中间件信任依赖", cls: "p-neutral" },
+          { tone: "影响/重构", name: "block builder / searcher", reason: "区块构建与支付路径可能被协议化重塑", cls: "p-neutral" },
+          { tone: "利好/关注", name: "客户端团队", reason: "多客户端 devnet 与互操作测试重要性上升", cls: "p-positive" },
+        ],
+      },
+      {
+        match: /Danksharding|PeerDAS|Blob|L2|rollup/i,
+        projects: [
+          { tone: "利好/关注", name: "Optimism / Arbitrum / Base", reason: "Blob 带宽与 DA 改善直接影响 rollup 成本", cls: "p-positive" },
+          { tone: "利好/关注", name: "DA / rollup infra", reason: "数据可用性扩容提高 L2 总吞吐天花板", cls: "p-positive" },
+        ],
+      },
+    ];
 
-	    function impactHTML(it) {
-	      const text = `${it.when} ${it.source} ${it.body}`.replace(/<[^>]+>/g, " ");
-	      if (noDirectImpact.test(text)) return "";
-	      const seen = new Set();
-	      const impacts = impactRules.flatMap((rule) => {
-	        if (!rule.match.test(text)) return [];
-	        return rule.impacts.filter((impact) => {
-	          if (seen.has(impact.label)) return false;
-	          seen.add(impact.label);
-	          return true;
-	        });
-	      }).slice(0, 3);
-	      if (!impacts.length) return "";
-	      return `
-	        <div class="ex-impact">
-	          <span class="ex-impact-kicker">影响路径</span>
-	          ${impacts.map((impact) => `<span class="ex-impact-chip ${impact.cls}">→ ${impact.label}</span>`).join("")}
-	        </div>`;
-	    }
+    function impactHTML(it) {
+      const text = `${it.when} ${it.source} ${it.body}`.replace(/<[^>]+>/g, " ");
+      if (noDirectImpact.test(text)) return "";
+      const seen = new Set();
+      const impacts = impactRules.flatMap((rule) => {
+        if (!rule.match.test(text)) return [];
+        return rule.impacts.filter((impact) => {
+          if (seen.has(impact.label)) return false;
+          seen.add(impact.label);
+          return true;
+        });
+      }).slice(0, 3);
+      if (!impacts.length) return "";
+      return `
+        <div class="ex-impact">
+          <span class="ex-impact-kicker">影响路径</span>
+          ${impacts.map((impact) => `<span class="ex-impact-chip ${impact.cls}">→ ${impact.label}</span>`).join("")}
+        </div>`;
+    }
 
-	    function projectHTML(it) {
-	      const text = `${it.when} ${it.source} ${it.body}`.replace(/<[^>]+>/g, " ");
-	      if (noDirectImpact.test(text)) return "";
-	      const seen = new Set();
-	      const projects = projectRules.flatMap((rule) => {
-	        if (!rule.match.test(text)) return [];
-	        return rule.projects.filter((project) => {
-	          const key = `${project.tone}:${project.name}`;
-	          if (seen.has(key)) return false;
-	          seen.add(key);
-	          return true;
-	        });
-	      }).slice(0, 3);
-	      if (!projects.length) return "";
-	      return `
-	        <div class="ex-projects">
-	          <span class="ex-project-kicker">项目影响</span>
-	          ${projects.map((project) => `
-	            <span class="ex-project-chip ${project.cls}">
-	              <b>${project.tone}</b>${project.name}<em>${project.reason}</em>
-	            </span>`).join("")}
-	        </div>`;
-	    }
+    function projectHTML(it) {
+      const text = `${it.when} ${it.source} ${it.body}`.replace(/<[^>]+>/g, " ");
+      if (noDirectImpact.test(text)) return "";
+      const seen = new Set();
+      const projects = projectRules.flatMap((rule) => {
+        if (!rule.match.test(text)) return [];
+        return rule.projects.filter((project) => {
+          const key = `${project.tone}:${project.name}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+      }).slice(0, 3);
+      if (!projects.length) return "";
+      return `
+        <div class="ex-projects">
+          <span class="ex-project-kicker">项目影响</span>
+          ${projects.map((project) => `
+            <span class="ex-project-chip ${project.cls}">
+              <b>${project.tone}</b>${project.name}<em>${project.reason}</em>
+            </span>`).join("")}
+        </div>`;
+    }
 
-	    const itemHTML = (it) => `
-	      <div class="ex-item">
-	        <div class="ex-item-meta">
-	          ${it.when ? `<span class="ex-when">${it.when}</span>` : ""}
-	          <span class="${remapSourceClass(it.sourceClass)}">${it.source}</span>
-	        </div>
-	        <p class="ex-body">${it.body}</p>
-	        ${impactHTML(it)}
-	        ${projectHTML(it)}
-	      </div>`;
+    const itemHTML = (it) => `
+      <div class="ex-item">
+        <div class="ex-item-meta">
+          ${it.when ? `<span class="ex-when">${it.when}</span>` : ""}
+          <span class="${remapSourceClass(it.sourceClass)}">${it.source}</span>
+        </div>
+        <p class="ex-body">${it.body}</p>
+        ${impactHTML(it)}
+        ${projectHTML(it)}
+      </div>`;
 
     const halfStopHTML = (s) => `
       <div class="ex-stop">
@@ -1103,10 +1104,10 @@ initLiveData();
           </div>
         </header>
 
-	        <div class="ex-title-band">
-	          <h1>ETH 动态</h1>
-	          <p class="ex-title-meta">动态 → 五大北极星 / 架构影响</p>
-	        </div>
+        <div class="ex-title-band">
+          <h1>ETH 动态</h1>
+          <p class="ex-title-meta">动态 → 五大北极星 / 架构影响</p>
+        </div>
 
         <section class="ex-cols ex-cols-2">
           <div class="ex-col ex-col-week">
@@ -1131,22 +1132,22 @@ initLiveData();
           <div class="ex-stars-grid">${stars.map(starHTML).join("")}</div>
         </section>
 
-	        <footer class="ex-foot">
-	          <span>来源:blog.ethereum.org · vitalik.eth.limo · strawmap.org · EIPs Repo · 公开媒体资料</span>
-	          <span>项目影响仅作信息整理,非投资建议</span>
-	          <span class="ex-foot-mark">ethereum-visual-history</span>
-	        </footer>
+        <footer class="ex-foot">
+          <span>来源:blog.ethereum.org · vitalik.eth.limo · strawmap.org · EIPs Repo · 公开媒体资料</span>
+          <span>项目影响仅作信息整理,非投资建议</span>
+          <span class="ex-foot-mark">ethereum-visual-history</span>
+        </footer>
       </div>
     `;
     return node;
   }
 
-	  async function exportWeekly() {
-	    const jsPDF = window.jspdf?.jsPDF;
-	    if (typeof html2canvas !== "function" || typeof jsPDF !== "function") {
-	      alert("PDF 导出组件还在加载,稍候重试。");
-	      return;
-	    }
+  async function exportWeekly() {
+    const jsPDF = window.jspdf?.jsPDF;
+    if (typeof jsPDF !== "function") {
+      alert("PDF 导出组件还在加载,稍候重试。");
+      return;
+    }
     btn.disabled = true;
     const originalText = btn.querySelector(".export-btn-label").textContent;
     btn.querySelector(".export-btn-label").textContent = "生成中…";
@@ -1154,35 +1155,29 @@ initLiveData();
     const node = buildExportNode();
     document.body.appendChild(node);
 
-	    try {
-	      const canvas = await html2canvas(node, {
-	        backgroundColor: "#faf8f3",
-	        scale: 2,
-	        useCORS: true,
-	        logging: false,
-	      });
-	      const imgData = canvas.toDataURL("image/png");
-	      const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
-	      const pageWidth = pdf.internal.pageSize.getWidth();
-	      const pageHeight = pdf.internal.pageSize.getHeight();
-	      const margin = 24;
-	      const imgWidth = pageWidth - margin * 2;
-	      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-	      let y = margin;
-	      let remaining = imgHeight;
+    try {
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
 
-	      pdf.addImage(imgData, "PNG", margin, y, imgWidth, imgHeight);
-	      remaining -= pageHeight - margin * 2;
-	      while (remaining > 0) {
-	        pdf.addPage();
-	        y = margin - (imgHeight - remaining);
-	        pdf.addImage(imgData, "PNG", margin, y, imgWidth, imgHeight);
-	        remaining -= pageHeight - margin * 2;
-	      }
-	      pdf.save(`ethereum-weekly-${today().iso}.pdf`);
-	    } catch (err) {
-	      console.error(err);
-	      alert("PDF 导出失败,请检查浏览器控制台。");
+      // 使用 jsPDF 原生 HTML 渲染，保持文本可选
+      await pdf.html(node, {
+        x: 5,
+        y: 5,
+        width: 200, // A4 宽度(210mm) 减去边距
+        margin: [5, 5, 5, 5],
+        useCORS: true,
+        logging: false,
+        // 防止页面溢出
+        windowHeight: node.scrollHeight,
+      });
+
+      pdf.save(`ethereum-weekly-${today().iso}.pdf`);
+    } catch (err) {
+      console.error("PDF export error:", err);
+      alert("PDF 导出失败,请检查浏览器控制台。");
     } finally {
       node.remove();
       btn.disabled = false;
