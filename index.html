@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>以太坊全景 · Ethereum Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+<script src="vendor/pdf-lib.min.js" defer></script>
+<script src="vendor/fontkit.umd.min.js" defer></script>
+<script src="vendor/SimHei.font.js" defer></script>
+<script src="vendor/html2canvas.min.js" defer></script>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- ============ 侧边栈导航 ============ -->
+<aside class="side-nav" id="side-nav">
+  <div class="side-logo">
+    <svg viewBox="0 0 32 32" width="24" height="24" aria-hidden="true">
+      <polygon points="16,2 4,17 16,23 28,17" fill="#a9b4ff"/>
+      <polygon points="16,2 4,17 16,12" fill="#fff"/>
+      <polygon points="16,25 4,18 16,30 28,18" fill="#7d8cff"/>
+    </svg>
+    <div>
+      <b>Ethereum</b>
+      <span>Explorer</span>
+    </div>
+  </div>
+
+  <nav class="side-links">
+    <a href="#/home" data-link="home">
+      <span class="sl-name">首页</span>
+      <span class="sl-sub">Home</span>
+    </a>
+    <a href="#/basics" data-link="basics">
+      <span class="sl-name">入门</span>
+      <span class="sl-sub">Basics</span>
+    </a>
+    <a href="#/tech" data-link="tech">
+      <span class="sl-name">技术</span>
+      <span class="sl-sub">Technology</span>
+    </a>
+    <a href="#/today" data-link="today">
+      <span class="sl-name">现状</span>
+      <span class="sl-sub">Today</span>
+    </a>
+    <a href="#/future" data-link="future">
+      <span class="sl-name">未来</span>
+      <span class="sl-sub">Future</span>
+    </a>
+    <a href="#/tools" data-link="tools">
+      <span class="sl-name">工具</span>
+      <span class="sl-sub">Tools</span>
+    </a>
+  </nav>
+
+  <!-- 侧栏底部实时数据(紧凑版) -->
+  <div class="side-live" id="side-live">
+    <div class="sl-row"><span>ETH</span><b id="live-price">—</b></div>
+    <div class="sl-row"><span>GAS</span><b id="live-gas">—</b></div>
+    <div class="sl-row"><span>BLOCK</span><b id="live-block">—</b></div>
+    <div class="sl-meta">
+      <em id="live-price-chg"></em>
+      <em id="live-gas-sub" style="display:none"></em>
+      <em id="live-staked" style="display:none"></em>
+      <em id="live-validators" style="display:none"></em>
+      <em id="live-block-time" style="display:none"></em>
+    </div>
+  </div>
+</aside>
+
+<main class="shell">
+
+<!-- ================================================
+     PAGE · HOME
+     ================================================ -->
+<div class="page" data-page="home">
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">WORLD COMPUTER · 去中心化 · 图灵完备</p>
+      <h1>以太坊全景</h1>
+      <p class="lead">
+        从「它是什么」到「它如何工作」,从历史里程碑到未来路线图。
+      </p>
+      <div class="hero-stats">
+        <div><b>2015</b><span>主网上线</span></div>
+        <div><b>2022.09</b><span>The Merge · 切换 PoS</span></div>
+        <div><b>2024.03</b><span>Dencun · EIP-4844</span></div>
+        <div><b>∞</b><span>Rollup-centric 路线</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>主题索引</h2>
+      <p>五大板块,每一块聚焦一个主题。</p>
+    </div>
+
+    <div class="entry-grid">
+      <a class="entry-card entry-basics" href="#/basics">
+        <h3>入门 · Basics</h3>
+        <p>什么是以太坊、为什么会有它、十年大事记与共识切换。</p>
+        <ul>
+          <li>什么是以太坊 · 5 步拆解</li>
+          <li>演进史 · 关键里程碑</li>
+          <li>PoW vs PoS · 共识对比</li>
+          <li>一笔交易:从点击到永久记录</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-tech" href="#/tech">
+        <h3>技术 · Technology</h3>
+        <p>6 层架构、执行 × 共识、账户、Gas、EVM → zkEVM → zkVM 演进。</p>
+        <ul>
+          <li>架构概览 · 6 层大楼</li>
+          <li>执行层 × 共识层(EVM + PoS)</li>
+          <li>账户与账本 · 状态树</li>
+          <li>Gas 与 EIP-1559</li>
+          <li>EVM → zkEVM → zkVM 演进</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-today" href="#/today">
+        <h3>现状 · Today</h3>
+        <p>模块化栈、升级进度、L2 四大分支、痛点与生态全景。</p>
+        <ul>
+          <li>① 模块化以太坊栈</li>
+          <li>② 升级路线进度</li>
+          <li>③ Rollup-centric · L2 四大分支</li>
+          <li>④ 当前痛点与挑战</li>
+          <li>⑤ 生态全景</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-future" href="#/future">
+        <h3>未来 · Future</h3>
+        <p>Vitalik 六阶段、2029 路线、Strawmap 五大北极星。</p>
+        <ul>
+          <li>Vitalik 六阶段路线图</li>
+          <li>2026 → 2029 路线全景</li>
+          <li>EF Strawmap · 五大北极星</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+
+      <a class="entry-card entry-tools" href="#/tools">
+        <h3>工具 · Tools</h3>
+        <p>亲手感受以太坊:质押收益、Gas、区块浏览器,以及一键导出周报。</p>
+        <ul>
+          <li>💰 质押收益计算器</li>
+          <li>⛽ Gas 费模拟器</li>
+          <li>🔍 迷你区块浏览器</li>
+          <li>📷 一键导出周报(在首页「近期动态」)</li>
+        </ul>
+        <span class="entry-go">进入 →</span>
+      </a>
+    </div>
+  </section>
+
+<!-- ============ 17 近期动态 ============ -->
+<section id="recent" class="section alt">
+  <div class="section-head section-head-with-action">
+    <div>
+      <h2>近期动态</h2>
+    </div>
+    <div class="export-btn-group">
+      <button class="export-btn export-btn-png" id="export-weekly-png-btn" type="button">
+        <span class="export-btn-icon">🖼️</span>
+        <span class="export-btn-label">导出图片</span>
+      </button>
+      <button class="export-btn" id="export-weekly-btn" type="button">
+        <span class="export-btn-icon">📄</span>
+        <span class="export-btn-label">导出 PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 时间窗格 -->
+  <div class="recent-grid recent-grid-top">
+
+    <!-- 近一周 -->
+    <div class="recent-col recent-week">
+      <div class="recent-col-head">
+        <span class="recent-tag">近一周</span>
+      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.05.28</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 在 Devconnect 倒计时阶段披露 <b>Glamsterdam 客户端 testnet 准备</b>:多客户端跨配对联调进入第二阶段,目标在 6 月公开 devnet,验证 ePBS、EIP-8037 重定价与 200M gas limit floor 在真实节奏下的稳定性。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.27</span>
+          <span class="recent-source recent-src-market">市场</span>
+          <p>美国现货 ETH ETF 资金面延续上周净流出节奏,机构端关注点转向 <b>EF 收缩信号</b> 与 CROPS 路线对长期 ETH 供给/质押率的影响,衍生品市场 IV 略升。</p>
+          <a class="recent-link" href="https://www.tokenpost.com/news/investing/20786" target="_blank" rel="noopener">TokenPost 数据 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.25</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>Vitalik 回应 EF 近期争议与人员流动,称 <b>Ethereum Foundation 将成为更小、更聚焦的"one node"</b>,减少 ETH 出售压力,并把长期重点收窄到 CROPS:抗审查、抗捕获、开放、隐私、安全。</p>
+          <a class="recent-link" href="https://www.coindesk.com/web3/2026/05/25/buterin-says-ethereum-foundation-will-shrink-sell-less-eth-and-focus-on-crops" target="_blank" rel="noopener">CoinDesk 报道 →</a>
+          <a class="recent-link" href="https://www.theblock.co/post/402435/vitalik-buterin-says-ethereum-foundation-will-be-a-smaller-ship-sell-less-eth-amid-researcher-exodus" target="_blank" rel="noopener">The Block →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.23</span>
+          <span class="recent-source recent-src-erc">应用层</span>
+          <p>多家钱包厂商上线 <b>ERC-7730 Clear Signing 元数据</b>初版集成,主流 DApp 开始提交可读交易意图描述,签名 UI 进入"看得懂再签"的过渡期。</p>
+          <a class="recent-link" href="https://eips.ethereum.org/EIPS/eip-7730" target="_blank" rel="noopener">ERC-7730 →</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 近一月 -->
+    <div class="recent-col recent-month">
+      <div class="recent-col-head">
+        <span class="recent-tag">近一月</span>
+      </div>
+      <ul class="recent-list">
+        <li class="recent-item">
+          <span class="recent-when">2026.05.21</span>
+          <span class="recent-source recent-src-market">市场</span>
+          <p>美国现货 ETH ETF 在 5 月中下旬转向连续净流出。公开报道显示,5 月 21 日单日约 <b>3258 万美元净赎回</b>,延续自 5 月 11 日开始的资金流出趋势,与月初短暂流入形成对比。</p>
+          <a class="recent-link" href="https://www.tokenpost.com/news/investing/20786" target="_blank" rel="noopener">TokenPost 数据 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.20</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>提出 Ethereum 走向<b>原生隐私</b>的短期方向:AA + FOCIL、keyed nonces / EIP-8250、Kohaku 与 private reads。重点是让隐私交易更难被审查,并减少链上活动与 RPC 查询暴露。</p>
+          <a class="recent-link" href="https://www.coindesk.com/tech/2026/05/20/vitalik-buterin-outlines-ethereum-s-privacy-measures-here-is-what-it-means-for-the-network-and-eth" target="_blank" rel="noopener">CoinDesk 解读 →</a>
+          <a class="recent-link" href="https://etherworld.co/vitalik-highlights-ethereums-short-term-push-toward-native-privacy/" target="_blank" rel="noopener">EtherWorld →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.18</span>
+          <span class="recent-source recent-src-vitalik">Vitalik</span>
+          <p>发表《<b>A shallow dive into formal verification</b>》,认为 AI 辅助漏洞发现会提高攻击效率,但 AI 辅助形式化验证也可能成为保护 Ethereum 基础设施、zk 系统、共识与后量子密码学的关键工具。</p>
+          <a class="recent-link" href="https://vitalik.eth.limo/general/2026/05/18/fv.html" target="_blank" rel="noopener">Vitalik 原文 →</a>
+          <a class="recent-link" href="https://www.coindesk.com/tech/2026/05/18/vitalik-buterin-says-ai-formal-verification-could-actually-make-crypto-much-more-secure" target="_blank" rel="noopener">CoinDesk 报道 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.12</span>
+          <span class="recent-source recent-src-erc">应用层</span>
+          <p>EF 联合钱包厂商与安全公司启动 <b>Clear Signing 开放标准(ERC-7730)</b>,目标缓解"盲签"风险,让用户在签名前看懂交易意图。该方向直接影响钱包、DApp、硬件签名与用户安全基础设施。</p>
+          <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          <a class="recent-link" href="https://eips.ethereum.org/EIPS/eip-7730" target="_blank" rel="noopener">ERC-7730 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.11</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 发布 <b>Protocol Cluster Updates: May 2026</b>。Soldøgn Interop 围绕 Glamsterdam 完成多项进展:post-Glamsterdam <b>200M gas limit floor</b>、ePBS 多客户端 devnet、EIP-8037 repricing,以及 Hegotá 的 FOCIL / native AA 准备。</p>
+          <a class="recent-link" href="https://blog.ethereum.org/2026/05/11/protocol-update-may-26" target="_blank" rel="noopener">EF 博客原文 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.05.02</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p><b>Soldøgn Interop Recap</b> 发布。100+ 以太坊核心贡献者在 Svalbard 进行单轨协议协作,目标是加固 Glamsterdam,并推进 ePBS、BAL、EIP-8037 与 Hegotá 前置工作。</p>
+          <a class="recent-link" href="https://blog.ethereum.org/" target="_blank" rel="noopener">EF 博客 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.30</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 公告 <b>Ethereum Protocol Fellowship 第 7 期(EPF7)</b> 招募,面向希望参与客户端、测试、规范与核心协议研究的开发者。</p>
+          <a class="recent-link" href="https://blog.ethereum.org/" target="_blank" rel="noopener">EF 博客 →</a>
+        </li>
+        <li class="recent-item">
+          <span class="recent-when">2026.04.29</span>
+          <span class="recent-source recent-src-ef">EF</span>
+          <p>EF 发布 <b>Allocation Update Q1 2026</b>。资金继续投向密码学、ZK、安全、协议研究与开发者工具,包括 EthereumJS maintenance、WalletConnect clear signing library、Lighthouse Fusaka / Glamsterdam 工作等。</p>
+          <a class="recent-link" href="https://blog.ethereum.org/2026/04/29/allocation-q1-26" target="_blank" rel="noopener">EF Allocation →</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- 近半年:横向时间轴 -->
+  <div class="recent-half-band recent-col recent-half">
+    <div class="recent-col-head">
+      <span class="recent-tag">近半年</span>
+    </div>
+
+    <div class="rh-track">
+      <!-- 时间轴底线 -->
+      <div class="rh-axis"></div>
+
+      <!-- 2026.04 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.04</b><span>研究节奏与公益项目</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">04.16</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>ETH Rangers Program Recap</b>。生态独立公共物品安全研究津贴项目阶段总结。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">04.10</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>Checkpoint #9</b>。EF 高频度路线图同步,汇总核心开发者电话与协议研究进度。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">04.02</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>My self-sovereign / local / private / secure LLM setup</b>》——"用户主权 + 本地 + 隐私"实践。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.03 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.03</b><span>Mandate 与财政部动作</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">03.14</span>
+            <span class="recent-source recent-src-market">市场</span>
+            <p><b>EF 向 BitMine(Tom Lee)出售 5,000 ETH</b>,成交 ~$10.2M。属常规出售但接盘方为公开 ETH 财政部公司而被广泛报道。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">03.13</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>Ethereum Foundation Mandate</b> 发布。EF 将自身定位为 Ethereum 众多 steward 之一,核心原则聚焦 CROPS:抗审查、开源、隐私、安全。</p>
+            <a class="recent-link" href="https://blog.ethereum.org/2026/03/13/ef-mandate" target="_blank" rel="noopener">EF Blog →</a>
+            <a class="recent-link" href="https://ethereum.org/foundation/mandate/" target="_blank" rel="noopener">完整文本 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.02 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.02</b><span>EF 重定向 + 进取路线图</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">02.26</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p>EF 公布<b>"近年最进取"的路线图</b>:2029 年前秒级终局,以太坊定位"价值互联网"基础层。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">02.24</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>EF 将 70,000 ETH 投入质押</b>,首次国库主动 staking,被视为财政管理新阶段。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">02.13</span>
+            <span class="recent-source recent-src-press">媒体</span>
+            <p><b>Tomasz Stańczak 卸任联合执行董事</b>,与 EF 内部 transition 相关,是 5 月离职潮前的关键节点。</p>
+            <a class="recent-link" href="https://www.coindesk.com" target="_blank" rel="noopener">CoinDesk →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2026.01 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2026.01</b><span>新年定调与社区共识</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">01.22</span>
+            <span class="recent-source recent-src-ef">EF</span>
+            <p><b>2026 年度路线图预告</b>。EF 公布全年节奏:Glamsterdam 主线 + Hegotá 前置 + 隐私/AA 工具链整合。</p>
+            <a class="recent-link" href="https://blog.ethereum.org" target="_blank" rel="noopener">EF 博客 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">01.08</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>The promise of values</b>》—— 价值层叙事与协议中立性的年度展望。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2025.12 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2025.12</b><span>Vitalik 集中输出</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">12.30</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Balance of power</b>》—— 权力分散与多元社会。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+          <li class="recent-item">
+            <span class="recent-when">12.17</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Let a thousand societies bloom</b>》—— 可信中立基础设施。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2025.11 -->
+      <div class="rh-stop">
+        <div class="rh-month"><b>2025.11</b><span>ZK × AI 边界</span></div>
+        <ul class="rh-list">
+          <li class="recent-item">
+            <span class="recent-when">11.07</span>
+            <span class="recent-source recent-src-vitalik">Vitalik</span>
+            <p>《<b>Galaxy brain resistance</b>》—— ZK × AI 可验证推理边界。</p>
+            <a class="recent-link" href="https://vitalik.eth.limo" target="_blank" rel="noopener">原文 →</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div><!-- /page home -->
+
+<!-- ================================================
+     PAGE · BASICS
+     ================================================ -->
+<div class="page" data-page="basics">
+  <div class="page-header">
+    <p class="page-eyebrow">BASICS · 入门</p>
+    <h1>入门:理解以太坊</h1>
+    <p class="page-desc">从「它是什么」到「它怎么改变」——三节课看懂以太坊的骨架。</p>
+  </div>
+
+<!-- ============ 01 简介 ============ -->
+<section id="intro" class="section">
+  <div class="section-head">
+    <h2>什么是以太坊</h2>
+    <p>以太坊是一个开源的、全球分布式的「世界计算机」——不仅能转账，还能运行代码（智能合约），让去中心化金融、NFT、DAO 成为可能。</p>
+  </div>
+
+  <div class="intro-grid">
+    <article class="intro-card">
+      <div class="intro-icon">🌍</div>
+      <h3>世界计算机</h3>
+      <p>一台由成千上万节点共同维护的全球公共计算机，任何人都能部署代码并确保它被诚实地执行。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">📜</div>
+      <h3>智能合约</h3>
+      <p>由代码定义的协议，满足条件自动执行，无需中间人。Uniswap、Aave、ENS 都是它的产物。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">🔓</div>
+      <h3>无需许可</h3>
+      <p>任何人无需身份审批即可部署 DApp、持有资产、参与治理。抗审查是其核心价值之一。</p>
+    </article>
+    <article class="intro-card">
+      <div class="intro-icon">💎</div>
+      <h3>ETH 资产</h3>
+      <p>原生加密资产，既是支付 Gas 的「燃料」，也是通过质押保护网络安全的「权益」。</p>
+    </article>
+  </div>
+
+  <div class="vs-table">
+    <h4>以太坊 vs 比特币 · 一张表看懂</h4>
+    <table>
+      <thead>
+        <tr><th>维度</th><th class="col-btc">Bitcoin · 比特币</th><th class="col-eth">Ethereum · 以太坊</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>定位</td><td>数字黄金 / 点对点现金</td><td>全球去中心化计算平台</td></tr>
+        <tr><td>脚本能力</td><td>受限脚本，不图灵完备</td><td>EVM 图灵完备,可运行任意合约</td></tr>
+        <tr><td>区块时间</td><td>~10 分钟</td><td>12 秒(1 slot)</td></tr>
+        <tr><td>共识机制</td><td>PoW(工作量证明)</td><td>PoS(权益证明,2022 起)</td></tr>
+        <tr><td>发行上限</td><td>2100 万枚</td><td>无硬顶,但 EIP-1559 销毁机制让 ETH 可能通缩</td></tr>
+        <tr><td>应用生态</td><td>支付 · Lightning</td><td>DeFi · NFT · DAO · L2 · ENS · 游戏</td></tr>
+        <tr><td>能耗</td><td>高(挖矿)</td><td>极低(下降 ~99.95%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 鸟瞰图:以太坊上都有谁在干什么 ============ -->
+  <section id="overview-map" class="section eth-map alt">
+    <div class="section-head">
+      <h2>鸟瞰以太坊 · 谁在上面干什么</h2>
+      <p>以太坊主网在中间,四类角色各自扮演着不同职责 —— 这是理解细节前的参照。</p>
+    </div>
+
+    <div class="map-wrap">
+      <svg class="map-svg" viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="map-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+
+        <!-- 中心:以太坊主网大圆盘 -->
+        <g class="map-core">
+          <circle cx="280" cy="210" r="78" fill="#faf8f3" stroke="#1a1a1a" stroke-width="2"/>
+          <circle cx="280" cy="210" r="66" fill="none" stroke="#1a1a1a" stroke-width="0.6" stroke-dasharray="2 3"/>
+          <!-- 标题 -->
+          <text x="280" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="16" font-weight="700" fill="#1a1a1a">Ethereum</text>
+          <text x="280" y="196" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="2.5">MAINNET · L1</text>
+          <!-- 内部:小区块链 -->
+          <g class="core-chain">
+            <rect x="244" y="208" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="260" y="208" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="276" y="208" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="292" y="208" width="14" height="14" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="308" y="208" width="14" height="14" fill="#8b2a2a" stroke="#8b2a2a" stroke-width="1"/>
+          </g>
+          <text x="280" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#8b2a2a" letter-spacing="2">world computer</text>
+        </g>
+
+        <!-- 4 条主连线 + 流动小点 -->
+        <!--
+          圆心 (280,210),半径 78
+          左上连线方向 → (280-78*cos45, 210-78*sin45) ≈ (225, 155)
+          右上 → (335, 155)
+          左下 → (225, 265)
+          右下 → (335, 265)
+        -->
+        <g class="map-flows">
+          <!-- 左上:用户 → 主网 · 发起交易 -->
+          <line x1="188" y1="136" x2="228" y2="158" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <text x="168" y="154" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">① 发起 Tx</text>
+          <circle class="flow-dot f1" r="4" fill="#8b2a2a"/>
+
+          <!-- 右上:开发者 → 主网 · 部署合约 -->
+          <line x1="372" y1="136" x2="332" y2="158" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <text x="392" y="154" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">② 部署合约</text>
+          <circle class="flow-dot f2" r="4" fill="#2a4a8b"/>
+
+          <!-- 左下:主网 → L2 · 压缩上传 -->
+          <line x1="228" y1="262" x2="188" y2="284" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <text x="168" y="278" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">④ 压缩上传</text>
+          <circle class="flow-dot f3" r="4" fill="#2d6a3e"/>
+
+          <!-- 右下:验证者 → 主网 · 打包出块 -->
+          <line x1="372" y1="284" x2="332" y2="262" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#map-arr)"/>
+          <text x="392" y="278" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">③ 打包出块</text>
+          <circle class="flow-dot f4" r="4" fill="#8b5a1a"/>
+        </g>
+
+        <!-- 四角色卡片 -->
+        <!-- 1 用户 (左上) -->
+        <g class="role-card r-user">
+          <rect x="20" y="56" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="34" y="82" font-size="24">👛</text>
+          <text x="66" y="80" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">普通用户</text>
+          <text x="66" y="96" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">USER · WALLET</text>
+          <line x1="34" y1="104" x2="174" y2="104" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="34" y="118" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">转账、换币、买 NFT、</text>
+          <text x="34" y="130" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">玩 DApp、参与治理</text>
+        </g>
+
+        <!-- 2 开发者 (右上) -->
+        <g class="role-card r-dev">
+          <rect x="372" y="56" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="386" y="82" font-size="24">👨‍💻</text>
+          <text x="420" y="80" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">开发者</text>
+          <text x="420" y="96" font-family="JetBrains Mono,monospace" font-size="8" fill="#2a4a8b" letter-spacing="1.5">DEVELOPER</text>
+          <line x1="386" y1="104" x2="526" y2="104" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="386" y="118" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">用 Solidity 写智能合约、</text>
+          <text x="386" y="130" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">部署 DApp、维护协议</text>
+        </g>
+
+        <!-- 3 L2 Rollup (左下) -->
+        <g class="role-card r-l2">
+          <rect x="20" y="284" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="34" y="310" font-size="24">🌉</text>
+          <text x="66" y="308" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">L2 Rollup</text>
+          <text x="66" y="324" font-family="JetBrains Mono,monospace" font-size="8" fill="#2d6a3e" letter-spacing="1.5">LAYER 2 · SCALING</text>
+          <line x1="34" y1="332" x2="174" y2="332" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="34" y="346" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">Arbitrum / Optimism / Base,</text>
+          <text x="34" y="358" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">链下打包 · 批量回传主网</text>
+        </g>
+
+        <!-- 4 验证者 (右下) -->
+        <g class="role-card r-val">
+          <rect x="372" y="284" width="168" height="80" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="386" y="310" font-size="24">🛡️</text>
+          <text x="420" y="308" font-family="Source Serif Pro,serif" font-size="15" font-weight="700" fill="#1a1a1a">验证者</text>
+          <text x="420" y="324" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b5a1a" letter-spacing="1.5">VALIDATOR · PoS</text>
+          <line x1="386" y1="332" x2="526" y2="332" stroke="#d9d3c4" stroke-width="0.8"/>
+          <text x="386" y="346" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">质押 32 ETH,打包区块、</text>
+          <text x="386" y="358" font-family="Source Serif Pro,serif" font-size="10.5" fill="#3a3a3a">投票盖章、赚取奖励</text>
+        </g>
+
+        <!-- 底注 -->
+        <text x="280" y="400" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.5">※ 2022 合并后已无矿工 · 由质押 ETH 的"验证者"取代</text>
+      </svg>
+    </div>
+
+    <!-- 下方:角色职责对照表 -->
+    <div class="role-table">
+      <div class="rt-row rt-head">
+        <div>角色</div><div>投入什么</div><div>干的事</div><div>拿到什么</div>
+      </div>
+      <div class="rt-row">
+        <div><b>👛 普通用户</b></div>
+        <div>ETH 手续费 (Gas)</div>
+        <div>发起交易 · 与 DApp 交互</div>
+        <div>转账完成、资产、NFT、收益</div>
+      </div>
+      <div class="rt-row">
+        <div><b>👨‍💻 开发者</b></div>
+        <div>时间 · 一次性部署费</div>
+        <div>写合约、部署 DApp、升级协议</div>
+        <div>协议手续费分成、代币、声誉</div>
+      </div>
+      <div class="rt-row">
+        <div><b>🌉 L2 Rollup</b></div>
+        <div>数据上传 Blob 费</div>
+        <div>链下执行交易、压缩后回传主网</div>
+        <div>更便宜的吞吐、继承主网安全</div>
+      </div>
+      <div class="rt-row">
+        <div><b>🛡️ 验证者</b></div>
+        <div>32 ETH 押金 · 节点运维</div>
+        <div>打包区块、投票、维持共识</div>
+        <div>出块奖励、小费、MEV (~3-5% APR)</div>
+      </div>
+    </div>
+  </section>
+
+<!-- ============ 以太坊 5 步看懂 · 从大到小拆解 ============ -->
+  <section id="story-101" class="section eth-101">
+    <div class="section-head">
+      <h2>以太坊是什么?5 步拆解</h2>
+      <p>从最宏观的比喻,一层层下钻到具体机制 —— 完全零基础,跟着看完这 5 张图就能建立直觉。</p>
+    </div>
+
+    <ol class="story-steps">
+
+      <!-- STEP 1 · 世界计算机 —— 一台虚拟电脑由很多真实电脑共同扮演 -->
+      <li class="story-step">
+        <div class="story-stage" aria-hidden="true">
+          <svg class="anim-svg" viewBox="0 0 260 160">
+            <!-- 顶部:一台大"虚拟电脑"屏幕 -->
+            <g class="vm-screen">
+              <rect x="80" y="16" width="100" height="62" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.6"/>
+              <rect x="80" y="16" width="100" height="10" fill="#1a1a1a"/>
+              <circle cx="86" cy="21" r="1.6" fill="#faf8f3"/>
+              <circle cx="92" cy="21" r="1.6" fill="#faf8f3"/>
+              <text x="130" y="50" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="13" font-weight="700" fill="#1a1a1a">Ethereum</text>
+              <text x="130" y="68" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="2">WORLD · COMPUTER</text>
+              <!-- 屏幕底座 -->
+              <line x1="118" y1="78" x2="142" y2="78" stroke="#1a1a1a" stroke-width="1.4"/>
+              <line x1="110" y1="84" x2="150" y2="84" stroke="#1a1a1a" stroke-width="1.4"/>
+            </g>
+
+            <!-- 中间:4 条虚线向上汇聚 -->
+            <g class="vm-links" stroke="#8b2a2a" stroke-width="0.8" stroke-dasharray="2 2" fill="none">
+              <line class="vl vl1" x1="36"  y1="130" x2="100" y2="84"/>
+              <line class="vl vl2" x1="96"  y1="130" x2="118" y2="84"/>
+              <line class="vl vl3" x1="160" y1="130" x2="142" y2="84"/>
+              <line class="vl vl4" x1="220" y1="130" x2="160" y2="84"/>
+            </g>
+
+            <!-- 底部:4 台真实电脑小图 -->
+            <g class="vm-pcs">
+              <g class="pc p1"><rect x="20" y="116" width="32" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/><rect x="22" y="118" width="28" height="16" fill="#d9d3c4"/><rect x="28" y="138" width="16" height="3" fill="#1a1a1a"/><text x="36" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">🇯🇵</text></g>
+              <g class="pc p2"><rect x="80" y="116" width="32" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/><rect x="82" y="118" width="28" height="16" fill="#d9d3c4"/><rect x="88" y="138" width="16" height="3" fill="#1a1a1a"/><text x="96" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">🇺🇸</text></g>
+              <g class="pc p3"><rect x="144" y="116" width="32" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/><rect x="146" y="118" width="28" height="16" fill="#d9d3c4"/><rect x="152" y="138" width="16" height="3" fill="#1a1a1a"/><text x="160" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">🇩🇪</text></g>
+              <g class="pc p4"><rect x="204" y="116" width="32" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/><rect x="206" y="118" width="28" height="16" fill="#d9d3c4"/><rect x="212" y="138" width="16" height="3" fill="#1a1a1a"/><text x="220" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">🇧🇷</text></g>
+            </g>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta"><span class="story-num">STEP 01</span><span class="story-zoom">🌍 最宏观</span></div>
+          <h3>把以太坊想成一台"全球公用电脑"</h3>
+          <p class="story-lead">它不是一台放在某个公司机房里的服务器,而是<b>由全世界几万台电脑共同扮演</b>的一台"虚拟电脑"。</p>
+          <p>任何人都可以用它,没人能关掉它 —— 因为没有一个"老板"拥有它。这就是所谓"去中心化"。</p>
+        </div>
+      </li>
+
+      <!-- STEP 2 · 区块链记账 —— 区块生成 + 连上 + 锁住 -->
+      <li class="story-step reverse">
+        <div class="story-stage" aria-hidden="true">
+          <svg class="anim-svg" viewBox="0 0 260 160">
+            <!-- 时钟提示每 12s -->
+            <g class="chain-clock">
+              <circle cx="30" cy="28" r="12" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/>
+              <line class="clock-hand" x1="30" y1="28" x2="30" y2="19" stroke="#8b2a2a" stroke-width="1.4"/>
+              <text x="52" y="32" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a">每 12s · 一个新区块</text>
+            </g>
+
+            <g class="chain-g">
+              <!-- block 1 -->
+              <g class="cblock b1">
+                <rect x="14"  y="66" width="46" height="46" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+                <text x="37" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" font-weight="700">#1</text>
+                <line x1="20" y1="90" x2="54" y2="90" stroke="#d9d3c4" stroke-width="0.8"/>
+                <text x="37" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx Tx</text>
+                <text x="37" y="108" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx</text>
+                <!-- 小锁 -->
+                <g class="clock-lock cl1"><rect x="54" y="68" width="8" height="7" fill="#1a1a1a"/><path d="M56 68 L56 65 Q56 62 58 62 Q60 62 60 65 L60 68" fill="none" stroke="#1a1a1a" stroke-width="1"/></g>
+              </g>
+              <!-- chain link 1→2 -->
+              <g class="clink l1">
+                <line x1="60" y1="89" x2="82" y2="89" stroke="#1a1a1a" stroke-width="1.4"/>
+                <circle cx="67" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+                <circle cx="75" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+              </g>
+              <!-- block 2 -->
+              <g class="cblock b2">
+                <rect x="82" y="66" width="46" height="46" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+                <text x="105" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" font-weight="700">#2</text>
+                <line x1="88" y1="90" x2="122" y2="90" stroke="#d9d3c4" stroke-width="0.8"/>
+                <text x="105" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx Tx</text>
+                <text x="105" y="108" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx</text>
+                <g class="clock-lock cl2"><rect x="122" y="68" width="8" height="7" fill="#1a1a1a"/><path d="M124 68 L124 65 Q124 62 126 62 Q128 62 128 65 L128 68" fill="none" stroke="#1a1a1a" stroke-width="1"/></g>
+              </g>
+              <!-- chain link 2→3 -->
+              <g class="clink l2">
+                <line x1="128" y1="89" x2="150" y2="89" stroke="#1a1a1a" stroke-width="1.4"/>
+                <circle cx="135" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+                <circle cx="143" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+              </g>
+              <!-- block 3 -->
+              <g class="cblock b3">
+                <rect x="150" y="66" width="46" height="46" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+                <text x="173" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1a1a" font-weight="700">#3</text>
+                <line x1="156" y1="90" x2="190" y2="90" stroke="#d9d3c4" stroke-width="0.8"/>
+                <text x="173" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx Tx</text>
+                <text x="173" y="108" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">Tx Tx</text>
+                <g class="clock-lock cl3"><rect x="190" y="68" width="8" height="7" fill="#1a1a1a"/><path d="M192 68 L192 65 Q192 62 194 62 Q196 62 196 65 L196 68" fill="none" stroke="#1a1a1a" stroke-width="1"/></g>
+              </g>
+              <!-- chain link 3→NEW -->
+              <g class="clink l3">
+                <line x1="196" y1="89" x2="218" y2="89" stroke="#1a1a1a" stroke-width="1.4"/>
+                <circle cx="203" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+                <circle cx="211" cy="89" r="2.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+              </g>
+              <!-- incoming new block -->
+              <g class="cblock b4">
+                <rect x="218" y="66" width="30" height="46" fill="#faf8f3" stroke="#8b2a2a" stroke-width="1.6" stroke-dasharray="3 2"/>
+                <text x="233" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" font-weight="700">NEW</text>
+              </g>
+            </g>
+            <text x="130" y="144" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6b6b">🔒 一旦上锁,历史就改不了</text>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta"><span class="story-num">STEP 02</span><span class="story-zoom">📒 形态</span></div>
+          <h3>它用"区块链"这种账本记账</h3>
+          <p class="story-lead">每过 <b>12 秒</b>,最近发生的一批操作会被打包成一个<b>"区块"</b>,然后挂在前一个区块后面 —— 就像一页页账本用钢链锁起来。</p>
+          <p>一旦锁上,历史就<b>永远改不了</b>:想动任何一笔,就得重写后面所有区块,几乎不可能。这就是"区块链"名字的来源。</p>
+        </div>
+      </li>
+
+      <!-- STEP 3 · 能干嘛(转账 + 合约) —— 上半飞币,下半 if/then 触发 -->
+      <li class="story-step">
+        <div class="story-stage" aria-hidden="true">
+          <svg class="anim-svg" viewBox="0 0 260 160">
+            <!-- 上半:转账 Alice → Bob,带头像 emoji -->
+            <text x="130" y="14" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="1.5">① 转账 · 发钱</text>
+            <g class="use-transfer">
+              <!-- Alice -->
+              <text x="31" y="34" text-anchor="middle" font-size="18">👩</text>
+              <rect x="16" y="38" width="30" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/>
+              <rect x="16" y="38" width="30" height="6" fill="#1a1a1a"/>
+              <text x="31" y="74" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a">Alice</text>
+              <!-- Bob -->
+              <text x="229" y="34" text-anchor="middle" font-size="18">👨</text>
+              <rect x="214" y="38" width="30" height="22" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/>
+              <rect x="214" y="38" width="30" height="6" fill="#1a1a1a"/>
+              <text x="229" y="74" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a">Bob</text>
+              <line x1="48" y1="49" x2="212" y2="49" stroke="#d9d3c4" stroke-width="1" stroke-dasharray="3 3"/>
+              <g class="eth-coin">
+                <polygon points="0,-7 -5,0 0,3 5,0" fill="#8b2a2a"/>
+                <polygon points="0,5 -5,0 0,9 5,0" fill="#8b2a2a"/>
+              </g>
+            </g>
+
+            <line x1="20" y1="86" x2="240" y2="86" stroke="#d9d3c4" stroke-width="0.8"/>
+
+            <!-- 下半:智能合约 if/then 规则 -->
+            <text x="130" y="98" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="1.5">② 智能合约 · 自动执行</text>
+            <g class="use-contract">
+              <!-- IF 条件卡 -->
+              <g class="rule-if">
+                <rect x="14" y="108" width="66" height="36" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="22" y="122" font-family="JetBrains Mono,monospace" font-size="9" fill="#2a4a8b" font-weight="700">IF</text>
+                <text x="47" y="122" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a">付款</text>
+                <text x="22" y="136" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">price = 1 ETH</text>
+              </g>
+              <!-- 箭头 -->
+              <g class="rule-arrow">
+                <line x1="82" y1="126" x2="102" y2="126" stroke="#1a1a1a" stroke-width="1.4"/>
+                <polygon points="102,126 96,122 96,130" fill="#1a1a1a"/>
+              </g>
+              <!-- 合约代码框中央 -->
+              <g class="rule-contract">
+                <rect x="104" y="108" width="52" height="36" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+                <text x="130" y="120" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">contract</text>
+                <line x1="110" y1="126" x2="150" y2="126" stroke="#d9d3c4" stroke-width="0.6"/>
+                <line x1="110" y1="132" x2="146" y2="132" stroke="#d9d3c4" stroke-width="0.6"/>
+                <line x1="110" y1="138" x2="150" y2="138" stroke="#d9d3c4" stroke-width="0.6"/>
+              </g>
+              <!-- 箭头 -->
+              <g class="rule-arrow2">
+                <line x1="158" y1="126" x2="178" y2="126" stroke="#1a1a1a" stroke-width="1.4"/>
+                <polygon points="178,126 172,122 172,130" fill="#1a1a1a"/>
+              </g>
+              <!-- THEN 结果卡 -->
+              <g class="rule-then">
+                <rect x="180" y="108" width="66" height="36" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.4"/>
+                <text x="188" y="122" font-family="JetBrains Mono,monospace" font-size="9" fill="#2d6a3e" font-weight="700">THEN</text>
+                <text x="220" y="122" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a">发货</text>
+                <text x="188" y="136" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">NFT → 买家</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta"><span class="story-num">STEP 03</span><span class="story-zoom">⚡ 能干嘛</span></div>
+          <h3>在上面可以做两件事</h3>
+          <p class="story-lead">这是以太坊和比特币<b>最根本的区别</b>:比特币只能做第 ①,以太坊两件都能做。</p>
+          <p><b>① 转账</b> —— 把 ETH 发给任何一个地址,没有银行参与,分钟级到账。</p>
+          <p><b>② 智能合约</b> —— 像一张"自动执行的协议":<b>如果付款 → 就发货</b>,条件满足立即生效,双方都无法反悔。借贷、交易所、NFT 全靠它跑起来。</p>
+        </div>
+      </li>
+
+      <!-- STEP 4 · Gas 燃料 —— 用户支付 ETH → 闲/忙切换价格 → 交易通过 -->
+      <li class="story-step reverse">
+        <div class="story-stage" aria-hidden="true">
+          <svg class="anim-svg" viewBox="0 0 260 160">
+            <!-- 左:用户手拿 ETH -->
+            <g class="gas-user">
+              <text x="30" y="56" text-anchor="middle" font-size="20">🧑</text>
+              <g class="pay-coin">
+                <polygon points="0,-6 -4,0 0,3 4,0" fill="#8b2a2a"/>
+                <polygon points="0,4 -4,0 0,7 4,0" fill="#8b2a2a"/>
+              </g>
+              <text x="30" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">付一点 ETH</text>
+            </g>
+
+            <!-- 中:Gas 泵(表盘 + 价格数字) -->
+            <g class="gas-pump-grp">
+              <rect x="92" y="44" width="76" height="72" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+              <text x="130" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="1.5">⛽ GAS</text>
+              <!-- 价格显示屏 -->
+              <rect x="100" y="64" width="60" height="22" fill="#1a1a1a"/>
+              <text class="price-low"  x="130" y="80" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#4ade80" font-weight="700">5 gwei</text>
+              <text class="price-high" x="130" y="80" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b6b" font-weight="700">80 gwei</text>
+              <!-- 指示灯 -->
+              <circle class="light-low"  cx="104" cy="100" r="3" fill="#4ade80"/>
+              <circle class="light-high" cx="156" cy="100" r="3" fill="#ff6b6b"/>
+              <text x="114" y="103" font-family="JetBrains Mono,monospace" font-size="6" fill="#6b6b6b">闲</text>
+              <text x="142" y="103" font-family="JetBrains Mono,monospace" font-size="6" fill="#6b6b6b">忙</text>
+              <!-- 出油管 -->
+              <line x1="168" y1="74" x2="184" y2="74" stroke="#1a1a1a" stroke-width="1.4"/>
+              <line x1="184" y1="74" x2="184" y2="90" stroke="#1a1a1a" stroke-width="1.4"/>
+            </g>
+
+            <!-- 右:被加燃料的 Tx -->
+            <g class="gas-tx">
+              <rect x="200" y="56" width="44" height="52" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+              <text x="222" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a" font-weight="700">Tx</text>
+              <line x1="206" y1="78" x2="238" y2="78" stroke="#d9d3c4" stroke-width="0.8"/>
+              <text x="222" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b6b6b">send ETH</text>
+              <text class="tx-stamp" x="222" y="104" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#2d6a3e" font-weight="700">✓</text>
+            </g>
+
+            <text x="130" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6b6b">闲时便宜 · 忙时变贵</text>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta"><span class="story-num">STEP 04</span><span class="story-zoom">⛽ 付费</span></div>
+          <h3>每做一件事都要付一点"燃料费"</h3>
+          <p class="story-lead">这就是 <b>Gas</b>:一台公用电脑不能让你白用,不然早被刷爆了。</p>
+          <p>你发起的每一笔操作都要付一点 ETH 作为手续费,<b>网络越闲越便宜、越忙越贵</b> —— 像打车高峰加价一样。付够了,交易才会被打包上链。</p>
+        </div>
+      </li>
+
+      <!-- STEP 5 · 谁在维护 —— 保险箱投入 32 ETH → 验证者出块赚奖励 / 作弊罚钱 -->
+      <li class="story-step">
+        <div class="story-stage" aria-hidden="true">
+          <svg class="anim-svg" viewBox="0 0 260 160">
+            <!-- 左:用户投入 32 ETH 的保险箱 -->
+            <g class="stake-vault">
+              <rect x="22" y="48" width="68" height="76" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.6"/>
+              <rect x="22" y="48" width="68" height="12" fill="#1a1a1a"/>
+              <text x="56" y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#faf8f3">VAULT</text>
+              <!-- 转盘 -->
+              <circle cx="56" cy="86" r="14" fill="none" stroke="#1a1a1a" stroke-width="1.4"/>
+              <line class="vault-dial" x1="56" y1="86" x2="56" y2="76" stroke="#8b2a2a" stroke-width="1.6"/>
+              <text x="56" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a1a1a" font-weight="700">32 ETH</text>
+              <text x="56" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">押金 · 锁定</text>
+            </g>
+
+            <!-- 中:箭头 + 验证者 "✓" 盖章 -->
+            <g class="stake-proc">
+              <line x1="94" y1="86" x2="118" y2="86" stroke="#1a1a1a" stroke-width="1.2"/>
+              <polygon points="118,86 112,82 112,90" fill="#1a1a1a"/>
+              <circle class="validator-seal" cx="130" cy="86" r="14" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.6"/>
+              <text x="130" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#2d6a3e" font-weight="700">✓</text>
+              <text x="130" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">验证者出块</text>
+              <line x1="144" y1="86" x2="168" y2="86" stroke="#1a1a1a" stroke-width="1.2"/>
+              <polygon points="168,86 162,82 162,90" fill="#1a1a1a"/>
+            </g>
+
+            <!-- 右:双路输出 —— 守规矩(+奖励) / 作弊(-罚款) -->
+            <g class="stake-out">
+              <!-- good: 奖励币 -->
+              <g class="good-path">
+                <rect x="180" y="44" width="62" height="32" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.4"/>
+                <text x="211" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#2d6a3e" font-weight="700">+ 奖励</text>
+                <text x="211" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">守规矩</text>
+                <g class="reward-coin r1"><polygon points="0,-5 -4,0 0,3 4,0" fill="#2d6a3e"/><polygon points="0,4 -4,0 0,7 4,0" fill="#2d6a3e"/></g>
+              </g>
+              <!-- bad: 罚款 -->
+              <g class="bad-path">
+                <rect x="180" y="96" width="62" height="32" fill="#faf8f3" stroke="#8b1a1a" stroke-width="1.4"/>
+                <text x="211" y="110" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b1a1a" font-weight="700">− 罚款</text>
+                <text x="211" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6b6b">作弊 Slash</text>
+              </g>
+            </g>
+
+            <text x="130" y="154" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b">PoS · 权益证明</text>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta"><span class="story-num">STEP 05</span><span class="story-zoom">🛡️ 谁在跑它</span></div>
+          <h3>"验证者"在背后真正让它运转</h3>
+          <p class="story-lead">任何人只要<b>锁定 32 个 ETH</b>作为押金,就能成为一个"验证者",帮网络打包区块、投票盖章。</p>
+          <p>做得好 —— 持续拿到 ETH 奖励(类似"利息")。作弊 —— 被协议自动<b>没收一部分押金</b>。这套"押金 + 奖惩"机制让几万个陌生人不敢乱来,也就是所谓的 <b>PoS · 权益证明</b>。</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <p class="story-tail">这 5 步已覆盖以太坊 90% 的核心概念,余下的细节分散在五大板块中。</p>
+  </section>
+
+
+<!-- ============ 02 历史时间线 ============ -->
+<section id="history" class="section alt">
+  <div class="section-head">
+    <h2>演进史 · 关键里程碑</h2>
+    <p>从 Vitalik 的白皮书到 Rollup 主导的扩容时代,以太坊走过了十年的迭代进化。</p>
+  </div>
+
+  <div class="history-timeline">
+    <div class="ht-item">
+      <div class="ht-year">2013</div>
+      <div class="ht-body">
+        <h4>白皮书发布</h4>
+        <p>Vitalik Buterin 提出「带图灵完备脚本的区块链」构想。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2015</div>
+      <div class="ht-body">
+        <h4>Frontier 主网上线</h4>
+        <p>7 月 30 日,以太坊创世区块诞生,PoW 共识启动。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2016</div>
+      <div class="ht-body">
+        <h4>The DAO 事件 · 硬分叉</h4>
+        <p>DAO 合约被攻击后,社区硬分叉产生 ETH 与 ETC。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2020</div>
+      <div class="ht-body">
+        <h4>信标链启动</h4>
+        <p>12 月 1 日,Beacon Chain(PoS)上线,与 PoW 主网并行。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2021</div>
+      <div class="ht-body">
+        <h4>EIP-1559 · 伦敦升级</h4>
+        <p>引入 Base Fee 销毁机制,重塑 Gas 市场,ETH 通缩预期成型。</p>
+      </div>
+    </div>
+    <div class="ht-item highlight">
+      <div class="ht-year">2022.09</div>
+      <div class="ht-body">
+        <h4>The Merge · 合并</h4>
+        <p>PoW 主网与 Beacon Chain 合并,能耗下降约 <b>99.95%</b>,正式进入 PoS 时代。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2023.04</div>
+      <div class="ht-body">
+        <h4>Shanghai/Capella · 上海升级</h4>
+        <p>EIP-4895 开启质押提现,质押者可正常取出本金与奖励。</p>
+      </div>
+    </div>
+    <div class="ht-item highlight">
+      <div class="ht-year">2024.03</div>
+      <div class="ht-body">
+        <h4>Dencun · 坎昆升级</h4>
+        <p>EIP-4844 引入 Blob 交易(Proto-Danksharding),Rollup 费用骤降 10-100 倍。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">2025</div>
+      <div class="ht-body">
+        <h4>Pectra 升级</h4>
+        <p>EIP-7702 账户抽象、验证者余额上限上调至 2048 ETH,提升资本效率。</p>
+      </div>
+    </div>
+    <div class="ht-item">
+      <div class="ht-year">∞</div>
+      <div class="ht-body">
+        <h4>The Splurge · 持续演进</h4>
+        <p>Verkle Tree · Full Danksharding · Single-Slot Finality 等长期路线。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 PoW vs PoS ============ -->
+<section id="pow-pos" class="section">
+  <div class="section-head">
+    <h2>PoW vs PoS · 共识对比</h2>
+    <p>为什么以太坊放弃挖矿?因为 PoS 让网络更节能、更去中心化、更安全。</p>
+  </div>
+
+  <div class="vs-split">
+    <div class="vs-col pow">
+      <h3>⛏️ PoW · 工作量证明</h3>
+      <ul>
+        <li><b>出块权</b> 算力竞赛,谁先算出哈希谁出块</li>
+        <li><b>硬件门槛</b> 专业矿机(ASIC/GPU)</li>
+        <li><b>能耗</b> 巨大,全年约 70+ TWh</li>
+        <li><b>安全成本</b> 51% 算力攻击</li>
+        <li><b>参与门槛</b> 高,倾向算力集中</li>
+      </ul>
+    </div>
+    <div class="vs-col pos">
+      <h3>🛡️ PoS · 权益证明</h3>
+      <ul>
+        <li><b>出块权</b> 按质押随机抽签选出提议者</li>
+        <li><b>硬件门槛</b> 普通服务器即可运行</li>
+        <li><b>能耗</b> 极低,下降约 99.95%</li>
+        <li><b>安全成本</b> 需买入并锁定 1/3 以上 ETH</li>
+        <li><b>参与门槛</b> 32 ETH 独立验证 / 池化门槛更低</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="energy-chart-wrap">
+    <h4>⚡ 能耗对比(合并前后)</h4>
+    <canvas id="energy-chart" height="110"></canvas>
+    <p class="chart-note">数据来源:剑桥 CCAF / Ethereum Foundation。合并后以太坊年耗电约 <b>0.01 TWh</b>,相当于一栋小型办公楼。</p>
+  </div>
+</section>
+
+</div><!-- /page basics -->
+
+<!-- ================================================
+     PAGE · TECH
+     ================================================ -->
+<div class="page" data-page="tech">
+  <div class="page-header">
+    <p class="page-eyebrow">TECHNOLOGY · 技术</p>
+    <h1>技术:协议层全解</h1>
+    <p class="page-desc">架构分层、EVM、PoS、账户模型、Gas、交易生命周期——以太坊的工程细节。</p>
+  </div>
+
+<!-- ============ 一笔交易的全景(置顶) ============
+     这一节放在 Tech 页首屏,先给小白一个"一笔交易从发起到永久记录"的全景,
+     并圈出每一步属于哪个架构层。下方再把每层拆开细讲。 -->
+<section id="lifecycle" class="section">
+  <div class="section-head">
+    <h2>一笔交易:从点击"确认"到"永久记录"</h2>
+    <p>你每一次点"确认",背后都会走完下面这 6 步,分别发生在 3 个不同的"架构层"里。下方会再把每一层拆开细讲。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🎬</span>
+    <div class="bh-body">
+      <span class="bh-tag">举个例子</span>
+      你在钱包点了"用 0.1 ETH 换 USDC":第 1 步钱包用私钥签字,第 2 步广播给全球节点,第 3 步验证者把它打包进区块,第 4 步 EVM 真正执行换币逻辑,第 5-6 步管委会投票盖章。大约 12.8 分钟后,这笔交易就"板上钉钉"了。
+    </div>
+  </div>
+
+  <!-- ===== 交易生命周期动态流程图 ===== -->
+  <div class="tx-flow">
+    <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="tx-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+        </marker>
+        <pattern id="tx-grid" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+          <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#efe8d5" stroke-width="0.4"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="880" height="400" fill="url(#tx-grid)"/>
+
+      <!-- ===== 架构层次分区(背景色带 + 虚线圈定 + 标签) ===== -->
+      <!-- ① 用户侧 / 网络层:钱包 + Mempool -->
+      <g class="tx-zone tx-zone-user">
+        <rect x="10" y="102" width="300" height="230" fill="#e8eef2" fill-opacity="0.55" stroke="#4a6b8a" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="160" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#4a6b8a" letter-spacing="2">USER &amp; P2P · 用户侧 / 网络层</text>
+      </g>
+      <!-- ③ + ④ 执行层:Builder 打包 + EL 执行 + gas 分流 -->
+      <g class="tx-zone tx-zone-el">
+        <rect x="315" y="10" width="300" height="322" fill="#f4e8e3" fill-opacity="0.55" stroke="#8b2a2a" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="465" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#8b2a2a" letter-spacing="2">EXECUTION LAYER · 执行层(EVM · Gas 结算)</text>
+      </g>
+      <!-- ⑤ + ⑥ 共识层 + 终局 -->
+      <g class="tx-zone tx-zone-cl">
+        <rect x="620" y="102" width="250" height="230" fill="#e4ece6" fill-opacity="0.55" stroke="#2d6a3e" stroke-width="1" stroke-dasharray="5 3" rx="4"/>
+        <text x="745" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="700" fill="#2d6a3e" letter-spacing="2">CONSENSUS LAYER · 共识层 / Finality</text>
+      </g>
+
+      <!-- 6 个主站点 -->
+      <!-- ① 用户钱包 -->
+      <g class="tx-node tx-n1">
+        <rect x="20" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="80" y="158" text-anchor="middle" font-size="22">👛</text>
+        <text x="80" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">① 钱包签名</text>
+        <text x="80" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">USER · WALLET</text>
+      </g>
+
+      <!-- ② mempool 候车厅 -->
+      <g class="tx-node tx-n2">
+        <rect x="170" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="230" y="158" text-anchor="middle" font-size="22">📡</text>
+        <text x="230" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">② Mempool</text>
+        <text x="230" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">BROADCAST · P2P</text>
+      </g>
+
+      <!-- ③ Builder 打包 -->
+      <g class="tx-node tx-n3">
+        <rect x="320" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="380" y="158" text-anchor="middle" font-size="22">📦</text>
+        <text x="380" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">③ Builder 打包</text>
+        <text x="380" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">PROPOSER · PBS</text>
+      </g>
+
+      <!-- ④ 执行层 EL -->
+      <g class="tx-node tx-n4">
+        <rect x="470" y="130" width="130" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="535" y="158" text-anchor="middle" font-size="22">⚙️</text>
+        <text x="535" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">④ EL 执行 · EVM</text>
+        <text x="535" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">GAS 结算 · 改账本</text>
+      </g>
+
+      <!-- ⑤ 共识层 CL -->
+      <g class="tx-node tx-n5">
+        <rect x="630" y="130" width="120" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="690" y="158" text-anchor="middle" font-size="22">🛡️</text>
+        <text x="690" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="12" font-weight="700" fill="#1a1a1a">⑤ CL 投票</text>
+        <text x="690" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">ATTEST · 2/3 FFG</text>
+      </g>
+
+      <!-- ⑥ Finality · 终局链 -->
+      <g class="tx-node tx-n6">
+        <rect x="780" y="130" width="80" height="70" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="820" y="158" text-anchor="middle" font-size="22">🔒</text>
+        <text x="820" y="180" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#1a1a1a">⑥ 终局</text>
+        <text x="820" y="195" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1">FINAL</text>
+      </g>
+
+      <!-- 主轴连线 -->
+      <g class="tx-edges" stroke="#1a1a1a" stroke-width="1.2" fill="none">
+        <line x1="140" y1="165" x2="168" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="290" y1="165" x2="318" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="440" y1="165" x2="468" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="600" y1="165" x2="628" y2="165" marker-end="url(#tx-arr)"/>
+        <line x1="750" y1="165" x2="778" y2="165" marker-end="url(#tx-arr)"/>
+      </g>
+
+      <!-- Gas 分叉:从 EL(④)出两条支线,一条到 🔥 销毁池,一条到 💰 验证者 -->
+      <!-- 🔥 销毁池(上方) -->
+      <g class="tx-burn">
+        <rect x="475" y="30" width="120" height="56" fill="#faf8f3" stroke="#8b2a2a" stroke-width="1.4" stroke-dasharray="0"/>
+        <text x="535" y="54" text-anchor="middle" font-size="18">🔥</text>
+        <text x="535" y="72" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#8b2a2a">Base Fee 销毁</text>
+        <text x="535" y="83" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#8b2a2a" letter-spacing="1">EIP-1559 · BURN</text>
+      </g>
+      <!-- 💰 验证者奖励(下方) -->
+      <g class="tx-tip">
+        <rect x="475" y="244" width="120" height="56" fill="#faf8f3" stroke="#2d6a3e" stroke-width="1.4"/>
+        <text x="535" y="268" text-anchor="middle" font-size="18">💰</text>
+        <text x="535" y="286" text-anchor="middle" font-family="Source Serif Pro,serif" font-size="11" font-weight="700" fill="#2d6a3e">Tip → 验证者</text>
+        <text x="535" y="297" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#2d6a3e" letter-spacing="1">PROPOSER REWARD</text>
+      </g>
+
+      <!-- Gas 分叉线 -->
+      <g class="tx-edges" stroke-width="1" fill="none">
+        <path d="M 535 130 L 535 86" stroke="#8b2a2a" marker-end="url(#tx-arr)"/>
+        <path d="M 535 200 L 535 244" stroke="#2d6a3e" marker-end="url(#tx-arr)"/>
+      </g>
+
+      <!-- 动画 1:交易胶囊,从 ① 走到 ⑥ -->
+      <g class="tx-pkg">
+        <rect x="-18" y="-10" width="36" height="20" fill="#8b2a2a" rx="2"/>
+        <text x="0" y="4" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="700">TX</text>
+      </g>
+
+      <!-- 动画 2:Gas 金币 🔥 上行(从 EL 到销毁池) -->
+      <text class="tx-coin-burn" font-size="14" fill="#8b2a2a">🔥</text>
+
+      <!-- 动画 3:Gas 金币 💰 下行(从 EL 到验证者) -->
+      <text class="tx-coin-tip" font-size="14" fill="#2d6a3e">💰</text>
+
+      <!-- 阶段标签:当前进行到哪一步 -->
+      <g class="tx-stage">
+        <text class="tx-stage-1" x="80" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-2" x="230" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-3" x="380" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-4" x="535" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-5" x="690" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+        <text class="tx-stage-6" x="820" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8b2a2a" letter-spacing="1">▼ NOW</text>
+      </g>
+    </svg>
+
+    <!-- ===== 6 张说明卡片:每一张正对上方一个节点,形成"图 + 文"一体 ===== -->
+    <div class="tx-stops" role="list">
+      <div class="tx-stop" data-step="1" data-zone="user" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">①</span>
+          <span class="tx-stop-zone tx-zone-user">用户侧</span>
+        </div>
+        <h4>🖊️ 签名 · 按下"确认"</h4>
+        <p>钱包用私钥(secp256k1)对交易哈希签字,证明"这笔操作是我本人发起的"。</p>
+      </div>
+
+      <div class="tx-stop" data-step="2" data-zone="user" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">②</span>
+          <span class="tx-stop-zone tx-zone-user">网络层</span>
+        </div>
+        <h4>📡 广播到 mempool</h4>
+        <p>通过 JSON-RPC 发给节点,再经 P2P 网络扩散到全球节点,塞进等待池。</p>
+      </div>
+
+      <div class="tx-stop" data-step="3" data-zone="el" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">③</span>
+          <span class="tx-stop-zone tx-zone-el">执行层</span>
+        </div>
+        <h4>📦 Builder 打包</h4>
+        <p>Builder 从候车厅挑出几百上千笔交易拼成一个区块,出价最高的方案被 Proposer 采用(PBS)。</p>
+      </div>
+
+      <div class="tx-stop" data-step="4" data-zone="el" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">④</span>
+          <span class="tx-stop-zone tx-zone-el">执行层</span>
+        </div>
+        <h4>⚙️ EVM 执行 · 改账本</h4>
+        <p>每个节点重放交易,更新 State/Storage/Receipts 三棵树。<b style="color:#8b2a2a">Base Fee 销毁 🔥</b>,<b style="color:#2d6a3e">Priority Fee 给验证者 💰</b>。</p>
+      </div>
+
+      <div class="tx-stop" data-step="5" data-zone="cl" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">⑤</span>
+          <span class="tx-stop-zone tx-zone-cl">共识层</span>
+        </div>
+        <h4>🗳️ 见证投票</h4>
+        <p>委员会对刚出的区块进行 Attestation 投票,LMD-GHOST 据此选出"正版"链。</p>
+      </div>
+
+      <div class="tx-stop" data-step="6" data-zone="cl" role="listitem" tabindex="0">
+        <span class="tx-stop-pin" aria-hidden="true"></span>
+        <div class="tx-stop-head">
+          <span class="tx-stop-num">⑥</span>
+          <span class="tx-stop-zone tx-zone-cl">共识层</span>
+        </div>
+        <h4>🔒 Finality · 盖章</h4>
+        <p>两个 Epoch(约 12.8 分钟)后,Casper FFG 把区块最终化,再也无法回滚——交易永久写入历史。</p>
+      </div>
+    </div>
+
+    <p class="tx-flow-caption">
+      <span><i style="background:#4a6b8a"></i>用户侧 / 网络层 · 签名 + 广播</span>
+      <span><i style="background:#8b2a2a"></i>执行层(EVM) · 打包 + Gas 结算</span>
+      <span><i style="background:#2d6a3e"></i>共识层 · 投票 + Finality</span>
+    </p>
+    <p class="tx-flow-caption tx-flow-caption-sub">
+      <span><b style="color:#8b2a2a">🔥 Base Fee</b> 被协议销毁(ETH 供给减少)</span>
+      <span><b style="color:#2d6a3e">💰 Priority Fee</b> 奖励给当前出块的验证者</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 架构概览(图解 + 概念卡) ============ -->
+<section id="overview" class="section tech-intro">
+  <div class="section-head">
+    <h2>架构概览:把以太坊当成一栋 6 层大楼</h2>
+    <p>上面的全景是一笔交易"纵向"流过了多少层,这里换一个视角——把协议本身"横切"开,每一层各司其职。</p>
+  </div>
+
+  <div class="tech-tower-wrap">
+
+    <!-- 左:6 层大楼图解 -->
+    <div class="tech-tower">
+      <svg viewBox="0 0 360 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="tt-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#8b2a2a"/>
+          </marker>
+          <pattern id="tt-grid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#e8e2d2" stroke-width="0.4"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="360" height="480" fill="url(#tt-grid)"/>
+
+        <!-- 6 层楼,从上到下 -->
+        <!-- L1 应用层 -->
+        <g class="tt-layer tt-l1" data-layer="1">
+          <rect x="40" y="30" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="54" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🌐 应用层</text>
+          <text x="56" y="72" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">APPLICATIONS</text>
+          <text x="310" y="54" text-anchor="end" font-size="18">💸🖼️🏛️🎮</text>
+          <text x="310" y="78" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">DeFi · NFT · DAO · 游戏</text>
+        </g>
+
+        <!-- L2 扩容层 -->
+        <g class="tt-layer tt-l2" data-layer="2">
+          <rect x="40" y="98" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="122" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🌉 Layer 2 扩容层</text>
+          <text x="56" y="140" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">ROLLUPS</text>
+          <text x="310" y="122" text-anchor="end" font-size="18">📦📦</text>
+          <text x="310" y="146" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">Arbitrum · OP · Base · zk</text>
+        </g>
+
+        <!-- L3 执行层 -->
+        <g class="tt-layer tt-l3" data-layer="3">
+          <rect x="40" y="166" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="190" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">⚙️ 执行层 EL</text>
+          <text x="56" y="208" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">EXECUTION · EVM</text>
+          <text x="310" y="190" text-anchor="end" font-size="18">🖥️</text>
+          <text x="310" y="214" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">跑合约 · 更新状态</text>
+        </g>
+
+        <!-- L4 共识层 -->
+        <g class="tt-layer tt-l4" data-layer="4">
+          <rect x="40" y="234" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="258" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">🛡️ 共识层 CL</text>
+          <text x="56" y="276" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">CONSENSUS · PoS</text>
+          <text x="310" y="258" text-anchor="end" font-size="18">🧑‍⚖️</text>
+          <text x="310" y="282" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">选谁出块 · 谁最终</text>
+        </g>
+
+        <!-- L5 网络层 -->
+        <g class="tt-layer tt-l5" data-layer="5">
+          <rect x="40" y="302" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="326" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">📡 网络层</text>
+          <text x="56" y="344" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">P2P NETWORKING</text>
+          <text x="310" y="326" text-anchor="end" font-size="18">🌍</text>
+          <text x="310" y="350" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">节点之间传消息</text>
+        </g>
+
+        <!-- L6 数据层 -->
+        <g class="tt-layer tt-l6" data-layer="6">
+          <rect x="40" y="370" width="280" height="58" fill="#faf8f3" stroke="#1a1a1a" stroke-width="1.4"/>
+          <text x="56" y="394" font-family="Source Serif Pro,serif" font-size="14" font-weight="700" fill="#1a1a1a">💾 数据层</text>
+          <text x="56" y="412" font-family="JetBrains Mono,monospace" font-size="8" fill="#8b2a2a" letter-spacing="1.5">STORAGE · MPT</text>
+          <text x="310" y="394" text-anchor="end" font-size="18">📚</text>
+          <text x="310" y="418" text-anchor="end" font-family="Source Serif Pro,serif" font-size="10" fill="#6b6b6b">永久存账本</text>
+        </g>
+
+        <!-- 地基 -->
+        <line x1="30" y1="446" x2="330" y2="446" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="30" y1="450" x2="330" y2="450" stroke="#1a1a1a" stroke-width="0.4" stroke-dasharray="3 3"/>
+        <text x="180" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6b6b" letter-spacing="3">BEDROCK · 物理互联网</text>
+
+        <!-- 左侧高亮指示条(随当前激活层滑动) -->
+        <rect class="tt-cursor" x="22" y="30" width="4" height="58" fill="#8b2a2a"/>
+      </svg>
+
+      <!-- 楼宇脚注 -->
+      <div class="tt-legend">
+        <span><i class="dot-top"></i>越往上 · 越贴近用户</span>
+        <span><i class="dot-bot"></i>越往下 · 越靠近硬件</span>
+      </div>
+    </div>
+
+    <!-- 右:逐层详解,6 张小卡 -->
+    <div class="tech-steps">
+      <article class="tt-step tt-step-1" data-layer="1">
+        <div class="tt-num">01</div>
+        <h3>🌐 应用层 · 你每天看到的东西</h3>
+        <p><b>比喻</b>:大楼的楼顶花园 —— 真正"好玩"的都在这儿。Uniswap 换币、OpenSea 买 NFT、Aave 借贷,都是跑在这一层的应用。</p>
+        <p class="tt-note">▸ 小白打开钱包能看见的所有按钮、DApp,都在这一层。</p>
+      </article>
+
+      <article class="tt-step tt-step-2" data-layer="2">
+        <div class="tt-num">02</div>
+        <h3>🌉 Layer 2 · 扩容层</h3>
+        <p><b>比喻</b>:商场的快速通道 —— 主厅太挤,新开几条高速车道(Rollup),大多数交易先走这里,最后汇总一次性上主链。</p>
+        <p class="tt-note">▸ Arbitrum / Optimism / Base,都是为了让你少付 Gas、快速确认。</p>
+      </article>
+
+      <article class="tt-step tt-step-3" data-layer="3">
+        <div class="tt-num">03</div>
+        <h3>⚙️ 执行层 EL · 那台"世界计算机"</h3>
+        <p><b>比喻</b>:大楼里真正的 CPU —— 收到交易,跑一遍 EVM 指令,改账本。节点软件有 Geth、Nethermind、Reth 等。</p>
+        <p class="tt-note">▸ 合约被部署、余额被修改、状态变化 —— 都发生在这层。</p>
+      </article>
+
+      <article class="tt-step tt-step-4" data-layer="4">
+        <div class="tt-num">04</div>
+        <h3>🛡️ 共识层 CL · 决定"谁说了算"</h3>
+        <p><b>比喻</b>:物业管委会 —— 每 12 秒投票一次,决定由谁记账、哪一份账本成为最终版本。靠质押 32 ETH 的验证者们维护。</p>
+        <p class="tt-note">▸ The Merge 后,PoS 取代了挖矿,这层就是"PoS 大脑"。</p>
+      </article>
+
+      <article class="tt-step tt-step-5" data-layer="5">
+        <div class="tt-num">05</div>
+        <h3>📡 网络层 · 节点之间的悄悄话</h3>
+        <p><b>比喻</b>:大楼里的电线和气动管道 —— 任何一笔交易、任何一个新区块,都要通过 P2P 广播传给全球上万个节点。</p>
+        <p class="tt-note">▸ 没有它,上面的"共识"就无从谈起。</p>
+      </article>
+
+      <article class="tt-step tt-step-6" data-layer="6">
+        <div class="tt-num">06</div>
+        <h3>💾 数据层 · 永不删除的账本</h3>
+        <p><b>比喻</b>:大楼地下室的档案柜 —— 自 2015 年以来的每一笔交易、每一个账户余额,都用 Merkle 树结构永久保存。</p>
+        <p class="tt-note">▸ 任何人下载完整节点,都能拿到这份 15+ TB 的账本副本。</p>
+      </article>
+    </div>
+
+  </div>
+
+  <p class="tt-tail">简单记:<b>上面两层</b>给用户用,<b>中间两层</b>是大脑,<b>下面两层</b>是地基。以太坊本质上是一个复制状态机:所有节点对同一份「世界状态」达成共识,通过交易驱动状态转移。</p>
+
+  <div class="cards tt-cards">
+    <article class="card">
+      <span class="tag">State Machine</span>
+      <h3>世界状态</h3>
+      <p>一棵 Merkle Patricia Trie,将地址映射到账户(余额、nonce、代码、storage root)。每个区块是一次状态转移函数 Y(S, T) = S'。</p>
+    </article>
+    <article class="card">
+      <span class="tag">Deterministic</span>
+      <h3>确定性执行</h3>
+      <p>EVM 是图灵完备且确定性的虚拟机,所有节点重放相同交易都得到相同结果——这是共识的基础。</p>
+    </article>
+    <article class="card">
+      <span class="tag">Modular</span>
+      <h3>模块化路线</h3>
+      <p>The Merge 后,执行与共识解耦;未来围绕 Rollup、Blob 数据可用性、Verkle Tree 等继续模块化演进。</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 执行层 × 共识层 (含 EVM + PoS) ============ -->
+<section id="layers" class="section">
+  <div class="section-head">
+    <h2>执行层 × 共识层 · 以太坊如何跑起来</h2>
+    <p>大楼里"跑合约"的是执行层 EL(里面装着 <b>EVM</b>),"拍板账本"的是共识层 CL(里面跑着 <b>PoS</b>)。两者各做一件事,通过 Engine API 对话。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🤝</span>
+    <div class="bh-body">
+      <span class="bh-tag">一句话</span>
+      <b>EL 是后厨 · CL 是前厅。</b>前厅接单、排队、上菜,后厨照单炒菜更新库存。两者分家之后,各自独立升级互不影响 —— 这正是 2022 年 The Merge 的核心。
+    </div>
+  </div>
+
+  <!-- 主对照图 -->
+  <div class="split">
+    <div class="split-card el">
+      <h3>⚙️ 执行层 EL · 后厨</h3>
+      <p class="sub">客户端: Geth · Nethermind · Besu · Erigon · Reth</p>
+      <ul>
+        <li>收集待处理交易(mempool)</li>
+        <li>用 <b>EVM</b> 跑合约、改账本</li>
+        <li>把打包好的"菜"交给 CL</li>
+        <li>对钱包/DApp 开放 JSON-RPC</li>
+      </ul>
+    </div>
+    <div class="arrow-engine">
+      <div class="arrow-label">Engine API<br/><span>EL ↔ CL 的对话接口</span></div>
+    </div>
+    <div class="split-card cl">
+      <h3>🛡️ 共识层 CL · 前厅</h3>
+      <p class="sub">客户端: Prysm · Lighthouse · Teku · Nimbus · Lodestar</p>
+      <ul>
+        <li>管理验证者、每 12 秒摇号出块</li>
+        <li>用 <b>PoS</b> 规则投票、选主干</li>
+        <li>两轮 2/3 投票通过 → 盖章</li>
+        <li>把确认过的区块推给 EL</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EVM 细节:默认收起 -->
+  <details class="drill">
+    <summary>
+      <span class="drill-tag">展开细节</span>
+      <b>⚙️ EL 里面跑什么?</b> EVM · 那台"世界计算机"
+      <span class="drill-hint">(Stack / Storage / Opcode)</span>
+    </summary>
+    <div class="drill-body">
+      <p class="note-soft">EVM 就像<b>游戏卡带机</b>:智能合约是卡带,EVM 是主机。每台节点都装着一模一样的主机,插入同一张卡带、按相同顺序按键,结果绝对一致 —— 这是区块链能达成共识的根本。</p>
+
+      <div class="evm-grid">
+        <div class="evm-box stack">
+          <h4>Stack · 桌面便签</h4>
+          <div class="stack-frames">
+            <div>0x2a</div>
+            <div>0x01</div>
+            <div>0xff</div>
+            <div>…</div>
+          </div>
+          <p>最多 1024 层 · 用完就擦</p>
+        </div>
+        <div class="evm-box mem">
+          <h4>Memory · 草稿纸</h4>
+          <div class="mem-bar"></div>
+          <p>本次运行临时用</p>
+        </div>
+        <div class="evm-box storage">
+          <h4>Storage · 合约硬盘</h4>
+          <div class="kv">
+            <div><span>slot 0</span><b>0x…a1</b></div>
+            <div><span>slot 1</span><b>0x…7c</b></div>
+            <div><span>slot 2</span><b>0x…00</b></div>
+          </div>
+          <p>永久保留 · 写入昂贵</p>
+        </div>
+        <div class="evm-box code">
+          <h4>Bytecode · 卡带</h4>
+<pre><code>PUSH1 0x60
+PUSH1 0x40
+MSTORE
+CALLVALUE
+DUP1
+ISZERO
+...</code></pre>
+          <p>只读 · Solidity 编译产出</p>
+        </div>
+      </div>
+
+      <div class="opcode-table">
+        <h4>常见 Opcode(这台主机认识的"按键")</h4>
+        <table>
+          <thead><tr><th>类别</th><th>示例</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>算术</td><td>ADD · MUL · MOD · EXP</td><td>256-bit 整数运算</td></tr>
+            <tr><td>栈/内存</td><td>PUSH · POP · MSTORE · MLOAD</td><td>操作栈与内存</td></tr>
+            <tr><td>存储</td><td>SLOAD · SSTORE</td><td>读写合约持久状态</td></tr>
+            <tr><td>控制流</td><td>JUMP · JUMPI · JUMPDEST</td><td>跳转必须落到 JUMPDEST</td></tr>
+            <tr><td>环境</td><td>CALLER · TIMESTAMP · CHAINID</td><td>区块/交易上下文</td></tr>
+            <tr><td>调用</td><td>CALL · DELEGATECALL · STATICCALL</td><td>跨合约调用</td></tr>
+            <tr><td>日志</td><td>LOG0–LOG4</td><td>事件日志,写入 Receipt</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+
+  <!-- PoS 细节:默认收起 -->
+  <details class="drill" id="consensus">
+    <summary>
+      <span class="drill-tag">展开细节</span>
+      <b>🛡️ CL 怎么投票?</b> PoS · 管委会的 4 步流程
+      <span class="drill-hint">(Slot / Epoch / Finality)</span>
+    </summary>
+    <div class="drill-body">
+      <p class="note-soft">每位验证者先押 <b>32 ETH</b> 当"保证金",每 12 秒摇号出一位值班员打包区块,其他人投票确认。两轮 2/3 以上同意 → 区块永不可逆。</p>
+
+      <div class="pos-grid">
+        <div class="pos-item">
+          <div class="num">32</div>
+          <div class="label">ETH · 入场押金</div>
+        </div>
+        <div class="pos-item">
+          <div class="num">12s</div>
+          <div class="label">一个 Slot</div>
+        </div>
+        <div class="pos-item">
+          <div class="num">32</div>
+          <div class="label">Slots = 1 Epoch</div>
+        </div>
+        <div class="pos-item">
+          <div class="num">~12.8分</div>
+          <div class="label">即可 Finality</div>
+        </div>
+      </div>
+
+      <div class="consensus-flow">
+        <div class="cf-step"><b>1. Proposer · 出题人</b><p>摇号选一位验证者打包区块</p></div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-step"><b>2. Attesters · 见证人</b><p>一小队委员投票:"我同意"</p></div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-step"><b>3. LMD-GHOST · 选主干</b><p>哪条链票最重 → 正版</p></div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-step"><b>4. Casper FFG · 盖章</b><p>2/3 权重通过 → 永不可逆</p></div>
+      </div>
+
+      <div class="cards two">
+        <article class="card">
+          <span class="tag danger">Slashing · 作弊扣款</span>
+          <h3>双签 / 矛盾投票</h3>
+          <p>同一 slot 出两个块、重复投票、环绕投票都会被 slash —— 押金扣走,强制离场。</p>
+        </article>
+        <article class="card">
+          <span class="tag success">Reward · 诚实赚钱</span>
+          <h3>激励结构</h3>
+          <p>按时出块、见证、同步委员会和 MEV 都有奖励;长期离线则 inactivity leak 慢慢扣 —— 鼓励一直在线。</p>
+        </article>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ 状态 ============ -->
+<section id="state" class="section alt">
+  <div class="section-head">
+    <h2>账户与账本 · 以太坊是怎么"记账"的</h2>
+    <p>前面一直在说"账本",它的结构到底长什么样?这里我们打开数据层地下室的档案柜,看看以太坊到底在存什么。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">📒</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      想象一本全球共用的 Excel:每一行就是一个账户,要么是<b>你</b>(外部账户 EOA,由钱包私钥控制),要么是<b>一段程序</b>(合约账户)。每行存着余额、nonce、合约代码等字段。以太坊并不直接存这张表,而是用一棵被称作 <b>Merkle Patricia Trie(MPT)</b>的哈希树来存,只要树根(State Root)一致,所有节点都能判断账本有没有被动过。
+    </div>
+  </div>
+
+  <div class="account-types">
+    <div class="acc eoa">
+      <h3>EOA · 外部账户</h3>
+      <ul>
+        <li>由私钥（secp256k1）控制</li>
+        <li>只有 nonce 和 balance</li>
+        <li>能发起交易</li>
+      </ul>
+    </div>
+    <div class="acc contract">
+      <h3>Contract · 合约账户</h3>
+      <ul>
+        <li>由 EVM 代码控制</li>
+        <li>有 code + storage root</li>
+        <li>被动响应调用</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="trie">
+    <h4>区块头中的四棵树</h4>
+    <div class="trie-grid">
+      <div class="trie-card">
+        <b>State Trie</b>
+        <p>地址 → 账户（nonce, balance, codeHash, storageRoot）</p>
+      </div>
+      <div class="trie-card">
+        <b>Storage Trie</b>
+        <p>每个合约一棵，slot → value（均为 32 bytes）</p>
+      </div>
+      <div class="trie-card">
+        <b>Transactions Trie</b>
+        <p>本区块所有交易的 Merkle 根</p>
+      </div>
+      <div class="trie-card">
+        <b>Receipts Trie</b>
+        <p>交易回执、Logs、状态变更布隆过滤</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    🌲 <b>Verkle Tree 路线：</b>
+    未来将用 Verkle Tree 替代 MPT，证明体积更小，是「无状态客户端（Stateless Clients）」的关键一步。
+  </div>
+</section>
+
+<!-- ============ Gas ============ -->
+<section id="gas" class="section">
+  <div class="section-head">
+    <h2>Gas · 你付的那笔手续费怎么算</h2>
+    <p>以太坊是公共计算机,想让它替你干活就得付费。这笔费用叫 <b>Gas</b> —— 它既防止有人写死循环把全网卡死,也是验证者干活的报酬来源。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">⛽</span>
+    <div class="bh-body">
+      <span class="bh-tag">打个比方</span>
+      像开车上高速:<b>Gas 用量</b>是你这趟烧的油(简单转账少,调用复杂合约多);<b>Base Fee</b> 是实时油价,堵车时自动涨价、冷清时自动降;<b>Priority Fee</b> 是给司机(验证者)的小费。最终账单:<b>Max Fee = Base Fee + Priority Fee</b>,其中 Base Fee 会被 🔥 销毁,让 ETH 供给减少。
+    </div>
+  </div>
+
+  <div class="gas-formula">
+    <code>
+      Max Fee = Base Fee (burn 🔥) + Priority Fee (tip → proposer)
+    </code>
+  </div>
+
+  <div class="gas-grid">
+    <div class="gas-card">
+      <h4>Base Fee</h4>
+      <p>由上一块使用率自动调整：超过 50% 则上涨，低于则下调。<br/><b>会被销毁</b>，使 ETH 具备通缩特性。</p>
+    </div>
+    <div class="gas-card">
+      <h4>Priority Fee</h4>
+      <p>小费，直接给出块的 Proposer，激励其将交易打包。</p>
+    </div>
+    <div class="gas-card">
+      <h4>Gas Limit</h4>
+      <p>区块上限约 <b>30M Gas</b>，目标值 15M。单交易至少 21000 Gas。</p>
+    </div>
+    <div class="gas-card">
+      <h4>Blob Fee</h4>
+      <p>EIP-4844 为 Rollup 引入独立 Blob 市场，Data Availability 成本骤降。</p>
+    </div>
+  </div>
+
+  <div class="op-cost">
+    <h4>典型指令 Gas 成本</h4>
+    <p class="op-cost-intro">
+      EVM 把每段合约代码拆成一条条<b>指令(opcode)</b>逐条执行,每条指令都标好了"价格"。
+      规律很简单:<b>纯计算 ≈ 几个 gas</b>,<b>读链上数据 ≈ 几千 gas</b>(磁盘 IO),
+      <b>写/改链上数据 ≈ 一两万 gas</b>(全网每个节点都得存一份,所以最贵)。
+    </p>
+    <ul>
+      <li>
+        <div class="op-row"><code>ADD / SUB</code><span>3</span></div>
+        <em>加 / 减 —— 纯算术,最便宜</em>
+      </li>
+      <li>
+        <div class="op-row"><code>MUL / DIV</code><span>5</span></div>
+        <em>乘 / 除 —— 比加减略复杂</em>
+      </li>
+      <li>
+        <div class="op-row"><code>SLOAD</code> (cold)<span>2100</span></div>
+        <em>从合约存储里读一个值 —— 第一次读叫 cold,贵</em>
+      </li>
+      <li>
+        <div class="op-row"><code>SSTORE</code> (zero → non-zero)<span>20000</span></div>
+        <em>往存储里写一个新值 —— 全网都得记下,最贵</em>
+      </li>
+      <li>
+        <div class="op-row"><code>CREATE</code><span>32000</span></div>
+        <em>部署一个新合约 —— 占用永久空间</em>
+      </li>
+      <li>
+        <div class="op-row"><code>CALL</code><span>~700+</span></div>
+        <em>调用另一个合约 —— 视参数和访问情况而定</em>
+      </li>
+      <li>
+        <div class="op-row"><code>Tx base</code><span>21000</span></div>
+        <em>每笔交易的"门票费",哪怕什么都不干也要付</em>
+      </li>
+    </ul>
+    <p class="op-cost-note">
+      💡 <b>所以你看到的 Gas Used 数字其实是这些指令费的总和:</b>简单转账只用门票钱(21,000);
+      Uniswap 换币要 SLOAD/SSTORE 一堆存储槽,所以涨到 ~180,000;部署合约 CREATE + 一长串 SSTORE,
+      轻松到 90 万。下方模拟器可以自己拨一拨试试。
+    </p>
+  </div>
+
+  <!-- ===== Gas 模拟器:让用户自己算一笔交易要多少钱 ===== -->
+  <div class="gas-calc" id="gas-calc">
+    <div class="gas-calc-head">
+      <h4>🧮 Gas 模拟器 · 自己算一笔</h4>
+      <p>选一个常见操作,或自定义 Gas 用量与单价,实时看这笔交易要花多少 ETH / USD,以及其中多少被 🔥 销毁、多少给了 💰 验证者。</p>
+    </div>
+
+    <!-- 预设操作:点一下自动填 Gas Used -->
+    <div class="gc-presets" role="tablist" aria-label="预设操作">
+      <button type="button" class="gc-preset is-active" data-gas="21000" data-label="ETH 转账">
+        <span class="gc-preset-emoji">💸</span>
+        <span class="gc-preset-name">ETH 转账</span>
+        <span class="gc-preset-gas">21,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="65000" data-label="ERC-20 转账">
+        <span class="gc-preset-emoji">🪙</span>
+        <span class="gc-preset-name">ERC-20 转账</span>
+        <span class="gc-preset-gas">65,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="180000" data-label="Uniswap Swap">
+        <span class="gc-preset-emoji">🔄</span>
+        <span class="gc-preset-name">Uniswap 换币</span>
+        <span class="gc-preset-gas">180,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="120000" data-label="NFT Mint">
+        <span class="gc-preset-emoji">🎨</span>
+        <span class="gc-preset-name">NFT Mint</span>
+        <span class="gc-preset-gas">120,000</span>
+      </button>
+      <button type="button" class="gc-preset" data-gas="900000" data-label="部署合约">
+        <span class="gc-preset-emoji">🚀</span>
+        <span class="gc-preset-name">部署合约</span>
+        <span class="gc-preset-gas">900,000</span>
+      </button>
+    </div>
+
+    <!-- 三个滑杆:Gas Used / Base Fee / Priority Fee -->
+    <div class="gc-controls">
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Gas Used</span>
+          <span class="gc-ctrl-val" id="gc-used-val">21,000</span>
+        </span>
+        <input type="range" id="gc-used" min="21000" max="2000000" step="1000" value="21000"/>
+        <span class="gc-ctrl-hint">21k(简单转账) → 2M(大型合约)</span>
+      </label>
+
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Base Fee 🔥</span>
+          <span class="gc-ctrl-val"><span id="gc-base-val">15</span> gwei</span>
+        </span>
+        <input type="range" id="gc-base" min="1" max="200" step="1" value="15"/>
+        <span class="gc-ctrl-hint">由网络拥堵自动调整 · 会被销毁</span>
+      </label>
+
+      <label class="gc-ctrl">
+        <span class="gc-ctrl-top">
+          <span class="gc-ctrl-name">Priority Fee 💰</span>
+          <span class="gc-ctrl-val"><span id="gc-tip-val">2</span> gwei</span>
+        </span>
+        <input type="range" id="gc-tip" min="0" max="50" step="0.5" value="2"/>
+        <span class="gc-ctrl-hint">小费 · 给验证者 · 越高越快被打包</span>
+      </label>
+    </div>
+
+    <!-- 结果区 -->
+    <div class="gc-result">
+      <div class="gc-result-main">
+        <span class="gc-result-label">这笔交易要花</span>
+        <div class="gc-result-figs">
+          <span class="gc-eth"><b id="gc-eth">0.000345</b> ETH</span>
+          <span class="gc-usd">≈ <b id="gc-usd">$0.00</b></span>
+        </div>
+      </div>
+
+      <!-- Base Fee / Priority Fee 拆分柱:可视化两部分占比 -->
+      <div class="gc-split">
+        <div class="gc-split-bar">
+          <span class="gc-split-burn" id="gc-bar-burn" style="width:88%"></span>
+          <span class="gc-split-tip"  id="gc-bar-tip"  style="width:12%"></span>
+        </div>
+        <div class="gc-split-legend">
+          <span><i style="background:#8b2a2a"></i>🔥 销毁 <b id="gc-burn">0.000315</b> ETH (<span id="gc-burn-pct">88%</span>)</span>
+          <span><i style="background:#2d6a3e"></i>💰 给验证者 <b id="gc-tip">0.000042</b> ETH (<span id="gc-tip-pct">12%</span>)</span>
+        </div>
+      </div>
+
+      <p class="gc-formula">
+        <code><span id="gc-used-mini">21,000</span> × (<span id="gc-base-mini">15</span> + <span id="gc-tip-mini">2</span>) gwei = <b><span id="gc-total-gwei">357,000</span> gwei</b></code>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+</div><!-- /page tech -->
+
+<!-- ================================================
+     PAGE · TODAY
+     ================================================ -->
+<div class="page" data-page="today">
+  <div class="page-header">
+    <p class="page-eyebrow">TODAY · 现状</p>
+    <h1>现状:今天的以太坊长什么样</h1>
+    <p class="page-desc">2026 年的 ETH 不是一条单链——它已经分裂成"L1 主网 + 一群 L2 + 数据层 + 再质押"的<b>模块化栈</b>。下面带你看清这一栈、当前升级路线进度,以及还在路上的痛点和生态。</p>
+  </div>
+
+<!-- ============ 当前架构总览(模块化栈) ============ -->
+<section id="stack" class="section">
+  <div class="section-head">
+    <h2>① 当前架构 · 模块化以太坊栈</h2>
+    <p>从 2022 年 The Merge + 2024 年 Dencun 之后,以太坊不再"一条链干所有事",而是<b>每一层各司其职</b>。</p>
+  </div>
+
+  <div class="beginner-hint">
+    <span class="bh-icon">🏛️</span>
+    <div class="bh-body">
+      <span class="bh-tag">一句话理解</span>
+      把以太坊想象成一栋"功能分租的大楼":<b>地基</b>(L1 主网)负责安全和最终裁决;<b>仓库</b>(Blob/DA)负责廉价存数据;<b>厂房</b>(L2 Rollup)负责高速执行;<b>电力公司</b>(Restaking)把 L1 的安全租给其他服务;<b>商铺</b>(Apps)是真正面向用户的应用。
+    </div>
+  </div>
+
+  <div class="mod-stack" id="mod-stack">
+    <!-- 5 层从下到上 -->
+    <div class="mod-layer ml-l1" data-layer="l1">
+      <div class="ml-head">
+        <span class="ml-tag">LAYER 1 · 结算 / 共识</span>
+        <h4>🛡️ 以太坊主网</h4>
+      </div>
+      <p class="ml-body">最终裁判 + 安全锚。所有 L2 的状态根、Blob、争议都最终回到这里裁决。PoS 验证者(~100 万)守护这一层。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>~15</b> TPS</span>
+        <span class="ml-stat"><b>32 ETH</b> 验证者门槛</span>
+        <span class="ml-stat"><b>~12.8 min</b> 终局</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-da" data-layer="da">
+      <div class="ml-head">
+        <span class="ml-tag">DATA AVAILABILITY · 数据层</span>
+        <h4>📦 Blob 数据层(EIP-4844)</h4>
+      </div>
+      <p class="ml-body">2024 年 Dencun 升级新增的"廉价仓库",专给 L2 上传压缩数据用。每块最多 6 个 ~128KB Blob,只保留 ~18 天但已足够 Rollup 拉取证明。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>~128KB</b> /Blob</span>
+        <span class="ml-stat"><b>6/块</b> 上限(目标 64MB)</span>
+        <span class="ml-stat"><b>L2 费用 ↓ 90%</b></span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-l2" data-layer="l2">
+      <div class="ml-head">
+        <span class="ml-tag">LAYER 2 · 执行</span>
+        <h4>🚀 Rollup 执行层</h4>
+      </div>
+      <p class="ml-body">真正跑用户交易的地方。把成千上万笔交易压缩后回写 L1,享受 L1 的安全、又比 L1 便宜数十倍。OP-Rollup 与 ZK-Rollup 两条技术路线并存。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>40+</b> 主流 L2</span>
+        <span class="ml-stat"><b>$40B+</b> TVL</span>
+        <span class="ml-stat"><b>~2000+</b> TPS(总和)</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-rs" data-layer="rs">
+      <div class="ml-head">
+        <span class="ml-tag">RESTAKING · 安全市场</span>
+        <h4>🔁 再质押层(EigenLayer 等)</h4>
+      </div>
+      <p class="ml-body">把 L1 验证者的"安全押金"二次出租给其他服务(预言机、跨链桥、DA 替代方案)。让以太坊的信任成为一个可定价的商品。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>$15B+</b> 再质押 TVL</span>
+        <span class="ml-stat"><b>20+</b> AVS 服务</span>
+        <span class="ml-stat"><b>共享</b> 安全模型</span>
+      </div>
+    </div>
+
+    <div class="mod-layer ml-app" data-layer="app">
+      <div class="ml-head">
+        <span class="ml-tag">APPLICATIONS · 应用层</span>
+        <h4>🎨 钱包 / DeFi / NFT / 社交</h4>
+      </div>
+      <p class="ml-body">用户真正点击、签名、看到 UI 的地方。今天大部分新应用直接部署在 L2,通过钱包(MetaMask/Rabby)+ 账户抽象(ERC-4337)与协议交互。</p>
+      <div class="ml-foot">
+        <span class="ml-stat"><b>3000+</b> 活跃 dApp</span>
+        <span class="ml-stat"><b>2500万+</b> 月活地址</span>
+        <span class="ml-stat"><b>账户抽象</b> 普及中</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="mod-stack-caption">
+    <b>关键变化:</b>2020 年以前 = 全部跑在 L1;2024 Dencun 之后 = L1 退到"安全 + DA",执行外包给 L2,
+    EigenLayer 又把 L1 安全做成商品 —— 这就是<b>"模块化以太坊"</b>。
+  </p>
+</section>
+
+<!-- ============ 升级路线进度 ============ -->
+<section id="progress" class="section alt">
+  <div class="section-head">
+    <h2>② 升级路线进度 · 我们走到哪了</h2>
+    <p>Vitalik 把以太坊路线图分成六个阶段,每阶段对应一类核心问题。下方这条进度条标出当前位置——同时进行多阶段是常态。</p>
+  </div>
+
+  <div class="progress-rail">
+    <div class="pr-line">
+      <span class="pr-fill"></span>
+    </div>
+
+    <div class="pr-step is-done">
+      <div class="pr-dot">✓</div>
+      <div class="pr-card">
+        <span class="pr-label">已完成 · 2022.09</span>
+        <h4>🔀 The Merge</h4>
+        <p>PoW → PoS 切换,能耗骤降 99.95%。EIP-3675 / 4895。</p>
+      </div>
+    </div>
+
+    <div class="pr-step is-active">
+      <div class="pr-dot">●</div>
+      <div class="pr-card">
+        <span class="pr-label">进行中 · 主战场</span>
+        <h4>🌊 The Surge</h4>
+        <p>扩容到 10 万 TPS。Dencun(2024)交付 Proto-Danksharding;<b>下一步 PeerDAS、完整 Danksharding</b>。</p>
+      </div>
+    </div>
+
+    <div class="pr-step is-active">
+      <div class="pr-dot">●</div>
+      <div class="pr-card">
+        <span class="pr-label">进行中 · 早期</span>
+        <h4>⚡ The Scourge</h4>
+        <p>解决 MEV、质押中心化。当前推进 PBS、加密内存池、Solo 质押友好化。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">规划中</span>
+        <h4>🌳 The Verge</h4>
+        <p>用 Verkle Tree 替代 MPT,让"无状态客户端"成为可能,手机也能验证以太坊。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">规划中</span>
+        <h4>🧹 The Purge</h4>
+        <p>EIP-4444:节点不必永久保存全部历史数据,降低运行门槛。</p>
+      </div>
+    </div>
+
+    <div class="pr-step">
+      <div class="pr-dot">○</div>
+      <div class="pr-card">
+        <span class="pr-label">长期</span>
+        <h4>🎉 The Splurge</h4>
+        <p>账户抽象、EVM 改进、量子安全等"杂项升级"的总称。</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="progress-note">
+    📅 <b>状态截止:2026 年 5 月。</b>
+    路线图阶段状态会随每次主网升级变化(下次主网升级后 PeerDAS 等 Surge 子项可能转为"已完成")。
+    最新进度可参考
+    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a>
+    与
+    <a href="https://ethroadmap.com" target="_blank" rel="noopener">ethroadmap.com</a>。
+  </p>
+</section>
+
+<!-- ============ 扩容 ============ -->
+<section id="scaling" class="section">
+  <div class="section-head">
+    <h2>③ Rollup-centric 路线 · L2 技术分支</h2>
+    <p>L1 主网专注于「结算 + DA」,把执行外包给 L2。按 <b>证明类型 × 数据放哪</b> 两两组合,主流 L2 落在 4 个象限上 —— 取舍在于<b>速度、成本、安全模型</b>。</p>
+  </div>
+
+  <div class="rollup-compare rollup-compare-4">
+    <div class="rc-card optim">
+      <h3>Optimistic Rollup</h3>
+      <p class="rc-tag">欺诈证明 · 数据上 L1</p>
+      <p>"先打包,有问题再打官司"。挑战期(7 天)内任何人可提交欺诈证明,推翻错误状态。</p>
+      <ul>
+        <li>✅ EVM 等价,合约可几乎无改动迁移</li>
+        <li>✅ 成本低,生态最成熟</li>
+        <li>⚠️ 原生提现需等 7 天挑战期</li>
+      </ul>
+      <div class="rc-eg">Arbitrum · Optimism · Base · Mantle</div>
+    </div>
+    <div class="rc-card zk">
+      <h3>ZK Rollup</h3>
+      <p class="rc-tag">有效性证明 · 数据上 L1</p>
+      <p>每个区块附带一个密码学证明,L1 一验就知道有没有错——不需要等待挑战期。</p>
+      <ul>
+        <li>✅ 终局性极快(分钟级提现)</li>
+        <li>✅ 密码学安全,不需要"乐观假设"</li>
+        <li>⚠️ 证明生成成本高,zkEVM 仍在演进</li>
+      </ul>
+      <div class="rc-eg">zkSync · StarkNet · Scroll · Linea · Polygon zkEVM</div>
+    </div>
+    <div class="rc-card optimium">
+      <h3>Optimium</h3>
+      <p class="rc-tag">欺诈证明 · 数据放链下</p>
+      <p>把 Optimistic 的数据从 L1 Blob 搬到外部 DA(EigenDA / Celestia / Avail)。费用更低,安全弱于纯 Rollup。</p>
+      <ul>
+        <li>✅ TPS 高、单笔成本接近零</li>
+        <li>✅ 适合大规模消费级应用</li>
+        <li>⚠️ 数据可用性依赖外部网络</li>
+      </ul>
+      <div class="rc-eg">Mantle(早期)· Metis · Manta Pacific</div>
+    </div>
+    <div class="rc-card validium">
+      <h3>Validium / Volition</h3>
+      <p class="rc-tag">有效性证明 · 数据放链下</p>
+      <p>用 ZK 证明保证状态正确,但<b>把交易数据放链下</b>(DAC 委员会或 EigenDA 等)。Volition 让用户每笔自选 DA。</p>
+      <ul>
+        <li>✅ 单笔成本可低至几厘美元</li>
+        <li>✅ 适合游戏、社交等高频低值场景</li>
+        <li>⚠️ 数据可用性依赖外部委员会</li>
+      </ul>
+      <div class="rc-eg">Immutable X · Sorare · X Layer · Polygon Miden</div>
+    </div>
+  </div>
+
+  <!-- DA 维度补充 -->
+  <div class="da-dim-note">
+    <span class="da-dim-tag">另一个维度</span>
+    <p>同一个 L2 还可以选不同的 <b>DA 数据可用性层</b>:<b>Ethereum Blob</b>(最贵但最安全)· <b>Celestia</b> · <b>EigenDA</b>(基于 Restaking)· <b>Avail</b>。Volition 模式下,用户甚至可以为每笔交易单独选 DA —— "贵但稳" 还是 "便宜但弱信任",由你自己决定。</p>
+  </div>
+
+  <!-- 执行层演进路径:EVM → zkEVM → zkVM(RISC-V) -->
+  <div class="vm-evolution">
+    <div class="vme-head">
+      <h4>🧬 执行层演进 · EVM → zkEVM → zkVM(RISC-V)</h4>
+      <p>L2 的"虚拟机"也在迭代。zkEVM 是当下最实用的方案,但未必是终局 —— Vitalik 在 2025 年 4 月提案 L1 长期可迁向 RISC-V zkVM。</p>
+    </div>
+    <div class="vme-row">
+      <div class="vme-step vme-past">
+        <div class="vme-era">过去 · 2015+</div>
+        <div class="vme-name">EVM</div>
+        <p class="vme-tag">专用虚拟机 · 256 位字长</p>
+        <p class="vme-body">为智能合约共识设计,但<b>对 ZK 不友好</b>:Keccak256 哈希在电路里成本极高,256 位运算贵。</p>
+        <div class="vme-meta">代表:L1 主网 / 所有 EVM 链</div>
+      </div>
+      <div class="vme-arrow">→</div>
+      <div class="vme-step vme-now">
+        <div class="vme-era">现在 · 2023+</div>
+        <div class="vme-name">zkEVM</div>
+        <p class="vme-tag">在 ZK 电路里复刻 EVM</p>
+        <p class="vme-body">兼容 Solidity,合约几乎无改动迁移。代价:证明慢、电路复杂。Vitalik 把它分成 Type 1~4 五档兼容性。</p>
+        <div class="vme-meta">代表:Scroll · Linea · zkSync · Polygon zkEVM</div>
+      </div>
+      <div class="vme-arrow">→</div>
+      <div class="vme-step vme-future">
+        <div class="vme-era">未来 · 2027?</div>
+        <div class="vme-name">zkVM(RISC-V)</div>
+        <p class="vme-tag">通用指令集 · ZK 原生</p>
+        <p class="vme-body">证明 RISC-V 这种<b>简单通用</b>的指令集。Rust/C/Go 都能编译进来,证明速度比 zkEVM 快 1~2 个数量级。EVM 通过解释器向后兼容。</p>
+        <div class="vme-meta">代表:RISC Zero · SP1 · Succinct · Jolt</div>
+      </div>
+    </div>
+    <p class="vme-foot">
+      💡 <b>关键洞察:</b>zkEVM 证明的是「EVM 这台特定虚拟机」;zkVM 证明的是「任何 CPU 程序」——
+      后者一旦成熟,zkEVM 只是它的一个<b>特例</b>(把 EVM 解释器编译到 RISC-V 上跑)。
+    </p>
+  </div>
+
+  <!-- L2 成熟度阶梯(L2BEAT 标准) -->
+  <div class="l2-stages">
+    <h4>L2 成熟度阶梯 · L2BEAT Stage 标准</h4>
+    <p class="l2-stages-desc">不是所有"自称 L2"的链都同样去中心化。L2BEAT 用三档 Stage 衡量它们对 L1 安全的真实继承程度。</p>
+    <div class="l2-stage-row">
+      <div class="l2-stage l2s-0">
+        <span class="l2s-badge">Stage 0</span>
+        <h5>训练轮</h5>
+        <p>团队仍可单方面升级合约 / 暂停链。多数早期 L2 起步阶段。</p>
+        <div class="l2s-eg">大部分新 L2 · 早期阶段</div>
+      </div>
+      <div class="l2-stage l2s-1">
+        <span class="l2s-badge">Stage 1</span>
+        <h5>有限信任</h5>
+        <p>有安全委员会 + 6 人门槛升级时间锁,普通人可发起强制提款。</p>
+        <div class="l2s-eg">Arbitrum One · Optimism · Base</div>
+      </div>
+      <div class="l2-stage l2s-2">
+        <span class="l2s-badge">Stage 2</span>
+        <h5>完全无信任</h5>
+        <p>升级权完全交给链上治理 / 时间锁,不依赖任何"管理员"。</p>
+        <div class="l2s-eg">极少数 L2 已达成 · 大多数仍在路上</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blob / DA 现状 -->
+  <div class="da-status">
+    <div class="da-head">
+      <h4>📦 Blob 数据层现状(EIP-4844 → Danksharding)</h4>
+      <p>2024 年 3 月 Dencun 升级带来"Proto-Danksharding"——给 Rollup 开了一条<b>独立的廉价数据通道</b>,L2 平均费用瞬间降了 90%+。2025 年 Pectra 升级再把 Blob 容量翻倍。</p>
+    </div>
+
+    <div class="da-grid">
+      <div class="da-now">
+        <span class="da-label">现在(Pectra 后 · 2025-05)</span>
+        <div class="da-blob-row">
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div>
+        </div>
+        <p class="da-cap">target <b>6</b> / max <b>9 个 Blob</b>/块 · 共 ~1.1 MB · 保留 18 天</p>
+      </div>
+
+      <div class="da-arrow">→</div>
+
+      <div class="da-future">
+        <span class="da-label">目标(完整 Danksharding)</span>
+        <div class="da-blob-row da-blob-row-many">
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+          <div class="da-blob is-on"></div><div class="da-blob is-on"></div>
+        </div>
+        <p class="da-cap"><b>~128 个 Blob</b>/块 · 每块 16 MB → 64 MB · 配 PeerDAS 抽样验证</p>
+      </div>
+    </div>
+
+    <p class="da-foot">
+      🎯 <b>下一站(Fusaka 升级):</b>引入 <b>PeerDAS</b>(数据可用性抽样)—— 让普通节点不用下载全部 Blob,只抽样验证一小段就够。
+      Fusaka 计划把 max blob 进一步推到 <b>12+</b>,这是从今天的 9 Blob 走向 128 Blob 完整 Danksharding 的关键一步。
+    </p>
+  </div>
+</section>
+
+<!-- ============ 11 当前痛点 ============ -->
+<section id="pain" class="section alt">
+  <div class="section-head">
+    <h2>④ 当前痛点与挑战</h2>
+    <p>没有完美的系统。了解以太坊尚未解决的问题,才能理解未来路线图的动力来源。</p>
+  </div>
+
+  <div class="pain-grid">
+    <article class="pain-card">
+      <span class="pain-tag">可扩展性</span>
+      <h3>💸 L1 吞吐仍然有限</h3>
+      <p>主网仅约 15 TPS,高峰期拥堵推高费用。解决方案:Rollup + Blob 数据层。</p>
+    </article>
+    <article class="pain-card">
+      <span class="pain-tag">MEV</span>
+      <h3>⚡ 最大可提取价值</h3>
+      <p>提议者可通过交易排序获利,导致三明治攻击与抢跑。解决方案:PBS、加密内存池。</p>
+    </article>
+    <article class="pain-card">
+      <span class="pain-tag">中心化风险</span>
+      <h3>🏦 质押过度集中</h3>
+      <p>Lido 等流动性质押协议占比偏高,存在协议层合谋风险。</p>
+    </article>
+    <article class="pain-card">
+      <span class="pain-tag">客户端</span>
+      <h3>🧩 客户端多样性不足</h3>
+      <p>Geth 占比过高,若存在 Bug 可能威胁整个网络的最终性。</p>
+    </article>
+    <article class="pain-card">
+      <span class="pain-tag">状态膨胀</span>
+      <h3>💾 状态数据不断膨胀</h3>
+      <p>全节点存储成本上升,影响普通用户自行验证。Verkle + EIP-4444 是出路。</p>
+    </article>
+    <article class="pain-card">
+      <span class="pain-tag">用户体验</span>
+      <h3>🔑 钱包与助记词</h3>
+      <p>私钥管理对普通用户门槛过高。解决方案:账户抽象(ERC-4337 / EIP-7702)。</p>
+    </article>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <h4>📈 主网平均 Gas 费变化(USD)</h4>
+      <canvas id="gas-history-chart" height="180"></canvas>
+      <p class="chart-note">2021 年 NFT 火爆推至 $50+,2024 Dencun 升级后 Rollup 上链成本骤降,平均费用回落至 $1 以下。</p>
+    </div>
+    <div class="chart-card">
+      <h4>🥧 质押池占比</h4>
+      <canvas id="staking-chart" height="180"></canvas>
+      <p class="chart-note">数据参考 Dune / Rated Network。Solo 质押者占比稳步上升是健康信号。</p>
+    </div>
+    <div class="chart-card">
+      <h4>📊 执行层客户端分布</h4>
+      <canvas id="client-chart" height="180"></canvas>
+      <p class="chart-note">参考 clientdiversity.org。Geth 曾一度超过 80%,社区持续推广 Nethermind/Reth 等替代客户端。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 生态项目 (迁至 today 末尾) ============ -->
+<section id="ecosystem" class="section">
+  <div class="section-head">
+    <h2>⑤ 生态全景 · 在以太坊之上</h2>
+    <p>以太坊最大的价值不是链本身,而是它之上跑着的几千个应用。这里是各赛道头部项目一览。</p>
+  </div>
+
+  <div class="eco-grid">
+    <div class="eco-group">
+      <h4 class="eco-cat defi">💱 DeFi · 去中心化金融</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>Uniswap</b><span>去中心化交易所</span></div>
+        <div class="eco-pill"><b>Aave</b><span>借贷协议</span></div>
+        <div class="eco-pill"><b>Curve</b><span>稳定币兑换</span></div>
+        <div class="eco-pill"><b>MakerDAO</b><span>DAI 稳定币</span></div>
+        <div class="eco-pill"><b>Lido</b><span>流动性质押</span></div>
+        <div class="eco-pill"><b>EigenLayer</b><span>再质押</span></div>
+      </div>
+    </div>
+
+    <div class="eco-group">
+      <h4 class="eco-cat nft">🎨 NFT & 社交</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>OpenSea</b><span>NFT 市场</span></div>
+        <div class="eco-pill"><b>Blur</b><span>NFT 交易</span></div>
+        <div class="eco-pill"><b>ENS</b><span>域名服务</span></div>
+        <div class="eco-pill"><b>Farcaster</b><span>去中心化社交</span></div>
+        <div class="eco-pill"><b>Lens</b><span>社交图谱</span></div>
+        <div class="eco-pill"><b>Art Blocks</b><span>生成艺术</span></div>
+      </div>
+    </div>
+
+    <div class="eco-group">
+      <h4 class="eco-cat l2">🚀 Layer 2 · 扩容</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>Arbitrum</b><span>Optimistic Rollup</span></div>
+        <div class="eco-pill"><b>Optimism</b><span>Optimistic Rollup</span></div>
+        <div class="eco-pill"><b>Base</b><span>Coinbase L2</span></div>
+        <div class="eco-pill"><b>zkSync Era</b><span>ZK Rollup</span></div>
+        <div class="eco-pill"><b>StarkNet</b><span>Cairo VM</span></div>
+        <div class="eco-pill"><b>Scroll / Linea</b><span>zkEVM</span></div>
+      </div>
+    </div>
+
+    <div class="eco-group">
+      <h4 class="eco-cat infra">🛠️ 基础设施 · Infra</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>MetaMask</b><span>钱包</span></div>
+        <div class="eco-pill"><b>Infura / Alchemy</b><span>节点 RPC</span></div>
+        <div class="eco-pill"><b>The Graph</b><span>索引服务</span></div>
+        <div class="eco-pill"><b>Chainlink</b><span>预言机</span></div>
+        <div class="eco-pill"><b>Etherscan</b><span>区块浏览器</span></div>
+        <div class="eco-pill"><b>Safe</b><span>多签钱包</span></div>
+      </div>
+    </div>
+
+    <div class="eco-group">
+      <h4 class="eco-cat dao">🏛️ DAO & 治理</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>Snapshot</b><span>链下投票</span></div>
+        <div class="eco-pill"><b>Tally</b><span>链上治理</span></div>
+        <div class="eco-pill"><b>Gitcoin</b><span>公共品资助</span></div>
+        <div class="eco-pill"><b>Optimism Collective</b><span>追溯奖励</span></div>
+      </div>
+    </div>
+
+    <div class="eco-group">
+      <h4 class="eco-cat dev">👨‍💻 开发工具</h4>
+      <div class="eco-items">
+        <div class="eco-pill"><b>Solidity</b><span>主流合约语言</span></div>
+        <div class="eco-pill"><b>Vyper</b><span>Python 风合约</span></div>
+        <div class="eco-pill"><b>Foundry</b><span>测试/部署</span></div>
+        <div class="eco-pill"><b>Hardhat</b><span>开发框架</span></div>
+        <div class="eco-pill"><b>viem / ethers</b><span>JS SDK</span></div>
+        <div class="eco-pill"><b>Remix</b><span>在线 IDE</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    💡 <b>TVL 视角:</b> 以太坊主网 + L2 目前锁定价值占整个加密市场 DeFi TVL 的 60% 以上,是智能合约赛道的绝对主场。
+  </div>
+</section>
+
+</div><!-- /page today -->
+
+<!-- ================================================
+     PAGE · FUTURE
+     ================================================ -->
+<div class="page" data-page="future">
+  <div class="page-header">
+    <p class="page-eyebrow">FUTURE · 未来</p>
+    <h1>未来:路线图与 2029 全景</h1>
+    <p class="page-desc">从 Vitalik 的六阶段框架,到 2026 → 2029 已敲定的硬分叉与关键里程碑 —— 看懂以太坊未来 4 年的演进节奏。</p>
+  </div>
+
+<!-- ============ 14 路线图 ============ -->
+<section id="roadmap" class="section">
+  <div class="section-head">
+    <h2>未来路线图 · Vitalik 六阶段</h2>
+    <p>The Merge → The Surge → The Scourge → The Verge → The Purge → The Splurge:每个阶段对应一类核心问题。</p>
+  </div>
+
+  <div class="roadmap-grid">
+    <div class="rm-card done">
+      <div class="rm-icon">🔀</div>
+      <h3>The Merge</h3>
+      <p class="rm-goal">PoW → PoS</p>
+      <p>关键 EIP: 3675 · 4895</p>
+      <span class="rm-status">✔ 已完成(2022)</span>
+    </div>
+    <div class="rm-card active">
+      <div class="rm-icon">🌊</div>
+      <h3>The Surge</h3>
+      <p class="rm-goal">扩容至 10 万 TPS</p>
+      <p>Rollups + Danksharding</p>
+      <span class="rm-status">🛠 进行中</span>
+    </div>
+    <div class="rm-card active">
+      <div class="rm-icon">⚔️</div>
+      <h3>The Scourge</h3>
+      <p class="rm-goal">抗审查 + MEV 治理</p>
+      <p>PBS · ePBS · 加密内存池</p>
+      <span class="rm-status">🧪 研究中</span>
+    </div>
+    <div class="rm-card">
+      <div class="rm-icon">👁️</div>
+      <h3>The Verge</h3>
+      <p class="rm-goal">无状态客户端</p>
+      <p>Verkle Tree 替代 MPT</p>
+      <span class="rm-status">📐 设计中</span>
+    </div>
+    <div class="rm-card">
+      <div class="rm-icon">🧹</div>
+      <h3>The Purge</h3>
+      <p class="rm-goal">简化协议、削减历史数据</p>
+      <p>EIP-4444 历史过期</p>
+      <span class="rm-status">🔍 讨论中</span>
+    </div>
+    <div class="rm-card">
+      <div class="rm-icon">✨</div>
+      <h3>The Splurge</h3>
+      <p class="rm-goal">其它长期改进</p>
+      <p>账户抽象 · EOF · VDF</p>
+      <span class="rm-status">🌌 长期</span>
+    </div>
+  </div>
+
+  <div class="eip-table">
+    <h4>关键 EIP 速查</h4>
+    <table>
+      <thead><tr><th>EIP</th><th>主题</th><th>状态</th><th>影响</th></tr></thead>
+      <tbody>
+        <tr><td>1559</td><td>Base Fee 销毁</td><td>✔ 已上线(2021)</td><td>重塑费用市场,引入通缩</td></tr>
+        <tr><td>4844</td><td>Proto-Danksharding</td><td>✔ 已上线(2024)</td><td>Rollup 费用下降 10-100×</td></tr>
+        <tr><td>4337</td><td>账户抽象</td><td>✔ 合约层</td><td>智能钱包、Gas 代付</td></tr>
+        <tr><td>7702</td><td>EOA → 合约临时升级</td><td>✔ Pectra(2025)</td><td>普通钱包也可批量签名</td></tr>
+        <tr><td>4444</td><td>历史数据过期</td><td>🧪 讨论</td><td>节点更轻量</td></tr>
+        <tr><td>6110</td><td>存款合约迁移</td><td>✔ Pectra</td><td>验证者上线更快</td></tr>
+        <tr><td>7600+</td><td>Verkle Tree 族群</td><td>📐 设计</td><td>无状态客户端关键</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 15 2029 路线全景 ============ -->
+<section id="roadmap-2029" class="section alt">
+  <div class="section-head">
+    <h2>2026 → 2029 路线全景</h2>
+    <p>把六阶段框架投影到时间轴上 —— 哪些升级已经定档、哪些还在研究中?以下是 2026 年 5 月的最新共识。</p>
+  </div>
+
+  <!-- 时间轴 -->
+  <div class="rm29-timeline">
+    <div class="rm29-track"></div>
+
+    <div class="rm29-year rm29-done">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2025 · 已完成</span>
+          <h3>Pectra</h3>
+        </div>
+        <ul>
+          <li><b>EIP-7702</b> · EOA 临时升级为合约钱包(账户抽象大众化)</li>
+          <li><b>Blob 翻倍</b> · target 3→6, max 6→9</li>
+          <li><b>EIP-7251</b> · 验证者最大有效余额 32 → 2048 ETH</li>
+          <li><b>EIP-6110</b> · 存款合约迁入信标链,新验证者上线时间从 ~12h 降到 ~13min</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-active">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2026 · 即将上线</span>
+          <h3>Fusaka</h3>
+        </div>
+        <ul>
+          <li><b>PeerDAS</b> · 数据可用性抽样,节点不再需要下载完整 Blob</li>
+          <li><b>Blob 容量</b> · max 9 → 12+,L2 上链成本再降一档</li>
+          <li><b>EVM Object Format(EOF)</b> · 字节码模块化,合约更易验证</li>
+          <li>客户端更轻量,Reth / Nimbus 等普及在即</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-planned">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2027 · 设计中</span>
+          <h3>Glamsterdam(暂定名)</h3>
+        </div>
+        <ul>
+          <li><b>Slot 时间</b> · 12s → 6s(出块速度翻倍)</li>
+          <li><b>ePBS</b> · 提议者-构建者分离写入协议层,削弱 MEV 中心化</li>
+          <li><b>Verkle Tree</b> · 替代 MPT,无状态客户端关键一步</li>
+          <li><b>Inclusion Lists</b> · 抗审查机制写入共识</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-research">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2028+ · 研究中</span>
+          <h3>The Verge / Purge 收尾</h3>
+        </div>
+        <ul>
+          <li><b>EIP-4444</b> · 历史数据过期,全节点磁盘占用从 TB 级降回 GB 级</li>
+          <li><b>SSF</b> · 单 slot 终局性,12 秒内不可逆</li>
+          <li><b>完整 Danksharding</b> · 128 Blob/块 → 1.3 MB/s 持续 DA 带宽</li>
+          <li><b>Account Abstraction</b> 全面替换 EOA(EIP-7702 后续)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rm29-year rm29-vision">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2029 · 愿景</span>
+          <h3>Snarkified Ethereum</h3>
+        </div>
+        <ul>
+          <li><b>L1 zkVM(RISC-V)</b> · Vitalik 提案的"极简执行层",EVM 通过解释器兼容</li>
+          <li><b>实时证明</b> · 区块出块即附带 ZK 证明,无需信任客户端实现</li>
+          <li><b>Stage 2 L2 普及</b> · 大部分主流 L2 完成完全无信任化</li>
+          <li><b>10 万+ TPS</b> · L1 + 完整 DAS + 成熟 zkVM 协同</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阶段进度对照 -->
+  <div class="rm29-pillars">
+    <h4>对照六阶段:每条战线走到哪一步了?</h4>
+    <div class="rm29-pillar-grid">
+      <div class="rm29-pillar"><b>The Merge</b><span>✅ 完成</span><p>PoS 已平稳运行 4 年</p></div>
+      <div class="rm29-pillar"><b>The Surge</b><span>🛠 进行中</span><p>Blob 翻倍 → PeerDAS → 完整 DAS</p></div>
+      <div class="rm29-pillar"><b>The Scourge</b><span>🧪 研究中</span><p>ePBS / Inclusion Lists 推进中</p></div>
+      <div class="rm29-pillar"><b>The Verge</b><span>📐 设计中</span><p>Verkle Tree 锁定 Glamsterdam</p></div>
+      <div class="rm29-pillar"><b>The Purge</b><span>🔍 准备中</span><p>EIP-4444 历史过期接近落地</p></div>
+      <div class="rm29-pillar"><b>The Splurge</b><span>🌌 长期</span><p>EOF / 7702 / zkVM 持续推进</p></div>
+    </div>
+  </div>
+
+  <p class="rm29-note">
+    📅 <b>截止 2026 年 5 月。</b>
+    上方时间轴中 Glamsterdam、Snarkified 等项目命名与时点尚未完全敲定,以
+    <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a>
+    与
+    <a href="https://ethroadmap.com" target="_blank" rel="noopener">ethroadmap.com</a>
+    为准。
+  </p>
+</section>
+
+<!-- ============ 16 EF Strawmap · 五大北极星 ============ -->
+<section id="strawmap" class="section">
+  <div class="section-head">
+    <h2>EF Strawmap · 五大北极星</h2>
+    <p>EF Protocol 团队提出的 <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a> 是一份"草案版"L1 路线图——把上面那条时间轴拆成 <b>3 个执行层</b> × <b>5 个长期目标</b> 的二维视图,供研究者协调讨论。</p>
+  </div>
+
+  <!-- 五大北极星(按"性能 / 韧性 / 体验"三大类划分) -->
+  <div class="sm-groups">
+    <!-- 性能组(3 颗) -->
+    <div class="sm-group sm-g-perf">
+      <div class="sm-group-head">
+        <span class="sm-group-icon">🏎</span>
+        <div>
+          <h3>性能 · Performance</h3>
+          <p>让链跑得更快、更宽。三颗星共同目标:把 L1+L2 推进到亿级用户级别。</p>
+        </div>
+      </div>
+      <div class="sm-stars sm-stars-3">
+        <div class="sm-star sm-s1">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">⚡</div>
+            <span class="sm-stage sm-stage-design">📐 设计中</span>
+          </div>
+          <h4>Fast L1</h4>
+          <p class="sm-star-tag">秒级终局性</p>
+          <p class="sm-star-body">把 12 秒 slot 砍到 6 秒,推进 SSF(单 slot 终局)—— 让 L1 反应速度追上中心化交易所。</p>
+          <div class="sm-stages">
+            <div class="sm-stage-track">
+              <span class="sm-stage-step is-done">研究</span>
+              <span class="sm-stage-step is-current">设计</span>
+              <span class="sm-stage-step">实现</span>
+              <span class="sm-stage-step">测试网</span>
+              <span class="sm-stage-step">主网</span>
+            </div>
+            <p class="sm-stage-detail"><b>当前:</b>Slot 6s 已写入 Glamsterdam 草案,SSF 仍是长期目标</p>
+          </div>
+        </div>
+        <div class="sm-star sm-s2">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">🚀</div>
+            <span class="sm-stage sm-stage-research">🔬 研究中</span>
+          </div>
+          <h4>Gigagas L1</h4>
+          <p class="sm-star-tag">10K TPS · 主网</p>
+          <p class="sm-star-body">把 L1 区块 Gas 上限推到 G 级,让主网自己也能扛住高频应用,不再完全依赖 L2。</p>
+          <div class="sm-stages">
+            <div class="sm-stage-track">
+              <span class="sm-stage-step is-current">研究</span>
+              <span class="sm-stage-step">设计</span>
+              <span class="sm-stage-step">实现</span>
+              <span class="sm-stage-step">测试网</span>
+              <span class="sm-stage-step">主网</span>
+            </div>
+            <p class="sm-stage-detail"><b>当前:</b>Gas limit 已逐步上调至 36M,G 级目标仍在论证</p>
+          </div>
+        </div>
+        <div class="sm-star sm-s3">
+          <div class="sm-star-top">
+            <div class="sm-star-icon">🌌</div>
+            <span class="sm-stage sm-stage-active">🛠 实现中</span>
+          </div>
+          <h4>Teragas L2</h4>
+          <p class="sm-star-tag">10M TPS · L2 总和</p>
+          <p class="sm-star-body">完整 Danksharding + PeerDAS,把 Blob 总带宽推到所有 L2 加起来 1000 万 TPS 的水平。</p>
+          <div class="sm-stages">
+            <div class="sm-stage-track">
+              <span class="sm-stage-step is-done">研究</span>
+              <span class="sm-stage-step is-done">设计</span>
+              <span class="sm-stage-step is-current">实现</span>
+              <span class="sm-stage-step">测试网</span>
+              <span class="sm-stage-step">主网</span>
+            </div>
+            <p class="sm-stage-detail"><b>当前:</b>Dencun + Pectra Blob×2 已主网,PeerDAS 在 Fusaka</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 韧性 + 体验(2 颗,并排一行) -->
+    <div class="sm-group-row">
+      <div class="sm-group sm-g-resil">
+        <div class="sm-group-head">
+          <span class="sm-group-icon">🛡</span>
+          <div>
+            <h3>韧性 · Resilience</h3>
+            <p>让链长期活下去 —— 即使密码学假设被推翻。</p>
+          </div>
+        </div>
+        <div class="sm-stars sm-stars-1">
+          <div class="sm-star sm-s4">
+            <div class="sm-star-top">
+              <div class="sm-star-icon">🛡️</div>
+              <span class="sm-stage sm-stage-research">🔬 研究中</span>
+            </div>
+            <h4>Post-Quantum</h4>
+            <p class="sm-star-tag">抗量子安全</p>
+            <p class="sm-star-body">用基于哈希的签名(STARK 友好)替换椭圆曲线,即使 Shor 算法落地也不会一夜崩盘。</p>
+            <div class="sm-stages">
+              <div class="sm-stage-track">
+                <span class="sm-stage-step is-current">研究</span>
+                <span class="sm-stage-step">设计</span>
+                <span class="sm-stage-step">实现</span>
+                <span class="sm-stage-step">测试网</span>
+                <span class="sm-stage-step">主网</span>
+              </div>
+              <p class="sm-stage-detail"><b>当前:</b>哈希签名方案选型中,与 NIST PQC 标准对齐</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sm-group sm-g-exp">
+        <div class="sm-group-head">
+          <span class="sm-group-icon">🕶</span>
+          <div>
+            <h3>体验 · Experience</h3>
+            <p>让用户用起来更舒服 —— 隐私是其中最难补的一块。</p>
+          </div>
+        </div>
+        <div class="sm-stars sm-stars-1">
+          <div class="sm-star sm-s5">
+            <div class="sm-star-top">
+              <div class="sm-star-icon">🕶️</div>
+              <span class="sm-stage sm-stage-research">🔬 研究中</span>
+            </div>
+            <h4>Native Privacy</h4>
+            <p class="sm-star-tag">隐私转账原生化</p>
+            <p class="sm-star-body">把 Privacy Pools / 屏蔽转账纳入协议层,让"不暴露余额"成为默认能力,而非外挂应用。</p>
+            <div class="sm-stages">
+              <div class="sm-stage-track">
+                <span class="sm-stage-step is-current">研究</span>
+                <span class="sm-stage-step">设计</span>
+                <span class="sm-stage-step">实现</span>
+                <span class="sm-stage-step">测试网</span>
+                <span class="sm-stage-step">主网</span>
+              </div>
+              <p class="sm-stage-detail"><b>当前:</b>Privacy Pools 已在应用层落地,协议层尚未启动</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三层视角 -->
+  <div class="sm-layers">
+    <div class="sm-layer sm-cl">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">CL</span>
+        <h4>Consensus Layer · 共识层</h4>
+      </div>
+      <p>验证者怎么投票、怎么出块、怎么达成最终性。</p>
+      <ul>
+        <li><b>SSF</b> · 单 slot 终局性</li>
+        <li><b>ePBS</b> · 协议层 PBS</li>
+        <li><b>Inclusion Lists</b> · 抗审查</li>
+        <li><b>Account Aggregation</b> · 验证者整合</li>
+      </ul>
+    </div>
+    <div class="sm-layer sm-dl">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">DL</span>
+        <h4>Data Layer · 数据层</h4>
+      </div>
+      <p>L2 把数据上传到哪里、节点如何低成本地验证它存在。</p>
+      <ul>
+        <li><b>PeerDAS</b> · 数据可用性抽样</li>
+        <li><b>Blob Scaling</b> · max 9 → 12 → 128</li>
+        <li><b>Full Danksharding</b> · 1.3 MB/s 持续 DA</li>
+        <li><b>EIP-4444</b> · 历史数据过期</li>
+      </ul>
+    </div>
+    <div class="sm-layer sm-el">
+      <div class="sm-layer-head">
+        <span class="sm-layer-tag">EL</span>
+        <h4>Execution Layer · 执行层</h4>
+      </div>
+      <p>EVM 怎么演化,合约怎么验证、状态怎么存。</p>
+      <ul>
+        <li><b>EOF</b> · 字节码模块化</li>
+        <li><b>Verkle Tree</b> · 无状态客户端</li>
+        <li><b>RISC-V zkVM</b> · 极简执行层</li>
+        <li><b>EIP-7702</b> 后续 · AA 全面化</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 七 fork 节奏轴 -->
+  <div class="sm-forks">
+    <h4>七次硬分叉 · 每 6 个月一次</h4>
+    <p class="sm-forks-desc">strawmap 假设 2029 年前每 ~6 个月一次硬分叉,共 7 次。前两次已命名,后几次仍是占位符 I* / J* / L*。</p>
+    <div class="sm-fork-track">
+      <div class="sm-fork sm-fork-done">
+        <span class="sm-fork-when">2024.03</span>
+        <b>Dencun</b>
+        <em>EIP-4844 Blob</em>
+      </div>
+      <div class="sm-fork sm-fork-done">
+        <span class="sm-fork-when">2025.05</span>
+        <b>Pectra</b>
+        <em>EIP-7702 / Blob×2</em>
+      </div>
+      <div class="sm-fork sm-fork-active">
+        <span class="sm-fork-when">2026 H2</span>
+        <b>Fusaka</b>
+        <em>PeerDAS</em>
+      </div>
+      <div class="sm-fork sm-fork-planned">
+        <span class="sm-fork-when">2027 H1</span>
+        <b>Glamsterdam</b>
+        <em>ePBS · BALs · Slot 6s</em>
+      </div>
+      <div class="sm-fork sm-fork-planned">
+        <span class="sm-fork-when">2027 H2</span>
+        <b>Hegotá</b>
+        <em>Verkle / EOF 收尾</em>
+      </div>
+      <div class="sm-fork sm-fork-future">
+        <span class="sm-fork-when">2028</span>
+        <b>I*</b>
+        <em>占位 · SSF / Privacy</em>
+      </div>
+      <div class="sm-fork sm-fork-future">
+        <span class="sm-fork-when">2029</span>
+        <b>J* / L*</b>
+        <em>占位 · zkVM / PQ</em>
+      </div>
+    </div>
+  </div>
+
+  <p class="sm-note">
+    🧪 <b>这是 strawman(草案),不是承诺。</b>
+    Fork 命名按希腊语/字母表轮换(A→B→C…),具体内容会随研究进展调整。完整可视化大图见
+    <a href="https://strawmap.org" target="_blank" rel="noopener">strawmap.org</a>。
+  </p>
+</section>
+
+
+</div><!-- /page future -->
+
+<!-- ================================================
+     PAGE · TOOLS
+     ================================================ -->
+<div class="page" data-page="tools">
+  <div class="page-header">
+    <p class="page-eyebrow">TOOLS · 工具</p>
+    <h1>工具:亲手感受以太坊</h1>
+    <p class="page-desc">三个小工具:质押收益 · Gas 费计算 · 最新区块一瞥。</p>
+  </div>
+
+<!-- ============ 交互工具 ============ -->
+<section id="tools" class="section">
+  <div class="section-head">
+    <h2>互动工具箱</h2>
+    <p>用三个小工具亲手感受以太坊:质押收益 · Gas 费计算 · 最新区块一瞥。</p>
+  </div>
+
+  <div class="tool-grid">
+
+    <!-- 工具 1:质押计算器 -->
+    <div class="tool-card">
+      <h3>💰 质押收益计算器</h3>
+      <div class="tool-field">
+        <label>质押数量(ETH)</label>
+        <input type="range" id="stake-amount" min="0.01" max="1000" step="0.01" value="32" />
+        <div class="tool-row"><input type="number" id="stake-amount-num" value="32" step="0.01" /><span>ETH</span></div>
+      </div>
+      <div class="tool-field">
+        <label>年化率 APR(%)</label>
+        <input type="range" id="stake-apr" min="1" max="10" step="0.1" value="3.2" />
+        <div class="tool-row"><input type="number" id="stake-apr-num" value="3.2" step="0.1" /><span>%</span></div>
+      </div>
+      <div class="tool-output">
+        <div><span>每日</span><b id="stake-daily">—</b></div>
+        <div><span>每月</span><b id="stake-monthly">—</b></div>
+        <div><span>每年</span><b id="stake-yearly">—</b></div>
+        <div class="tool-output-usd"><span>按当前 ETH 价格换算(年)</span><b id="stake-yearly-usd">—</b></div>
+      </div>
+      <p class="tool-note">💡 Solo 质押需 32 ETH;流动性质押(stETH/rETH)无门槛但存在协议风险。</p>
+    </div>
+
+    <!-- 工具 2:Gas 费模拟器 -->
+    <div class="tool-card">
+      <h3>⛽ Gas 费模拟器</h3>
+      <div class="tool-field">
+        <label>操作类型</label>
+        <select id="gas-type">
+          <option value="21000">简单转账 ETH(21,000)</option>
+          <option value="65000">ERC-20 Token 转账(~65,000)</option>
+          <option value="150000">Uniswap Swap(~150,000)</option>
+          <option value="250000">NFT Mint(~250,000)</option>
+          <option value="500000">复杂 DeFi 组合(~500,000)</option>
+        </select>
+      </div>
+      <div class="tool-field">
+        <label>Gas Price(gwei)</label>
+        <input type="range" id="gas-price" min="1" max="300" step="1" value="20" />
+        <div class="tool-row"><input type="number" id="gas-price-num" value="20" step="1" /><span>gwei</span></div>
+        <div class="gas-presets">
+          <button data-g="5">慢 5</button>
+          <button data-g="15">标准 15</button>
+          <button data-g="30">快 30</button>
+          <button data-g="80">拥堵 80</button>
+        </div>
+      </div>
+      <div class="tool-output">
+        <div><span>消耗 ETH</span><b id="gas-eth">—</b></div>
+        <div class="tool-output-usd"><span>按当前价格(USD)</span><b id="gas-usd">—</b></div>
+      </div>
+      <p class="tool-note">💡 L2 (Arbitrum/Base) 上同样操作通常仅需几美分。</p>
+    </div>
+
+    <!-- 工具 3:迷你区块浏览器 -->
+    <div class="tool-card wide">
+      <h3>🔍 迷你区块浏览器</h3>
+      <div class="tool-actions">
+        <button id="blocks-refresh">🔄 刷新最新区块</button>
+        <span class="tool-hint">数据来源:Etherscan 公共 API</span>
+      </div>
+      <div class="blocks-table-wrap">
+        <table class="blocks-table">
+          <thead>
+            <tr><th>区块号</th><th>时间</th><th>交易数</th><th>Gas 用量</th><th>Base Fee(gwei)</th><th>出块者</th></tr>
+          </thead>
+          <tbody id="blocks-tbody">
+            <tr><td colspan="6" class="blocks-empty">点击刷新获取最新区块…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div><!-- /page tools -->
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p>© 2026 · 以太坊架构详解</p>
+    <p class="links">
+      <a href="https://ethereum.org/en/developers/docs/" target="_blank" rel="noopener">ethereum.org/docs</a> ·
+      <a href="https://github.com/ethereum/EIPs" target="_blank" rel="noopener">EIPs</a> ·
+      <a href="https://ethereum.github.io/yellowpaper/paper.pdf" target="_blank" rel="noopener">Yellow Paper</a>
+    </p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
