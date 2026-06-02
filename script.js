@@ -1295,9 +1295,8 @@ initLiveData();
         return tw + padX * 2;
       };
 
-      // ---- 单条 item 渲染(在当前栏中流式) ----
-      // 关键约束:绘制时实时检查 state.y,每画一行如果跌破栏底就 switchCol,
-      // 这样即便估算失败也不会让两条 item 在视觉上重叠
+      // ---- 单条 item 渲染 ----
+      // 预计算整条 item 高度,尽量让同一条新闻完整出现在同一栏中
       const renderItem = (it, opts = {}) => {
         const w = COL_W;
         const compact = !!opts.compact;
@@ -1309,8 +1308,50 @@ initLiveData();
         const projects = projectsFor(it);
         const links = (it.links || []).filter((l) => l.href);
 
-        // 估算首屏需要的最小高度(meta + 至少正文一行),空间不够先切栏
-        ensureSpace(16 + bodyLH);
+        // 预计算整条 item 总高度
+        let totalH = 15; // meta row
+        totalH += bodyLines.length * bodyLH;
+        let linkLines = [];
+        if (links.length) {
+          const linkText = `↗ ${links[0].text || links[0].href}`;
+          linkLines = lay.wrap(linkText, 7, w);
+          totalH += linkLines.length * 9;
+        }
+        let impactLabelLines = [];
+        let impactHeadW = 0;
+        if (impacts.length) {
+          impactHeadW = lay.measure("影响路径 ", 7);
+          const labels = impacts.map((im) => `→ ${im.label}`).join("  ");
+          impactLabelLines = lay.wrap(labels, 7, Math.max(40, w - impactHeadW));
+          totalH += impactLabelLines.length * 9;
+        }
+        let projectData = [];
+        if (projects.length) {
+          for (const pj of projects) {
+            const head = `[${pj.tone}] ${pj.name}`;
+            const headW = lay.measure(head, 7);
+            const reasonLines = lay.wrap(` — ${pj.reason}`, 7, Math.max(40, w - headW - 2));
+            projectData.push({ pj, head, headW, reasonLines });
+            totalH += reasonLines.length * 9;
+          }
+        }
+        totalH += 8; // separator
+
+        // 整条 item 能放进单栏时,确保空间后再开始绘制
+        const colMax = state.topY - state.bottomY;
+        const fitsSingleCol = totalH <= colMax;
+        if (fitsSingleCol) {
+          ensureSpace(totalH);
+        } else {
+          ensureSpace(16 + bodyLH);
+        }
+
+        // 绘制单行的小工具
+        const drawRow = (txt, size, color, lh) => {
+          if (!fitsSingleCol) ensureSpace(lh);
+          drawText(txt, state.x, state.y - size, { size, color });
+          advance(lh);
+        };
 
         // 元数据行: 日期 + 来源徽标
         let cx = state.x;
@@ -1324,54 +1365,31 @@ initLiveData();
         }
         advance(15);
 
-        // 绘制单行的小工具:画之前确保空间,画完前进 lh
-        const drawRow = (txt, size, color, lh) => {
-          ensureSpace(lh);
-          drawText(txt, state.x, state.y - size, { size, color });
-          advance(lh);
-        };
-        const drawRowAt = (txt, dx, size, color, lh) => {
-          // 与 drawRow 相同,但 x 偏移 dx;画完前进 lh
-          ensureSpace(lh);
-          drawText(txt, state.x + dx, state.y - size, { size, color });
-          advance(lh);
-        };
-
         // 正文
         for (const line of bodyLines) drawRow(line, bodySize, COL.ink, bodyLH);
 
-        // 链接(取首条,避免膨胀)
-        if (links.length) {
-          const lk = links[0];
-          const linkText = `↗ ${lk.text || lk.href}`;
-          for (const line of lay.wrap(linkText, 7, w)) drawRow(line, 7, COL.link, 9);
+        // 链接(取首条)
+        if (linkLines.length) {
+          for (const line of linkLines) drawRow(line, 7, COL.link, 9);
         }
 
         // 影响路径
         if (impacts.length) {
           const head = "影响路径 ";
-          const headW = lay.measure(head, 7);
-          const labels = impacts.map((im) => `→ ${im.label}`).join("  ");
-          const lines = lay.wrap(labels, 7, Math.max(40, w - headW));
-          // 第一行:头标签 + 首行内容
-          ensureSpace(9);
+          if (!fitsSingleCol) ensureSpace(9);
           drawText(head, state.x, state.y - 7, { size: 7, color: COL.accent });
-          drawText(lines[0] || "", state.x + headW, state.y - 7, { size: 7, color: COL.ink });
+          drawText(impactLabelLines[0] || "", state.x + impactHeadW, state.y - 7, { size: 7, color: COL.ink });
           advance(9);
-          for (let i = 1; i < lines.length; i++) drawRow(lines[i], 7, COL.ink, 9);
+          for (let i = 1; i < impactLabelLines.length; i++) drawRow(impactLabelLines[i], 7, COL.ink, 9);
         }
 
         // 项目影响
-        if (projects.length) {
-          for (const pj of projects) {
+        if (projectData.length) {
+          for (const { pj, head, headW, reasonLines } of projectData) {
             const positive = pj.cls === "p-positive";
             const risk = pj.cls === "p-risk";
             const tone = positive ? RGB(31, 128, 67) : risk ? RGB(196, 57, 60) : RGB(107, 107, 118);
-            const head = `[${pj.tone}] ${pj.name}`;
-            const headW = lay.measure(head, 7);
-            const reason = ` — ${pj.reason}`;
-            const reasonLines = lay.wrap(reason, 7, Math.max(40, w - headW - 2));
-            ensureSpace(9);
+            if (!fitsSingleCol) ensureSpace(9);
             drawText(head, state.x, state.y - 7, { size: 7, color: tone });
             drawText(reasonLines[0] || "", state.x + headW + 2, state.y - 7, { size: 7, color: COL.dim });
             advance(9);
