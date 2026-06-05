@@ -45,9 +45,9 @@ code, pre { font-family: var(--mono); }
   position: fixed;
   top: 0;
   left: 0;
-  width: 240px;
+  width: 60px;
   height: 100vh;
-  padding: 36px 22px 22px;
+  padding: 36px 10px 22px;
   background: var(--bg);
   border-right: 1px solid var(--rule);
   display: flex;
@@ -55,6 +55,26 @@ code, pre { font-family: var(--mono); }
   gap: 28px;
   z-index: 100;
   font-family: var(--serif);
+  overflow: hidden;
+  transition: width 0.25s ease, padding 0.25s ease;
+}
+.side-nav:hover {
+  width: 240px;
+  padding: 36px 22px 22px;
+}
+.side-nav .side-logo div,
+.side-nav .sl-name,
+.side-nav .sl-sub,
+.side-nav .side-live {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.side-nav:hover .side-logo div,
+.side-nav:hover .sl-name,
+.side-nav:hover .sl-sub,
+.side-nav:hover .side-live {
+  opacity: 1;
 }
 .side-logo {
   display: flex;
@@ -62,6 +82,9 @@ code, pre { font-family: var(--mono); }
   gap: 12px;
   padding: 0 0 18px;
   border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .side-logo b {
   display: block;
@@ -204,9 +227,10 @@ code, pre { font-family: var(--mono); }
    主壳 + 页面系统 Shell + Pages
    ===================================================== */
 .shell {
-  margin-left: 240px;
+  margin-left: 60px;
   min-height: 100vh;
   position: relative;
+  transition: margin-left 0.25s ease;
 }
 .page {
   display: none;
@@ -482,8 +506,8 @@ code, pre { font-family: var(--mono); }
 .section.alt {
   background: var(--bg-2);
   max-width: none;
-  padding-left: calc((100vw - 240px - 1100px) / 2 + 6vw);
-  padding-right: calc((100vw - 240px - 1100px) / 2 + 6vw);
+  padding-left: calc((100vw - 60px - 1100px) / 2 + 6vw);
+  padding-right: calc((100vw - 60px - 1100px) / 2 + 6vw);
 }
 @media (max-width: 980px) {
   .section.alt {
@@ -3508,12 +3532,20 @@ footer {
    ================================ */
 @media (max-width: 980px) {
   .side-nav {
-    width: 72px;
-    padding: 20px 10px;
+    width: 48px;
+    padding: 16px 6px;
+  }
+  .side-nav:hover {
+    width: 200px;
+    padding: 20px 16px;
   }
   .side-logo div,
   .sl-name, .sl-sub,
   .side-live { display: none; }
+  .side-nav:hover .side-logo div,
+  .side-nav:hover .sl-name,
+  .side-nav:hover .sl-sub,
+  .side-nav:hover .side-live { display: block; opacity: 1; }
   .side-logo {
     justify-content: center;
     padding: 0 0 14px;
@@ -3525,7 +3557,7 @@ footer {
     padding: 12px 6px;
   }
   .sl-idx { font-size: 14px; }
-  .shell { margin-left: 72px; }
+  .shell { margin-left: 48px; }
 }
 
 /* ================================
