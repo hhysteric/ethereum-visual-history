@@ -1632,10 +1632,38 @@ initLiveData();
     return out.slice(0, 3);
   }
 
+  const moSkipPatterns = [
+    /BitMine.*浮亏|BitMine.*loss/i,
+    /Tom Lee.*\$250/i,
+    /Base.*MCP|MCP AI 工具/i,
+    /ETF.*净流出|净流出.*节奏/i,
+    /ETF.*净赎回|单日.*赎回/i,
+    /ERC-7730.*集成|7730 Clear Signing 元数据/i,
+    /Clear Signing 开放标准|ERC-7730.*启动/i,
+    /formal verification|形式化验证.*AI/i,
+  ];
+
+  const hfSkipPatterns = [
+    /ETH Rangers|Rangers Program/i,
+    /Checkpoint #\d/i,
+    /self-sovereign.*LLM|本地.*隐私.*LLM/i,
+    /Allocation Update|资金继续投向/i,
+    /promise of values|价值层叙事/i,
+    /EPF.*招募|Fellowship.*招募/i,
+  ];
+
   function buildExportNode() {
     const wk = collectColumn(".recent-week");
-    const mo = collectColumn(".recent-month");
-    const hf = collectHalfFlat();
+    const moRaw = collectColumn(".recent-month");
+    const mo = moRaw.filter(it => {
+      const text = `${it.when} ${it.source} ${it.body.replace(/<[^>]+>/g, "")}`;
+      return !moSkipPatterns.some(re => re.test(text));
+    });
+    const hfRaw = collectHalfFlat();
+    const hf = hfRaw.filter(it => {
+      const text = `${it.when} ${it.source} ${it.body.replace(/<[^>]+>/g, "")}`;
+      return !hfSkipPatterns.some(re => re.test(text));
+    });
     const stars = collectStars();
     const t = today();
 
