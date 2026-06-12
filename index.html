@@ -2537,18 +2537,34 @@ ISZERO
       </div>
     </div>
 
+    <div class="rm29-year rm29-done">
+      <div class="rm29-dot"></div>
+      <div class="rm29-card">
+        <div class="rm29-head">
+          <span class="rm29-tag">2025.12 · 已完成</span>
+          <h3>Fusaka (Fulu-Osaka)</h3>
+        </div>
+        <ul>
+          <li><b>PeerDAS</b> · 数据可用性抽样,节点不再需要下载完整 Blob</li>
+          <li><b>EOF</b> · EVM Object Format,字节码模块化,合约更易验证</li>
+          <li><b>Blob 参数分叉</b> · 允许在主升级之间单独调整 Blob 容量</li>
+          <li><b>Gas limit</b> · 交易 gas 上限 16.7M,默认 gas limit 提升至 ~60M</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="rm29-year rm29-active">
       <div class="rm29-dot"></div>
       <div class="rm29-card">
         <div class="rm29-head">
-          <span class="rm29-tag">2026 · 即将上线</span>
-          <h3>Fusaka</h3>
+          <span class="rm29-tag">H2 2026 · 开发中</span>
+          <h3>Glamsterdam</h3>
         </div>
         <ul>
-          <li><b>PeerDAS</b> · 数据可用性抽样,节点不再需要下载完整 Blob</li>
-          <li><b>Blob 容量</b> · max 9 → 12+,L2 上链成本再降一档</li>
-          <li><b>EVM Object Format(EOF)</b> · 字节码模块化,合约更易验证</li>
-          <li>客户端更轻量,Reth / Nimbus 等普及在即</li>
+          <li><b>EIP-7732 ePBS</b> · 提议者-构建者分离写入协议层,传播窗口 2s→9s</li>
+          <li><b>EIP-7928 BALs</b> · 区块级访问列表,支持并行执行</li>
+          <li><b>EIP-8037/8038</b> · 状态创建与访问 gas 重定价,控制状态膨胀</li>
+          <li><b>EIP-2780</b> · 内在交易 gas 降低(简单转账便宜 71%)</li>
         </ul>
       </div>
     </div>
@@ -2557,14 +2573,14 @@ ISZERO
       <div class="rm29-dot"></div>
       <div class="rm29-card">
         <div class="rm29-head">
-          <span class="rm29-tag">2027 · 设计中</span>
-          <h3>Glamsterdam(暂定名)</h3>
+          <span class="rm29-tag">H2 2026 · 开发中</span>
+          <h3>Hegotá</h3>
         </div>
         <ul>
-          <li><b>Slot 时间</b> · 12s → 6s(出块速度翻倍)</li>
-          <li><b>ePBS</b> · 提议者-构建者分离写入协议层,削弱 MEV 中心化</li>
           <li><b>Verkle Tree</b> · 替代 MPT,无状态客户端关键一步</li>
-          <li><b>Inclusion Lists</b> · 抗审查机制写入共识</li>
+          <li><b>EIP-8141 Native AA</b> · 协议级账户抽象,支持自定义签名方案(含抗量子)</li>
+          <li><b>FOCIL</b> · 分叉选择强制纳入列表,抗审查写入共识</li>
+          <li>与 Glamsterdam 同年但分开部署,Hegotá 聚焦状态结构与账户层</li>
         </ul>
       </div>
     </div>
@@ -2573,14 +2589,14 @@ ISZERO
       <div class="rm29-dot"></div>
       <div class="rm29-card">
         <div class="rm29-head">
-          <span class="rm29-tag">2028+ · 研究中</span>
+          <span class="rm29-tag">2027+ · 研究中</span>
           <h3>The Verge / Purge 收尾</h3>
         </div>
         <ul>
           <li><b>EIP-4444</b> · 历史数据过期,全节点磁盘占用从 TB 级降回 GB 级</li>
-          <li><b>SSF</b> · 单 slot 终局性,12 秒内不可逆</li>
+          <li><b>SSF</b> · 单 slot 终局性,仍在研究阶段</li>
           <li><b>完整 Danksharding</b> · 128 Blob/块 → 1.3 MB/s 持续 DA 带宽</li>
-          <li><b>Account Abstraction</b> 全面替换 EOA(EIP-7702 后续)</li>
+          <li><b>Slot 时间缩短</b> · 12s → 6-8s(需 SSF 配合,尚无定档)</li>
         </ul>
       </div>
     </div>
@@ -2607,16 +2623,16 @@ ISZERO
     <h4>对照六阶段:每条战线走到哪一步了?</h4>
     <div class="rm29-pillar-grid">
       <div class="rm29-pillar"><b>The Merge</b><span>✅ 完成</span><p>PoS 已平稳运行 4 年</p></div>
-      <div class="rm29-pillar"><b>The Surge</b><span>🛠 进行中</span><p>Blob 翻倍 → PeerDAS → 完整 DAS</p></div>
-      <div class="rm29-pillar"><b>The Scourge</b><span>🧪 研究中</span><p>ePBS / Inclusion Lists 推进中</p></div>
-      <div class="rm29-pillar"><b>The Verge</b><span>📐 设计中</span><p>Verkle Tree 锁定 Glamsterdam</p></div>
+      <div class="rm29-pillar"><b>The Surge</b><span>🛠 进行中</span><p>PeerDAS 已上线,完整 DAS 推进中</p></div>
+      <div class="rm29-pillar"><b>The Scourge</b><span>🛠 进行中</span><p>ePBS 纳入 Glamsterdam / FOCIL 纳入 Hegotá</p></div>
+      <div class="rm29-pillar"><b>The Verge</b><span>📐 设计中</span><p>Verkle Tree 锁定 Hegotá</p></div>
       <div class="rm29-pillar"><b>The Purge</b><span>🔍 准备中</span><p>EIP-4444 历史过期接近落地</p></div>
-      <div class="rm29-pillar"><b>The Splurge</b><span>🌌 长期</span><p>EOF / 7702 / zkVM 持续推进</p></div>
+      <div class="rm29-pillar"><b>The Splurge</b><span>🌌 长期</span><p>EOF 已落地 / 7702 已上线 / zkVM 研究中</p></div>
     </div>
   </div>
 
   <p class="rm29-note">
-    📅 <b>截止 2026 年 5 月。</b>
+    📅 <b>截止 2026 年 6 月。</b>
     上方时间轴中 Glamsterdam、Snarkified 等项目命名与时点尚未完全敲定,以
     <a href="https://ethereum.org/roadmap" target="_blank" rel="noopener">ethereum.org/roadmap</a>
     与
@@ -2660,7 +2676,7 @@ ISZERO
               <span class="sm-stage-step">测试网</span>
               <span class="sm-stage-step">主网</span>
             </div>
-            <p class="sm-stage-detail"><b>当前:</b>Slot 6s 已写入 Glamsterdam 草案,SSF 仍是长期目标</p>
+            <p class="sm-stage-detail"><b>当前:</b>EIP-7928 Slot Auction 纳入 Glamsterdam;Slot 6s / SSF 仍为长期目标</p>
           </div>
         </div>
         <div class="sm-star sm-s2">
@@ -2698,7 +2714,7 @@ ISZERO
               <span class="sm-stage-step">测试网</span>
               <span class="sm-stage-step">主网</span>
             </div>
-            <p class="sm-stage-detail"><b>当前:</b>Dencun + Pectra Blob×2 已主网,PeerDAS 在 Fusaka</p>
+            <p class="sm-stage-detail"><b>当前:</b>Dencun + Pectra Blob×2 + Fusaka PeerDAS 均已主网,完整 DAS 待后续</p>
           </div>
         </div>
       </div>
@@ -2828,20 +2844,20 @@ ISZERO
         <b>Pectra</b>
         <em>EIP-7702 / Blob×2</em>
       </div>
+      <div class="sm-fork sm-fork-done">
+        <span class="sm-fork-when">2025.12</span>
+        <b>Fusaka</b>
+        <em>PeerDAS · EOF</em>
+      </div>
       <div class="sm-fork sm-fork-active">
         <span class="sm-fork-when">2026 H2</span>
-        <b>Fusaka</b>
-        <em>PeerDAS</em>
-      </div>
-      <div class="sm-fork sm-fork-planned">
-        <span class="sm-fork-when">2027 H1</span>
         <b>Glamsterdam</b>
-        <em>ePBS · BALs · Slot 6s</em>
+        <em>ePBS · EIP-7928 · EIP-8037</em>
       </div>
       <div class="sm-fork sm-fork-planned">
-        <span class="sm-fork-when">2027 H2</span>
+        <span class="sm-fork-when">2026 H2</span>
         <b>Hegotá</b>
-        <em>Verkle / EOF 收尾</em>
+        <em>Verkle · Native AA · FOCIL</em>
       </div>
       <div class="sm-fork sm-fork-future">
         <span class="sm-fork-when">2028</span>
