@@ -1634,13 +1634,13 @@ initLiveData();
 
   const moSkipPatterns = [
     /BitMine.*浮亏|BitMine.*loss/i,
+    /BitMine.*持仓.*逼近|流通量 5%/i,
     /Tom Lee.*\$250/i,
     /Base.*MCP|MCP AI 工具/i,
     /ETF.*净流出|净流出.*节奏/i,
     /ETF.*净赎回|单日.*赎回/i,
-    /ERC-7730.*集成|7730 Clear Signing 元数据/i,
-    /Clear Signing 开放标准|ERC-7730.*启动/i,
-    /formal verification|形式化验证.*AI/i,
+    /Kohaku.*抗量子|量子化成本/i,
+    /AI Agent.*ERC.*爆发|Agent.*标准竞争/i,
   ];
 
   const hfSkipPatterns = [
