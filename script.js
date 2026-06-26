@@ -1641,6 +1641,10 @@ initLiveData();
     /ETF.*净赎回|单日.*赎回/i,
     /Kohaku.*抗量子|量子化成本/i,
     /AI Agent.*ERC.*爆发|Agent.*标准竞争/i,
+    /期货.*偏空信号|质押者韧性/i,
+    /Binance OI.*创纪录|370 万 ETH/i,
+    /\$1,500 关键支撑|OI 从.*跌至/i,
+    /Bitmine 增持至.*554/i,
   ];
 
   const hfSkipPatterns = [
